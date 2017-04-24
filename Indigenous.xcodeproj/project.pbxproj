@@ -8,22 +8,51 @@
 
 /* Begin PBXBuildFile section */
 		33AD2B7B1EA9991900ABE68B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AD2B7A1EA9991900ABE68B /* AppDelegate.swift */; };
-		33AD2B7D1EA9991900ABE68B /* IndieAuthLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AD2B7C1EA9991900ABE68B /* IndieAuthLoginViewController.swift */; };
 		33AD2B801EA9991900ABE68B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AD2B7E1EA9991900ABE68B /* Main.storyboard */; };
 		33AD2B821EA9991900ABE68B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AD2B811EA9991900ABE68B /* Assets.xcassets */; };
 		33AD2B851EA9991900ABE68B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AD2B831EA9991900ABE68B /* LaunchScreen.storyboard */; };
-		33F007D31EAC3E1A0054E747 /* mf2-parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F007D21EAC3E1A0054E747 /* mf2-parser.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		33661B8C1EADBCEE00DED2F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33661B851EADBCED00DED2F7 /* mf2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 33661B6B1EADBCED00DED2F7;
+			remoteInfo = mf2;
+		};
+		33661B8E1EADBCEE00DED2F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33661B851EADBCED00DED2F7 /* mf2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 33661B741EADBCED00DED2F7;
+			remoteInfo = mf2Tests;
+		};
+		33F007FD1EAD84FE0054E747 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 33F007DE1EAD84FD0054E747;
+			remoteInfo = IndieAuth;
+		};
+		33F007FF1EAD84FE0054E747 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 33F007E71EAD84FD0054E747;
+			remoteInfo = IndieAuthTests;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		33661B851EADBCED00DED2F7 /* mf2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = mf2.xcodeproj; path = ../../mf2/mf2.xcodeproj; sourceTree = "<group>"; };
 		33AD2B771EA9991900ABE68B /* Indigenous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Indigenous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AD2B7A1EA9991900ABE68B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		33AD2B7C1EA9991900ABE68B /* IndieAuthLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndieAuthLoginViewController.swift; sourceTree = "<group>"; };
 		33AD2B7F1EA9991900ABE68B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33AD2B811EA9991900ABE68B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33AD2B841EA9991900ABE68B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33AD2B861EA9991900ABE68B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		33F007D21EAC3E1A0054E747 /* mf2-parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "mf2-parser.swift"; sourceTree = "<group>"; };
+		33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IndieAuth.xcodeproj; path = ../../IndieAuth/IndieAuth.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +66,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33661B861EADBCED00DED2F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				33661B8D1EADBCEE00DED2F7 /* mf2.framework */,
+				33661B8F1EADBCEE00DED2F7 /* mf2Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		33AD2B6E1EA9991900ABE68B = {
 			isa = PBXGroup;
 			children = (
@@ -70,7 +108,7 @@
 		33F007D01EABC1B40054E747 /* IndieAuth */ = {
 			isa = PBXGroup;
 			children = (
-				33AD2B7C1EA9991900ABE68B /* IndieAuthLoginViewController.swift */,
+				33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */,
 			);
 			name = IndieAuth;
 			sourceTree = "<group>";
@@ -78,9 +116,18 @@
 		33F007D11EAC3DFA0054E747 /* mf2 */ = {
 			isa = PBXGroup;
 			children = (
-				33F007D21EAC3E1A0054E747 /* mf2-parser.swift */,
+				33661B851EADBCED00DED2F7 /* mf2.xcodeproj */,
 			);
 			name = mf2;
+			sourceTree = "<group>";
+		};
+		33F007F91EAD84FD0054E747 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				33F007FE1EAD84FE0054E747 /* IndieAuth.framework */,
+				33F008001EAD84FE0054E747 /* IndieAuthTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,12 +178,53 @@
 			mainGroup = 33AD2B6E1EA9991900ABE68B;
 			productRefGroup = 33AD2B781EA9991900ABE68B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 33F007F91EAD84FD0054E747 /* Products */;
+					ProjectRef = 33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */;
+				},
+				{
+					ProductGroup = 33661B861EADBCED00DED2F7 /* Products */;
+					ProjectRef = 33661B851EADBCED00DED2F7 /* mf2.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				33AD2B761EA9991900ABE68B /* Indigenous */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		33661B8D1EADBCEE00DED2F7 /* mf2.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = mf2.framework;
+			remoteRef = 33661B8C1EADBCEE00DED2F7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		33661B8F1EADBCEE00DED2F7 /* mf2Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = mf2Tests.xctest;
+			remoteRef = 33661B8E1EADBCEE00DED2F7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		33F007FE1EAD84FE0054E747 /* IndieAuth.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = IndieAuth.framework;
+			remoteRef = 33F007FD1EAD84FE0054E747 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		33F008001EAD84FE0054E747 /* IndieAuthTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = IndieAuthTests.xctest;
+			remoteRef = 33F007FF1EAD84FE0054E747 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		33AD2B751EA9991900ABE68B /* Resources */ = {
@@ -156,8 +244,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33F007D31EAC3E1A0054E747 /* mf2-parser.swift in Sources */,
-				33AD2B7D1EA9991900ABE68B /* IndieAuthLoginViewController.swift in Sources */,
 				33AD2B7B1EA9991900ABE68B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
