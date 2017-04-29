@@ -2,10 +2,13 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../IndieAuth/IndieAuth.xcodeproj">
+      location = "group:RelLinkParser/RelLinkParser.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../RelLinkParser/RelLinkParser.xcodeproj">
+      location = "group:mf2/mf2.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:IndieAuth/IndieAuth.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:../Indigenous/Indigenous.xcodeproj">

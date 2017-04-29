@@ -10,10 +10,12 @@
 		33AD2B7B1EA9991900ABE68B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AD2B7A1EA9991900ABE68B /* AppDelegate.swift */; };
 		33AD2B821EA9991900ABE68B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AD2B811EA9991900ABE68B /* Assets.xcassets */; };
 		33AD2B851EA9991900ABE68B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AD2B831EA9991900ABE68B /* LaunchScreen.storyboard */; };
-		33B562CA1EB511F20032EB4F /* IndieAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B562C91EB511F20032EB4F /* IndieAuth.framework */; };
-		33B562CB1EB511F20032EB4F /* IndieAuth.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33B562C91EB511F20032EB4F /* IndieAuth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		33B562CD1EB511F20032EB4F /* RelLinkParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B562CC1EB511F20032EB4F /* RelLinkParser.framework */; };
-		33B562CE1EB511F20032EB4F /* RelLinkParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33B562CC1EB511F20032EB4F /* RelLinkParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		33DA4C3E1EB541C900A587BB /* RelLinkParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DA4C3D1EB541C900A587BB /* RelLinkParser.framework */; };
+		33DA4C3F1EB541C900A587BB /* RelLinkParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33DA4C3D1EB541C900A587BB /* RelLinkParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		33DA4C411EB541C900A587BB /* mf2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DA4C401EB541C900A587BB /* mf2.framework */; };
+		33DA4C421EB541C900A587BB /* mf2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33DA4C401EB541C900A587BB /* mf2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		33DA4C441EB541C900A587BB /* IndieAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DA4C431EB541C900A587BB /* IndieAuth.framework */; };
+		33DA4C451EB541C900A587BB /* IndieAuth.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33DA4C431EB541C900A587BB /* IndieAuth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33FCF55A1EB1764900E8377B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33FCF5591EB1764900E8377B /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -24,8 +26,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				33B562CB1EB511F20032EB4F /* IndieAuth.framework in Embed Frameworks */,
-				33B562CE1EB511F20032EB4F /* RelLinkParser.framework in Embed Frameworks */,
+				33DA4C451EB541C900A587BB /* IndieAuth.framework in Embed Frameworks */,
+				33DA4C421EB541C900A587BB /* mf2.framework in Embed Frameworks */,
+				33DA4C3F1EB541C900A587BB /* RelLinkParser.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,8 +41,9 @@
 		33AD2B811EA9991900ABE68B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33AD2B841EA9991900ABE68B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33AD2B861EA9991900ABE68B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		33B562C91EB511F20032EB4F /* IndieAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IndieAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		33B562CC1EB511F20032EB4F /* RelLinkParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RelLinkParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33DA4C3D1EB541C900A587BB /* RelLinkParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RelLinkParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33DA4C401EB541C900A587BB /* mf2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = mf2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33DA4C431EB541C900A587BB /* IndieAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IndieAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33FCF5591EB1764900E8377B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,8 +52,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33B562CA1EB511F20032EB4F /* IndieAuth.framework in Frameworks */,
-				33B562CD1EB511F20032EB4F /* RelLinkParser.framework in Frameworks */,
+				33DA4C441EB541C900A587BB /* IndieAuth.framework in Frameworks */,
+				33DA4C411EB541C900A587BB /* mf2.framework in Frameworks */,
+				33DA4C3E1EB541C900A587BB /* RelLinkParser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,8 +64,9 @@
 		33AD2B6E1EA9991900ABE68B = {
 			isa = PBXGroup;
 			children = (
-				33B562CC1EB511F20032EB4F /* RelLinkParser.framework */,
-				33B562C91EB511F20032EB4F /* IndieAuth.framework */,
+				33DA4C431EB541C900A587BB /* IndieAuth.framework */,
+				33DA4C401EB541C900A587BB /* mf2.framework */,
+				33DA4C3D1EB541C900A587BB /* RelLinkParser.framework */,
 				33AD2B791EA9991900ABE68B /* Indigenous */,
 				33AD2B781EA9991900ABE68B /* Products */,
 			);
