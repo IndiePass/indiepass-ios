@@ -10,57 +10,12 @@
 		33AD2B7B1EA9991900ABE68B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AD2B7A1EA9991900ABE68B /* AppDelegate.swift */; };
 		33AD2B821EA9991900ABE68B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AD2B811EA9991900ABE68B /* Assets.xcassets */; };
 		33AD2B851EA9991900ABE68B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AD2B831EA9991900ABE68B /* LaunchScreen.storyboard */; };
+		33B562CA1EB511F20032EB4F /* IndieAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B562C91EB511F20032EB4F /* IndieAuth.framework */; };
+		33B562CB1EB511F20032EB4F /* IndieAuth.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33B562C91EB511F20032EB4F /* IndieAuth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		33B562CD1EB511F20032EB4F /* RelLinkParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B562CC1EB511F20032EB4F /* RelLinkParser.framework */; };
+		33B562CE1EB511F20032EB4F /* RelLinkParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33B562CC1EB511F20032EB4F /* RelLinkParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33FCF55A1EB1764900E8377B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33FCF5591EB1764900E8377B /* Main.storyboard */; };
-		33FCF55F1EB1806900E8377B /* mf2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33661B8D1EADBCEE00DED2F7 /* mf2.framework */; };
-		33FCF5601EB1806900E8377B /* mf2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33661B8D1EADBCEE00DED2F7 /* mf2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		33FCF5631EB1806900E8377B /* IndieAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33F007FE1EAD84FE0054E747 /* IndieAuth.framework */; };
-		33FCF5641EB1806900E8377B /* IndieAuth.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33F007FE1EAD84FE0054E747 /* IndieAuth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		33661B8C1EADBCEE00DED2F7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33661B851EADBCED00DED2F7 /* mf2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 33661B6B1EADBCED00DED2F7;
-			remoteInfo = mf2;
-		};
-		33661B8E1EADBCEE00DED2F7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33661B851EADBCED00DED2F7 /* mf2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 33661B741EADBCED00DED2F7;
-			remoteInfo = mf2Tests;
-		};
-		33F007FD1EAD84FE0054E747 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 33F007DE1EAD84FD0054E747;
-			remoteInfo = IndieAuth;
-		};
-		33F007FF1EAD84FE0054E747 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 33F007E71EAD84FD0054E747;
-			remoteInfo = IndieAuthTests;
-		};
-		33FCF5611EB1806900E8377B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33661B851EADBCED00DED2F7 /* mf2.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 33661B6A1EADBCED00DED2F7;
-			remoteInfo = mf2;
-		};
-		33FCF5651EB1806900E8377B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 33F007DD1EAD84FD0054E747;
-			remoteInfo = IndieAuth;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		33FCF5671EB1806900E8377B /* Embed Frameworks */ = {
@@ -69,8 +24,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				33FCF5641EB1806900E8377B /* IndieAuth.framework in Embed Frameworks */,
-				33FCF5601EB1806900E8377B /* mf2.framework in Embed Frameworks */,
+				33B562CB1EB511F20032EB4F /* IndieAuth.framework in Embed Frameworks */,
+				33B562CE1EB511F20032EB4F /* RelLinkParser.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,13 +33,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		33661B851EADBCED00DED2F7 /* mf2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = mf2.xcodeproj; path = ../../mf2/mf2.xcodeproj; sourceTree = "<group>"; };
 		33AD2B771EA9991900ABE68B /* Indigenous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Indigenous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AD2B7A1EA9991900ABE68B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33AD2B811EA9991900ABE68B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33AD2B841EA9991900ABE68B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33AD2B861EA9991900ABE68B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IndieAuth.xcodeproj; path = ../../IndieAuth/IndieAuth.xcodeproj; sourceTree = "<group>"; };
+		33B562C91EB511F20032EB4F /* IndieAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IndieAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33B562CC1EB511F20032EB4F /* RelLinkParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RelLinkParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33FCF5591EB1764900E8377B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,26 +48,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33FCF5631EB1806900E8377B /* IndieAuth.framework in Frameworks */,
-				33FCF55F1EB1806900E8377B /* mf2.framework in Frameworks */,
+				33B562CA1EB511F20032EB4F /* IndieAuth.framework in Frameworks */,
+				33B562CD1EB511F20032EB4F /* RelLinkParser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		33661B861EADBCED00DED2F7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				33661B8D1EADBCEE00DED2F7 /* mf2.framework */,
-				33661B8F1EADBCEE00DED2F7 /* mf2Tests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		33AD2B6E1EA9991900ABE68B = {
 			isa = PBXGroup;
 			children = (
+				33B562CC1EB511F20032EB4F /* RelLinkParser.framework */,
+				33B562C91EB511F20032EB4F /* IndieAuth.framework */,
 				33AD2B791EA9991900ABE68B /* Indigenous */,
 				33AD2B781EA9991900ABE68B /* Products */,
 			);
@@ -129,8 +77,6 @@
 		33AD2B791EA9991900ABE68B /* Indigenous */ = {
 			isa = PBXGroup;
 			children = (
-				33F007D11EAC3DFA0054E747 /* mf2 */,
-				33F007D01EABC1B40054E747 /* IndieAuth */,
 				33AD2B7A1EA9991900ABE68B /* AppDelegate.swift */,
 				33FCF5591EB1764900E8377B /* Main.storyboard */,
 				33AD2B811EA9991900ABE68B /* Assets.xcassets */,
@@ -138,31 +84,6 @@
 				33AD2B861EA9991900ABE68B /* Info.plist */,
 			);
 			path = Indigenous;
-			sourceTree = "<group>";
-		};
-		33F007D01EABC1B40054E747 /* IndieAuth */ = {
-			isa = PBXGroup;
-			children = (
-				33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */,
-			);
-			name = IndieAuth;
-			sourceTree = "<group>";
-		};
-		33F007D11EAC3DFA0054E747 /* mf2 */ = {
-			isa = PBXGroup;
-			children = (
-				33661B851EADBCED00DED2F7 /* mf2.xcodeproj */,
-			);
-			name = mf2;
-			sourceTree = "<group>";
-		};
-		33F007F91EAD84FD0054E747 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				33F007FE1EAD84FE0054E747 /* IndieAuth.framework */,
-				33F008001EAD84FE0054E747 /* IndieAuthTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,8 +101,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				33FCF5621EB1806900E8377B /* PBXTargetDependency */,
-				33FCF5661EB1806900E8377B /* PBXTargetDependency */,
 			);
 			name = Indigenous;
 			productName = Indigenous;
@@ -216,53 +135,12 @@
 			mainGroup = 33AD2B6E1EA9991900ABE68B;
 			productRefGroup = 33AD2B781EA9991900ABE68B /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 33F007F91EAD84FD0054E747 /* Products */;
-					ProjectRef = 33F007F81EAD84FD0054E747 /* IndieAuth.xcodeproj */;
-				},
-				{
-					ProductGroup = 33661B861EADBCED00DED2F7 /* Products */;
-					ProjectRef = 33661B851EADBCED00DED2F7 /* mf2.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				33AD2B761EA9991900ABE68B /* Indigenous */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		33661B8D1EADBCEE00DED2F7 /* mf2.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = mf2.framework;
-			remoteRef = 33661B8C1EADBCEE00DED2F7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		33661B8F1EADBCEE00DED2F7 /* mf2Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = mf2Tests.xctest;
-			remoteRef = 33661B8E1EADBCEE00DED2F7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		33F007FE1EAD84FE0054E747 /* IndieAuth.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = IndieAuth.framework;
-			remoteRef = 33F007FD1EAD84FE0054E747 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		33F008001EAD84FE0054E747 /* IndieAuthTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = IndieAuthTests.xctest;
-			remoteRef = 33F007FF1EAD84FE0054E747 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		33AD2B751EA9991900ABE68B /* Resources */ = {
@@ -287,19 +165,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		33FCF5621EB1806900E8377B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = mf2;
-			targetProxy = 33FCF5611EB1806900E8377B /* PBXContainerItemProxy */;
-		};
-		33FCF5661EB1806900E8377B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IndieAuth;
-			targetProxy = 33FCF5651EB1806900E8377B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		33AD2B831EA9991900ABE68B /* LaunchScreen.storyboard */ = {
@@ -414,6 +279,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = Indigenous/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = software.studioh.Indigenous;
@@ -428,6 +294,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = Indigenous/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = software.studioh.Indigenous;
