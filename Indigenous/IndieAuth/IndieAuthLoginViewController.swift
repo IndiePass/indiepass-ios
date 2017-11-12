@@ -148,6 +148,10 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     }
     
     // Mark: View Controller Functions
+    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        loginDisplay?.isHidden = false
+        progressDisplay?.isHidden = true
+    }
     
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
