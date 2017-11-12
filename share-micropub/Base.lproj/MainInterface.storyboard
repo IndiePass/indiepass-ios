@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j1y-V4-xli">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Micropub Share View Controller-->
+        <scene sceneID="ceB-am-kn3">
+            <objects>
+                <viewController id="j1y-V4-xli" customClass="MicropubShareViewController" customModule="share_micropub" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8bI-gs-bmD"/>
+                        <viewControllerLayoutGuide type="bottom" id="d5i-Ba-RvD"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="wbc-yd-nQP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <segue destination="gl9-Ja-c40" kind="presentation" identifier="presentModalNav" id="4Bl-ER-2Kr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CEy-Cv-SGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1394" y="68"/>
+        </scene>
+        <!--Modal Nav Controller-->
+        <scene sceneID="W33-pF-zxZ">
+            <objects>
+                <navigationController id="gl9-Ja-c40" customClass="ModalNavController" customModule="share_micropub" customModuleProvider="target" sceneMemberID="viewController">
+                    <value key="contentSizeForViewInPopover" type="size" width="240" height="391"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hkJ-Sz-EYp">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="7S3-6X-Gue" kind="relationship" relationship="rootViewController" id="Sya-hg-G1t"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5nc-Ba-U2g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-425" y="68"/>
+        </scene>
+        <!--Choose Action-->
+        <scene sceneID="esq-vl-0n3">
+            <objects>
+                <tableViewController id="7S3-6X-Gue" customClass="ShareViewController" customModule="share_micropub" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ktR-ll-5Ef">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" textLabel="hKd-PB-wrw" style="IBUITableViewCellStyleDefault" id="DVm-zZ-GJA">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DVm-zZ-GJA" id="dhW-fj-cq0">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hKd-PB-wrw">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="7S3-6X-Gue" id="Px8-40-pCY"/>
+                            <outlet property="delegate" destination="7S3-6X-Gue" id="62b-5b-jIV"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Choose Action" id="jwm-Nf-X2h">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="OlO-he-mqA">
+                            <connections>
+                                <action selector="cancelShare:" destination="7S3-6X-Gue" id="hxq-hL-kBa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="bff-9w-CMr" kind="show" identifier="showReplyView" id="UMY-LI-bep"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CJT-ca-fNg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="68"/>
+        </scene>
+        <!--Reply-->
+        <scene sceneID="GnO-uX-m0L">
+            <objects>
+                <viewController title="Reply" id="bff-9w-CMr" customClass="ReplyViewController" customModule="share_micropub" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SFd-MB-daS"/>
+                        <viewControllerLayoutGuide type="bottom" id="8xv-Hv-0sR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BB4-qB-emY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" text="dd" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i5V-KT-DDH">
+                                <rect key="frame" x="16" y="101" width="343" height="566"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="In Reply To: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6h-Gz-6Xf">
+                                <rect key="frame" x="16" y="72" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="J6h-Gz-6Xf" firstAttribute="top" secondItem="SFd-MB-daS" secondAttribute="bottom" constant="8" id="ZKy-Pe-ScM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="i5V-KT-DDH" secondAttribute="trailing" id="gxD-bI-aFj"/>
+                            <constraint firstItem="i5V-KT-DDH" firstAttribute="top" secondItem="J6h-Gz-6Xf" secondAttribute="bottom" constant="8" id="iN2-m5-dxH"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="i5V-KT-DDH" secondAttribute="leading" id="jzf-dk-JPr"/>
+                            <constraint firstItem="8xv-Hv-0sR" firstAttribute="top" secondItem="i5V-KT-DDH" secondAttribute="bottom" id="k43-wJ-58Z"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="noteText" destination="i5V-KT-DDH" id="DeJ-mc-Z0W"/>
+                        <outlet property="replyLabel" destination="J6h-Gz-6Xf" id="aTS-9m-TO9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kMx-Wa-RT4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1333.5999999999999" y="67.916041979010501"/>
+        </scene>
+        <!--Indie Auth Login View Controller-->
+        <scene sceneID="ALR-z2-YjX">
+            <objects>
+                <viewController storyboardIdentifier="indieAuthLoginView" id="HwT-Hg-7TE" customClass="IndieAuthLoginViewController" customModule="IndieAuth" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="r9i-Si-oHw"/>
+                        <viewControllerLayoutGuide type="bottom" id="3Tv-L3-hFG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="F5y-tR-4Gg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Jib-3B-GXP">
+                                <rect key="frame" x="97" y="278.5" width="181" height="110"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with your Domain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubx-Ix-g7e">
+                                        <rect key="frame" x="1" y="0.0" width="179.5" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="YourDomain.com" textAlignment="natural" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="xyo-Du-NZ5">
+                                        <rect key="frame" x="25" y="40" width="131" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" enablesReturnKeyAutomatically="YES"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePx-Ys-lpc">
+                                        <rect key="frame" x="71.5" y="80" width="38" height="30"/>
+                                        <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="loginWithIndieAuth:" destination="HwT-Hg-7TE" eventType="touchUpInside" id="Tla-NL-ks6"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0P2-aM-Qhd">
+                                <rect key="frame" x="16" y="588" width="343" height="59"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This login uses IndieAuth and requires you to have a website on your domain that supports IndieAuth." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Uk-7C-86e">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="29"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJo-hQ-Pb7">
+                                        <rect key="frame" x="87.5" y="29" width="168" height="30"/>
+                                        <state key="normal" title="Find out about IndieAuth"/>
+                                        <connections>
+                                            <action selector="readAboutIndieAuth:" destination="HwT-Hg-7TE" eventType="touchUpInside" id="CjF-Po-5ev"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xdH-bA-vOV">
+                                <rect key="frame" x="83" y="323" width="208" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Authorizing with Server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kMx-Ys-Rbf">
+                                        <rect key="frame" x="0.0" y="0.0" width="178" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Npd-YD-rni">
+                                        <rect key="frame" x="188" y="0.0" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Jib-3B-GXP" firstAttribute="centerX" secondItem="F5y-tR-4Gg" secondAttribute="centerX" id="1MJ-IL-JdQ"/>
+                            <constraint firstItem="3Tv-L3-hFG" firstAttribute="top" secondItem="0P2-aM-Qhd" secondAttribute="bottom" constant="20" id="9ba-NW-m2K"/>
+                            <constraint firstItem="0P2-aM-Qhd" firstAttribute="leading" secondItem="F5y-tR-4Gg" secondAttribute="leadingMargin" id="AKg-KS-X0u"/>
+                            <constraint firstItem="Jib-3B-GXP" firstAttribute="centerY" secondItem="F5y-tR-4Gg" secondAttribute="centerY" id="GIJ-Pn-6Zu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Jib-3B-GXP" secondAttribute="trailing" constant="81" id="GUg-X9-072"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0P2-aM-Qhd" secondAttribute="trailing" id="KUm-jr-00b"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="domainInput" destination="xyo-Du-NZ5" id="TwH-C4-dhV"/>
+                        <outlet property="indieAuthDomain" destination="xyo-Du-NZ5" id="Ph2-c6-Mdx"/>
+                        <outlet property="loginDisplay" destination="Jib-3B-GXP" id="2Zn-BP-oCE"/>
+                        <outlet property="progressDisplay" destination="xdH-bA-vOV" id="Tvj-A5-zrJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j2w-mn-w9l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-426" y="-640"/>
+        </scene>
+    </scenes>
+</document>

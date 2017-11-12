@@ -67,3 +67,4 @@ fastlane/test_output
 /IndieAuth
 /mf2
 /RelLinkParser
+/.idea
