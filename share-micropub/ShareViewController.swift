@@ -78,9 +78,10 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         
     func sendMicropub(forAction: String, aboutUrl: URL) {
         
-        var entryString = ""
-        
-        switch(forAction) {
+        DispatchQueue.global(qos: .background).async {
+            var entryString = ""
+            
+            switch(forAction) {
             case "Like":
                 entryString = "h=entry&like-of=\(aboutUrl.absoluteString)"
             case "Repost":
@@ -89,42 +90,44 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
                 entryString = "h=entry&bookmark-of=\(aboutUrl.absoluteString)"
             default:
                 print("ERROR")
-        }
-        
-        
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
-        
-        if let micropubDetails = micropubAuth,
-            let micropubEndpoint = URL(string: micropubDetails["micropub_endpoint"] as! String) {
-            print(micropubEndpoint)
-            
-            var request = URLRequest(url: micropubEndpoint)
-            request.httpMethod = "POST"
-            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-            let bodyString = "\(entryString)&access_token=\(micropubDetails["access_token"]!)"
-            let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
-            request.httpBody = bodyData
-            
-            // set up the session
-            let config = URLSessionConfiguration.default
-            let session = URLSession(configuration: config)
-            
-            let task = session.dataTask(with: request) { (data, response, error) in
-                print("Done with Task")
-                print(data)
-                print(response)
-                print(error)
-                
-                if let delegate = self.navigationController?.transitioningDelegate as? HalfModalTransitioningDelegate {
-                    delegate.interactiveDismiss = false
-                }
-                
-                self.dismiss(animated: true, completion: nil)
-                self.parent?.parent?.parent?.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
             }
-            task.resume()
+            
+            let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+            let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
+            
+            if let micropubDetails = micropubAuth,
+                let micropubEndpoint = URL(string: micropubDetails["micropub_endpoint"] as! String) {
+                
+                var request = URLRequest(url: micropubEndpoint)
+                request.httpMethod = "POST"
+                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                let bodyString = "\(entryString)&access_token=\(micropubDetails["access_token"]!)"
+                let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
+                request.httpBody = bodyData
+                
+                // set up the session
+                let config = URLSessionConfiguration.default
+                let session = URLSession(configuration: config)
+                
+                let task = session.dataTask(with: request) { (data, response, error) in
+    
+                    if let delegate = self.navigationController?.transitioningDelegate as? HalfModalTransitioningDelegate {
+                        delegate.interactiveDismiss = false
+                    }
+
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true) { () in
+                            if let presentingVC = self.parent?.transitioningDelegate as? HalfModalTransitioningDelegate,
+                                let micropubVC = presentingVC.viewController as? MicropubShareViewController {
+                                micropubVC.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
+                            }
+                        }
+                    }
+                
+                }
+                task.resume()
+            }
         }
     }
     
@@ -159,21 +162,24 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
 //    }
     
     @IBAction func cancelShare(_ sender: UIBarButtonItem) {
+        
         if let delegate = navigationController?.transitioningDelegate as? HalfModalTransitioningDelegate {
             delegate.interactiveDismiss = false
         }
-
-        dismiss(animated: true, completion: nil)
-        self.parent?.parent?.parent?.extensionContext!.cancelRequest(withError: NSError(domain: "pub.abode.indigenous", code: 1))
         
-        // todo: Need to figure out how to fix this
+        dismiss(animated: true) { () in
+            if let presentingVC = self.parent?.transitioningDelegate as? HalfModalTransitioningDelegate,
+                let micropubVC = presentingVC.viewController as? MicropubShareViewController {
+                micropubVC.extensionContext!.cancelRequest(withError: NSError(domain: "pub.abode.indigenous", code: 1))
+            }
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Loading View")
-        print(extensionItems?.first)
+//        print("Loading View")
+//        print(extensionItems?.first)
 
         let itemProvider = extensionItems?.first?.attachments?.first as! NSItemProvider
         let propertyList = String(kUTTypePropertyList)
@@ -212,8 +218,8 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     }
     
     private func shareUrl(url: URLComponents) {
-        print("Time to Share a URL")
-        print(url)
+//        print("Time to Share a URL")
+//        print(url)
         
         sharingType = "url"
         sharingContent = url
