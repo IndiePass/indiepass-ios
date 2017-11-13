@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PYD-PS-4ML">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PYD-PS-4ML">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +12,7 @@
         <!--Indie Auth Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="indieAuthLoginView" id="BYZ-38-t0r" customClass="IndieAuthLoginViewController" customModule="IndieAuth" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="indieAuthLoginView" id="BYZ-38-t0r" customClass="IndieAuthLoginViewController" customModule="Indigenous" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -50,7 +49,7 @@
                                 <rect key="frame" x="16" y="588" width="343" height="59"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This login uses IndieAuth and requires you to have a website on your domain that supports IndieAuth." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iTW-RP-loS">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="29"/>
+                                        <rect key="frame" x="-16" y="0.0" width="0.0" height="29"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -65,17 +64,17 @@
                                 </subviews>
                             </stackView>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ttp-KB-we2">
-                                <rect key="frame" x="83" y="323" width="208.5" height="20"/>
+                                <rect key="frame" x="83" y="323" width="208" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Authorizing with Server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2h-8Y-jhw">
-                                        <rect key="frame" x="0.0" y="0.0" width="178.5" height="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="178" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="cZO-9Z-rCk">
-                                        <rect key="frame" x="188.5" y="0.0" width="20" height="20"/>
+                                        <rect key="frame" x="188" y="0.0" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                             </stackView>
@@ -138,7 +137,7 @@
                 <navigationController id="wTu-LW-KOJ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Timeline" image="sample-504-doghouse" id="RZh-5o-Wvo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tHb-yX-cje">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -159,7 +158,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="mst-5m-pMl" kind="relationship" relationship="viewControllers" id="QJB-ya-ndA"/>
                         <segue destination="hqC-o9-XLt" kind="relationship" relationship="viewControllers" id="AY5-Aq-KVK"/>
                     </connections>
                 </tabBarController>
@@ -180,7 +178,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification View" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3J-nX-ivi">
-                                <rect key="frame" x="97" y="319" width="181" height="29"/>
+                                <rect key="frame" x="100" y="319" width="175.5" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -211,22 +209,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="quN-dn-Tbz">
-                                <rect key="frame" x="116" y="266" width="143.5" height="135"/>
+                                <rect key="frame" x="118.5" y="266" width="138.5" height="135"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged in as:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sse-aE-Ps0">
-                                        <rect key="frame" x="0.0" y="0.0" width="143.5" height="41"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="138.5" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7l-CF-AEm">
-                                        <rect key="frame" x="17" y="47" width="110" height="41"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7l-CF-AEm">
+                                        <rect key="frame" x="32" y="47" width="74.5" height="41"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2w-C4-o2Q">
-                                        <rect key="frame" x="29" y="94" width="86" height="41"/>
+                                        <rect key="frame" x="28" y="94" width="83" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <state key="normal" title="Log Out"/>
                                         <connections>
@@ -235,11 +233,21 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0Q-Mm-uKa">
+                                <rect key="frame" x="16" y="20" width="343" height="92"/>
+                                <string key="text">You are logged in. Right now the entire functionality exists inside the Micropub Share sheet. You can activate that in Safari or your favorite app.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="h0Q-Mm-uKa" firstAttribute="leading" secondItem="Ltf-XC-8qg" secondAttribute="leading" constant="16" id="RmT-Bd-a4Z"/>
                             <constraint firstItem="quN-dn-Tbz" firstAttribute="centerX" secondItem="Ltf-XC-8qg" secondAttribute="centerX" id="ayW-5U-NPY"/>
+                            <constraint firstItem="h0Q-Mm-uKa" firstAttribute="top" secondItem="eVp-eC-zsH" secondAttribute="bottom" constant="32" id="bkv-0V-8mc"/>
                             <constraint firstItem="quN-dn-Tbz" firstAttribute="centerY" secondItem="Ltf-XC-8qg" secondAttribute="centerY" id="er3-SO-XkD"/>
+                            <constraint firstAttribute="trailing" secondItem="h0Q-Mm-uKa" secondAttribute="trailing" constant="16" id="gCv-sx-YdG"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Account" image="sample-986-ghost" id="cw1-Wn-pYh"/>

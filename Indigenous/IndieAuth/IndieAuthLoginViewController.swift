@@ -19,6 +19,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     var userEndpoints: [String : [URL]] = [:]
     var userAccessToken: String? = nil
     var userScope: String? = nil
+    var authSession: SFAuthenticationSession?
     
     enum IndieWebEndpointType: String {
         case Authorization = "authorization_endpoint"
@@ -68,9 +69,23 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                     
                     if let openUrl = authorizationUrl {
                         DispatchQueue.main.sync {
-                            let safariVC = SFSafariViewController(url: openUrl)
-                            safariVC.delegate = self
-                            self.present(safariVC, animated: true, completion: nil)
+                            self.authSession = SFAuthenticationSession(url: openUrl, callbackURLScheme: callbackUrl?.absoluteString) { (callback: URL?, error: Error? ) in
+                                //Handle auth
+                                print("completion called")
+                                guard error == nil, let successURL = callback else {
+                                    print("In guard statement")
+                                    print(callback)
+                                    print(error)
+                                    self.loginDisplay?.isHidden = false
+                                    self.progressDisplay?.isHidden = true
+                                    return
+                                }
+                                
+                                DispatchQueue.global(qos: .background).async {
+                                    self.indieAuthProcess(urlResponse: successURL)
+                                }
+                            }
+                            self.authSession?.start()
                         }
                     }
                 }
@@ -84,6 +99,8 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     // Recieve a response URL from a authorization request or a token request. Process the url and call the appropriate functions to continue
     public func indieAuthProcess(urlResponse: URL) {
+        print("indie auth processing begun")
+        
         var responseUrlComponents = URLComponents(url: urlResponse.absoluteURL, resolvingAgainstBaseURL: false)
         var responseItems: [String: String] = [:]
         var responseType: String? = nil
@@ -135,11 +152,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 defaults?.set(micropubAuth, forKey: "micropubAuth")
                 
                 DispatchQueue.main.sync {
-                    // Hide Safari View Controller
-                    self.presentedViewController?.dismiss(animated: true, completion: nil)
                     self.dismiss(animated: true, completion: nil)
-                    self.progressDisplay?.isHidden = true
-                    self.loginDisplay?.isHidden = false
                 }
                 
             }
@@ -148,11 +161,6 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     }
     
     // Mark: View Controller Functions
-    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        loginDisplay?.isHidden = false
-        progressDisplay?.isHidden = true
-    }
-    
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         loginWithIndieAuth(nil)

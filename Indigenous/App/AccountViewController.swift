@@ -13,10 +13,14 @@ class AccountViewController: UIViewController {
     let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        super.viewDidLoad()        
+//        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
+//        usernameDisplay.text = micropubAuth?["me"] as? String
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
-        
         usernameDisplay.text = micropubAuth?["me"] as? String
     }
 
