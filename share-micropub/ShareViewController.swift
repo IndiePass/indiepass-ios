@@ -33,9 +33,9 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     var sharingType: String? = nil
     var sharingContent: URLComponents? = nil
     var extensionItems: [NSExtensionItem]? = nil
-
-//    var micropubActions = ["Like", "Repost", "Bookmark", "Reply"]
     var micropubActions = ["Like", "Repost", "Bookmark"]
+    
+//    var micropubActions = ["Like", "Repost", "Bookmark", "Reply"]
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -66,6 +66,8 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
                 sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!)
             case "Bookmark":
                 sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!)
+            case "Listen":
+                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!)
             case "Reply":
                 performSegue(withIdentifier: "showReplyView", sender: self)
             default:
@@ -88,6 +90,8 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
                 entryString = "h=entry&repost-of=\(aboutUrl.absoluteString)"
             case "Bookmark":
                 entryString = "h=entry&bookmark-of=\(aboutUrl.absoluteString)"
+            case "Listen":
+                entryString = "h=entry&listen-of=\(aboutUrl.absoluteString)"
             default:
                 print("ERROR")
             }
@@ -235,6 +239,14 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
+        if let meString = micropubAuth?["me"] as? String {
+            if (meString == "https://eddiehinkle.com/") {
+                micropubActions.append("Listen")
+            }
+        }
         
         self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.size.height)
         
