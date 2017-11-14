@@ -49,7 +49,7 @@
                                 <rect key="frame" x="16" y="588" width="343" height="59"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This login uses IndieAuth and requires you to have a website on your domain that supports IndieAuth." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iTW-RP-loS">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="29"/>
+                                        <rect key="frame" x="-16" y="0.0" width="0.0" height="29"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -78,18 +78,30 @@
                                     </activityIndicatorView>
                                 </subviews>
                             </stackView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCT-i4-Z6X">
+                                <rect key="frame" x="16" y="20" width="53" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zU2-Gv-21a"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="IW0-j4-QCX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="03u-Q4-3la"/>
+                            <constraint firstItem="SCT-i4-Z6X" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="186-Re-fJe"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="IW0-j4-QCX" secondAttribute="bottom" constant="20" id="8Rg-op-lEa"/>
                             <constraint firstItem="hZo-yK-fRI" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="IMA-ma-Sv5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hZo-yK-fRI" secondAttribute="trailing" constant="81" id="XFE-Y1-yYC"/>
                             <constraint firstItem="hZo-yK-fRI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="l7j-Pe-j1q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="IW0-j4-QCX" secondAttribute="trailing" id="vf4-tH-JYl"/>
+                            <constraint firstItem="SCT-i4-Z6X" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="z7k-g9-Mmv"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="SCT-i4-Z6X" id="Fhb-m4-KzE"/>
                         <outlet property="domainInput" destination="xL7-6b-rnR" id="nao-4k-R3P"/>
                         <outlet property="indieAuthDomain" destination="xL7-6b-rnR" id="P97-M5-0Ya"/>
                         <outlet property="loginDisplay" destination="hZo-yK-fRI" id="UJ3-bi-ztx"/>
@@ -98,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-679" y="-682"/>
+            <point key="canvasLocation" x="-679.20000000000005" y="-682.3088455772114"/>
         </scene>
         <!--Timeline-->
         <scene sceneID="JQu-4t-JCx">

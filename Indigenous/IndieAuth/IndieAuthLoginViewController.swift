@@ -31,6 +31,14 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var progressDisplay: UIStackView!
     @IBOutlet weak var loginDisplay: UIStackView!
     @IBOutlet weak var domainInput: UITextField!
+    @IBOutlet weak var cancelButton: UIButton!
+    
+    @IBAction func cancelLogin(_ sender: UIButton) {
+        authSession?.cancel()
+        cancelButton?.isHidden = true
+        loginDisplay?.isHidden = false
+        progressDisplay?.isHidden = true
+    }
     
     @IBAction func readAboutIndieAuth(_ sender: UIButton) {
         if let openUrl = URL(string: indieAuthSetupUrl) {
@@ -43,6 +51,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func loginWithIndieAuth(_ sender: UIButton?) {
         
+        cancelButton?.isHidden = false;
         loginDisplay?.isHidden = true
         progressDisplay?.isHidden = false
     
@@ -76,6 +85,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                                     print("In guard statement")
                                     print(callback)
                                     print(error)
+                                    self.cancelButton?.isHidden = true
                                     self.loginDisplay?.isHidden = false
                                     self.progressDisplay?.isHidden = true
                                     return
