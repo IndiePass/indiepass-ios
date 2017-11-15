@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */; };
+		C87B4DAE1FBBA6AB00181B62 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87B4DAD1FBBA6AB00181B62 /* IntentsUI.framework */; };
+		C87B4DB11FBBA6AB00181B62 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DB01FBBA6AB00181B62 /* IntentViewController.swift */; };
+		C87B4DB41FBBA6AB00181B62 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C87B4DB21FBBA6AB00181B62 /* MainInterface.storyboard */; };
+		C87B4DB81FBBA6AB00181B62 /* voice-notesUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C87B4DAB1FBBA6AB00181B62 /* voice-notesUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C87B4DBB1FBBA6AB00181B62 /* voice-notes.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C87B4DA21FBBA6AB00181B62 /* voice-notes.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
+		C87B4DC51FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
+		C87B4DC61FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
 		C8B3B0871FAADAA90041C58E /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0821FAADAA90041C58E /* libxmlParserOption.swift */; };
 		C8B3B0881FAADAA90041C58E /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0831FAADAA90041C58E /* CSS.swift */; };
 		C8B3B0891FAADAA90041C58E /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0841FAADAA90041C58E /* Kanna.swift */; };
@@ -51,6 +60,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C87B4DB61FBBA6AB00181B62 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8CBEAEA1FAA9B4600298113 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C87B4DAA1FBBA6AB00181B62;
+			remoteInfo = "voice-notesUI";
+		};
+		C87B4DB91FBBA6AB00181B62 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8CBEAEA1FAA9B4600298113 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C87B4DA11FBBA6AB00181B62;
+			remoteInfo = "voice-notes";
+		};
 		C8CBDEE21FB4E858001CF409 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C8CBEAEA1FAA9B4600298113 /* Project object */;
@@ -82,6 +105,8 @@
 			dstSubfolderSpec = 13;
 			files = (
 				C8CBDEE41FB4E858001CF409 /* share-micropub.appex in Embed App Extensions */,
+				C87B4DBB1FBBA6AB00181B62 /* voice-notes.appex in Embed App Extensions */,
+				C87B4DB81FBBA6AB00181B62 /* voice-notesUI.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,6 +114,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C87B4DA21FBBA6AB00181B62 /* voice-notes.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "voice-notes.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		C87B4DA61FBBA6AB00181B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C87B4DAB1FBBA6AB00181B62 /* voice-notesUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "voice-notesUI.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C87B4DAD1FBBA6AB00181B62 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		C87B4DB01FBBA6AB00181B62 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
+		C87B4DB31FBBA6AB00181B62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		C87B4DB51FBBA6AB00181B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C87B4DC31FBBAB3900181B62 /* Micropub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Micropub.swift; sourceTree = "<group>"; };
+		C87B4DC71FBBACBB00181B62 /* voice-notes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-notes.entitlements"; sourceTree = "<group>"; };
 		C8883C881FB4F26A005957E3 /* Indigenous.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Indigenous.entitlements; sourceTree = "<group>"; };
 		C8883C891FB4F278005957E3 /* share-micropub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "share-micropub.entitlements"; sourceTree = "<group>"; };
 		C8B3B0821FAADAA90041C58E /* libxmlParserOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = libxmlParserOption.swift; sourceTree = "<group>"; };
@@ -131,6 +166,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C87B4D9F1FBBA6AB00181B62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87B4DA81FBBA6AB00181B62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C87B4DAE1FBBA6AB00181B62 /* IntentsUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C8CBDED71FB4E858001CF409 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -162,6 +212,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C87B4DA31FBBA6AB00181B62 /* voice-notes */ = {
+			isa = PBXGroup;
+			children = (
+				C87B4DC71FBBACBB00181B62 /* voice-notes.entitlements */,
+				C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */,
+				C87B4DA61FBBA6AB00181B62 /* Info.plist */,
+			);
+			path = "voice-notes";
+			sourceTree = "<group>";
+		};
+		C87B4DAC1FBBA6AB00181B62 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C87B4DAD1FBBA6AB00181B62 /* IntentsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C87B4DAF1FBBA6AB00181B62 /* voice-notesUI */ = {
+			isa = PBXGroup;
+			children = (
+				C87B4DB01FBBA6AB00181B62 /* IntentViewController.swift */,
+				C87B4DB21FBBA6AB00181B62 /* MainInterface.storyboard */,
+				C87B4DB51FBBA6AB00181B62 /* Info.plist */,
+			);
+			path = "voice-notesUI";
+			sourceTree = "<group>";
+		};
+		C87B4DC21FBBAB0400181B62 /* Micropub */ = {
+			isa = PBXGroup;
+			children = (
+				C87B4DC31FBBAB3900181B62 /* Micropub.swift */,
+			);
+			path = Micropub;
+			sourceTree = "<group>";
+		};
 		C8CBDEDB1FB4E858001CF409 /* share-micropub */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +267,7 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
+				C87B4DC21FBBAB0400181B62 /* Micropub */,
 				C8F431C01FB530010026B8D6 /* Presentation */,
 				C8F431C21FB530010026B8D6 /* Transitioning */,
 				C8CBEB511FAA9DEE00298113 /* Modules */,
@@ -188,6 +275,9 @@
 				C8CBEB0C1FAA9B4600298113 /* IndigenousTests */,
 				C8CBEB171FAA9B4600298113 /* IndigenousUITests */,
 				C8CBDEDB1FB4E858001CF409 /* share-micropub */,
+				C87B4DA31FBBA6AB00181B62 /* voice-notes */,
+				C87B4DAF1FBBA6AB00181B62 /* voice-notesUI */,
+				C87B4DAC1FBBA6AB00181B62 /* Frameworks */,
 				C8CBEAF31FAA9B4600298113 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -199,6 +289,8 @@
 				C8CBEB091FAA9B4600298113 /* IndigenousTests.xctest */,
 				C8CBEB141FAA9B4600298113 /* IndigenousUITests.xctest */,
 				C8CBDEDA1FB4E858001CF409 /* share-micropub.appex */,
+				C87B4DA21FBBA6AB00181B62 /* voice-notes.appex */,
+				C87B4DAB1FBBA6AB00181B62 /* voice-notesUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -298,6 +390,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C87B4DA11FBBA6AB00181B62 /* voice-notes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C87B4DBF1FBBA6AB00181B62 /* Build configuration list for PBXNativeTarget "voice-notes" */;
+			buildPhases = (
+				C87B4D9E1FBBA6AB00181B62 /* Sources */,
+				C87B4D9F1FBBA6AB00181B62 /* Frameworks */,
+				C87B4DA01FBBA6AB00181B62 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "voice-notes";
+			productName = "voice-notes";
+			productReference = C87B4DA21FBBA6AB00181B62 /* voice-notes.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		C87B4DAA1FBBA6AB00181B62 /* voice-notesUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C87B4DBC1FBBA6AB00181B62 /* Build configuration list for PBXNativeTarget "voice-notesUI" */;
+			buildPhases = (
+				C87B4DA71FBBA6AB00181B62 /* Sources */,
+				C87B4DA81FBBA6AB00181B62 /* Frameworks */,
+				C87B4DA91FBBA6AB00181B62 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "voice-notesUI";
+			productName = "voice-notesUI";
+			productReference = C87B4DAB1FBBA6AB00181B62 /* voice-notesUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		C8CBDED91FB4E858001CF409 /* share-micropub */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8CBDEE71FB4E858001CF409 /* Build configuration list for PBXNativeTarget "share-micropub" */;
@@ -328,6 +454,8 @@
 			);
 			dependencies = (
 				C8CBDEE31FB4E858001CF409 /* PBXTargetDependency */,
+				C87B4DB71FBBA6AB00181B62 /* PBXTargetDependency */,
+				C87B4DBA1FBBA6AB00181B62 /* PBXTargetDependency */,
 			);
 			name = Indigenous;
 			productName = Indigenous;
@@ -380,6 +508,19 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Studio H, LLC";
 				TargetAttributes = {
+					C87B4DA11FBBA6AB00181B62 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					C87B4DAA1FBBA6AB00181B62 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
 					C8CBDED91FB4E858001CF409 = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
@@ -427,11 +568,28 @@
 				C8CBEB081FAA9B4600298113 /* IndigenousTests */,
 				C8CBEB131FAA9B4600298113 /* IndigenousUITests */,
 				C8CBDED91FB4E858001CF409 /* share-micropub */,
+				C87B4DA11FBBA6AB00181B62 /* voice-notes */,
+				C87B4DAA1FBBA6AB00181B62 /* voice-notesUI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C87B4DA01FBBA6AB00181B62 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87B4DA91FBBA6AB00181B62 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C87B4DB41FBBA6AB00181B62 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C8CBDED81FB4E858001CF409 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -469,11 +627,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C87B4D9E1FBBA6AB00181B62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C87B4DC61FBBAB3900181B62 /* Micropub.swift in Sources */,
+				C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87B4DA71FBBA6AB00181B62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C87B4DB11FBBA6AB00181B62 /* IntentViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C8CBDED61FB4E858001CF409 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C8CBDEF21FB4EAAE001CF409 /* IndieAuthLoginViewController.swift in Sources */,
+				C87B4DC51FBBAB3900181B62 /* Micropub.swift in Sources */,
 				C8CBDEF01FB4E8E6001CF409 /* MicropubShareViewController.swift in Sources */,
 				C8CBDEF41FB4EAD4001CF409 /* RealLinkParser.swift in Sources */,
 				C8CBDEF71FB4EAFD001CF409 /* libxmlHTMLNode.swift in Sources */,
@@ -497,6 +673,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8CBEAFE1FAA9B4600298113 /* Indigenous.xcdatamodeld in Sources */,
+				C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */,
 				C8B3B0871FAADAA90041C58E /* libxmlParserOption.swift in Sources */,
 				C8CBEB2C1FAA9BF700298113 /* IndieAuthLoginViewController.swift in Sources */,
 				C8B3B08B1FAADAA90041C58E /* libxmlHTMLDocument.swift in Sources */,
@@ -534,6 +711,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C87B4DB71FBBA6AB00181B62 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C87B4DAA1FBBA6AB00181B62 /* voice-notesUI */;
+			targetProxy = C87B4DB61FBBA6AB00181B62 /* PBXContainerItemProxy */;
+		};
+		C87B4DBA1FBBA6AB00181B62 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C87B4DA11FBBA6AB00181B62 /* voice-notes */;
+			targetProxy = C87B4DB91FBBA6AB00181B62 /* PBXContainerItemProxy */;
+		};
 		C8CBDEE31FB4E858001CF409 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C8CBDED91FB4E858001CF409 /* share-micropub */;
@@ -552,6 +739,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		C87B4DB21FBBA6AB00181B62 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C87B4DB31FBBA6AB00181B62 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		C8CBDEDE1FB4E858001CF409 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -571,6 +766,72 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C87B4DBD1FBBA6AB00181B62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				INFOPLIST_FILE = "voice-notesUI/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.voice-notesUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C87B4DBE1FBBA6AB00181B62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				INFOPLIST_FILE = "voice-notesUI/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.voice-notesUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C87B4DC01FBBA6AB00181B62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "voice-notes/voice-notes.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				INFOPLIST_FILE = "voice-notes/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.voice-notes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C87B4DC11FBBA6AB00181B62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "voice-notes/voice-notes.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				INFOPLIST_FILE = "voice-notes/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.voice-notes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		C8CBDEE51FB4E858001CF409 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -825,6 +1086,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C87B4DBC1FBBA6AB00181B62 /* Build configuration list for PBXNativeTarget "voice-notesUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C87B4DBD1FBBA6AB00181B62 /* Debug */,
+				C87B4DBE1FBBA6AB00181B62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C87B4DBF1FBBA6AB00181B62 /* Build configuration list for PBXNativeTarget "voice-notes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C87B4DC01FBBA6AB00181B62 /* Debug */,
+				C87B4DC11FBBA6AB00181B62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C8CBDEE71FB4E858001CF409 /* Build configuration list for PBXNativeTarget "share-micropub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

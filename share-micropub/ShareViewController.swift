@@ -61,13 +61,13 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         
         switch(micropubActions[indexPath.row]) {
             case "Like":
-                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!)
+                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
             case "Repost":
-                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!)
+                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
             case "Bookmark":
-                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!)
+                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
             case "Listen":
-                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!)
+                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
             case "Reply":
                 performSegue(withIdentifier: "showReplyView", sender: self)
             default:
@@ -77,60 +77,18 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         }
 
     }
-        
-    func sendMicropub(forAction: String, aboutUrl: URL) {
-        
-        DispatchQueue.global(qos: .background).async {
-            var entryString = ""
-            
-            switch(forAction) {
-            case "Like":
-                entryString = "h=entry&like-of=\(aboutUrl.absoluteString)"
-            case "Repost":
-                entryString = "h=entry&repost-of=\(aboutUrl.absoluteString)"
-            case "Bookmark":
-                entryString = "h=entry&bookmark-of=\(aboutUrl.absoluteString)"
-            case "Listen":
-                entryString = "h=entry&listen-of=\(aboutUrl.absoluteString)"
-            default:
-                print("ERROR")
-            }
-            
-            let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-            let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
-            
-            if let micropubDetails = micropubAuth,
-                let micropubEndpoint = URL(string: micropubDetails["micropub_endpoint"] as! String) {
-                
-                var request = URLRequest(url: micropubEndpoint)
-                request.httpMethod = "POST"
-                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                let bodyString = "\(entryString)&access_token=\(micropubDetails["access_token"]!)"
-                let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
-                request.httpBody = bodyData
-                
-                // set up the session
-                let config = URLSessionConfiguration.default
-                let session = URLSession(configuration: config)
-                
-                let task = session.dataTask(with: request) { (data, response, error) in
     
-                    if let delegate = self.navigationController?.transitioningDelegate as? HalfModalTransitioningDelegate {
-                        delegate.interactiveDismiss = false
-                    }
-
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true) { () in
-                            if let presentingVC = self.parent?.transitioningDelegate as? HalfModalTransitioningDelegate,
-                                let micropubVC = presentingVC.viewController as? MicropubShareViewController {
-                                micropubVC.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
-                            }
-                        }
-                    }
-                
+    func shareComplete() {
+        if let delegate = self.navigationController?.transitioningDelegate as? HalfModalTransitioningDelegate {
+            delegate.interactiveDismiss = false
+        }
+        
+        DispatchQueue.main.async {
+            self.dismiss(animated: true) { () in
+                if let presentingVC = self.parent?.transitioningDelegate as? HalfModalTransitioningDelegate,
+                    let micropubVC = presentingVC.viewController as? MicropubShareViewController {
+                    micropubVC.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
                 }
-                task.resume()
             }
         }
     }
