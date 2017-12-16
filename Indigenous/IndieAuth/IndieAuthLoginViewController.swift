@@ -72,73 +72,53 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 print("User Endponts")
                 print(self.userEndpoints)
                 
-                guard let _ = self.userEndpoints["authorization_endpoint"] else {
-                    DispatchQueue.main.sync {
-                        let urlString = url!.absoluteString
-                        let alert = UIAlertController(title: "Error", message: "Authorization Endpoint not found on \(urlString)", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                            self.cancelLogin()
-                        }))
-                        self.present(alert, animated: true, completion: nil)
-                    }
+                guard let authorizationEndpoints = self.userEndpoints["authorization_endpoint"] else {
+                    let urlString = url!.absoluteString
+                    self.presentErrorLoginAgain("Authorization Endpoint not found on \(urlString)")
                     return
                 }
                 
-                guard let _ = self.userEndpoints["token_endpoint"] else {
-                    DispatchQueue.main.sync {
-                        let urlString = url!.absoluteString
-                        let alert = UIAlertController(title: "Error", message: "Token Endpoint not found on \(urlString)", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                            self.cancelLogin()
-                        }))
-                        self.present(alert, animated: true, completion: nil)
-                    }
+                guard self.userEndpoints["token_endpoint"] != nil else {
+                    let urlString = url!.absoluteString
+                    self.presentErrorLoginAgain("Token Endpoint not found on \(urlString)")
                     return
                 }
                 
-                guard let _ = self.userEndpoints["micropub_endpoint"] else {
-                    DispatchQueue.main.sync {
-                        let urlString = url!.absoluteString
-                        let alert = UIAlertController(title: "Error", message: "Micropub Endpoint not found on \(urlString)", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                            self.cancelLogin()
-                        }))
-                        self.present(alert, animated: true, completion: nil)
-                    }
+                guard self.userEndpoints["micropub"] != nil else {
+                    let urlString = url!.absoluteString
+                    self.presentErrorLoginAgain("Micropub Endpoint not found on \(urlString)")
                     return
                 }
                 
-                if let authorizationEndpoints = meEndpoints["authorization_endpoint"] {
 //                    let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: "read follow mute block create update")
-                    let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: "create")
-                    
-                    if let openUrl = authorizationUrl {
-                        DispatchQueue.main.sync {
-                            self.authSession = SFAuthenticationSession(url: openUrl, callbackURLScheme: callbackUrl?.absoluteString) { (callback: URL?, error: Error? ) in
-                                //Handle auth
-                                print("completion called")
-                                guard error == nil, let successURL = callback else {
-                                    print("In guard statement")
-                                    print(callback)
-                                    print(error)
-                                    self.cancelButton?.isHidden = true
-                                    self.loginDisplay?.isHidden = false
-                                    self.progressDisplay?.isHidden = true
-                                    return
-                                }
-                                
-                                DispatchQueue.global(qos: .background).async {
-                                    self.indieAuthProcess(urlResponse: successURL)
-                                }
+                let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: "create")
+                
+                if let openUrl = authorizationUrl {
+                    DispatchQueue.main.sync {
+                        self.authSession = SFAuthenticationSession(url: openUrl, callbackURLScheme: callbackUrl?.absoluteString) { (callback: URL?, error: Error? ) in
+                            //Handle auth
+                            print("completion called")
+                            guard error == nil, let successURL = callback else {
+                                print("In guard statement")
+                                print(callback)
+                                print(error)
+                                self.cancelButton?.isHidden = true
+                                self.loginDisplay?.isHidden = false
+                                self.progressDisplay?.isHidden = true
+                                return
                             }
-                            self.authSession?.start()
+                            
+                            DispatchQueue.global(qos: .background).async {
+                                self.indieAuthProcess(urlResponse: successURL)
+                            }
                         }
+                        self.authSession?.start()
                     }
                 }
             }
             
         } else {
-            print("Error, url not valid")
+            presentErrorLoginAgain("Sorry, that URL is not valid")
         }
         
     }
@@ -184,6 +164,11 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
         if let tokenEndpoints = userEndpoints["token_endpoint"] {
             IndieAuth.makeTokenRequest(forEndpoint: tokenEndpoints[0], meUrl: meUrl, code: authorizationCode, redirectURI: callbackUrl!, clientId: appClientId, state: state) { _, scope, accessToken in
                 
+                guard scope.lowercased().range(of:"create") != nil else {
+                    self.presentErrorLoginAgain("Recieved scope of \(scope), you must be authorized with at least create scope.")
+                    return
+                }
+                
                 let micropubAuth = [
                     "access_token": accessToken,
                     "scope": scope,
@@ -204,6 +189,16 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
             }
         }
         
+    }
+    
+    private func presentErrorLoginAgain(_ errorString: String) {
+        DispatchQueue.main.sync {
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                self.cancelLogin()
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     // Mark: View Controller Functions
