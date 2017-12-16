@@ -36,6 +36,9 @@ public class RealLinkParser {
             fetchEndpoints(fromHttpHeaders: httpHeader) { endpointUrls in
                 for urlType in endpointUrls.keys {
                     endpoints = saveEndpointUrls(endpointUrls[urlType]!, withName: urlType, inDictionary: endpoints)
+                    if let finalUrl = httpHeader.url {
+                        endpoints["url"] = [finalUrl]
+                    }
                 }
                 fetchLinksGroup.leave()
             }
@@ -45,6 +48,9 @@ public class RealLinkParser {
                 fetchLinks(fromHtml: html) { endpointUrls in
                     for urlType in endpointUrls.keys {
                         endpoints = saveEndpointUrls(endpointUrls[urlType]!, withName: urlType, inDictionary: endpoints)
+                        if let finalUrl = httpHeader.url {
+                            endpoints["url"] = [finalUrl]
+                        }
                     }
                     fetchLinksGroup.leave()
                 }

@@ -72,6 +72,10 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 print("User Endponts")
                 print(self.userEndpoints)
                 
+                if let newUrl = self.userEndpoints["url"]?[0] {
+                    url = newUrl
+                }
+                
                 guard let authorizationEndpoints = self.userEndpoints["authorization_endpoint"] else {
                     let urlString = url!.absoluteString
                     self.presentErrorLoginAgain("Authorization Endpoint not found on \(urlString)")
