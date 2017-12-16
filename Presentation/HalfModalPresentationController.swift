@@ -22,7 +22,9 @@ class HalfModalPresentationController : UIPresentationController {
         // Blur Effect
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.alpha = 0.7
         blurEffectView.frame = view.bounds
+        
         view.addSubview(blurEffectView)
         
         // Vibrancy Effect
