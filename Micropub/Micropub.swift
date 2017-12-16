@@ -13,15 +13,24 @@ func sendMicropub(forAction: String, aboutUrl: URL, completion: @escaping () -> 
     DispatchQueue.global(qos: .background).async {
         var entryString = ""
         
+        guard let encodedUrl = aboutUrl.absoluteString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)?.replacingOccurrences(of: "+", with: "%2B") else {
+            print("Encoding URL failed")
+            return
+        }
+        
+        print("Check on encoding url")
+        print(aboutUrl.absoluteString)
+        print(encodedUrl)
+        
         switch(forAction) {
             case "Like":
-                entryString = "h=entry&like-of=\(aboutUrl.absoluteString)"
+                entryString = "h=entry&like-of=\(encodedUrl)"
             case "Repost":
-                entryString = "h=entry&repost-of=\(aboutUrl.absoluteString)"
+                entryString = "h=entry&repost-of=\(encodedUrl)"
             case "Bookmark":
-                entryString = "h=entry&bookmark-of=\(aboutUrl.absoluteString)"
+                entryString = "h=entry&bookmark-of=\(encodedUrl)"
             case "Listen":
-                entryString = "h=entry&listen-of=\(aboutUrl.absoluteString)"
+                entryString = "h=entry&listen-of=\(encodedUrl)"
             default:
                 print("ERROR")
         }
@@ -34,7 +43,6 @@ func sendMicropub(forAction: String, aboutUrl: URL, completion: @escaping () -> 
             
             var request = URLRequest(url: micropubEndpoint)
             request.httpMethod = "POST"
-            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             let bodyString = "\(entryString)&access_token=\(micropubDetails["access_token"]!)"
             let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
