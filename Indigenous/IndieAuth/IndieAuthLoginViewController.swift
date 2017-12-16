@@ -33,7 +33,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var domainInput: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
     
-    @IBAction func cancelLogin(_ sender: UIButton) {
+    @IBAction func cancelLogin(_ sender: UIButton = UIButton()) {
         authSession?.cancel()
         cancelButton?.isHidden = true
         loginDisplay?.isHidden = false
@@ -71,6 +71,42 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 self.userEndpoints = meEndpoints
                 print("User Endponts")
                 print(self.userEndpoints)
+                
+                guard let _ = self.userEndpoints["authorization_endpoint"] else {
+                    DispatchQueue.main.sync {
+                        let urlString = url!.absoluteString
+                        let alert = UIAlertController(title: "Error", message: "Authorization Endpoint not found on \(urlString)", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            self.cancelLogin()
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    return
+                }
+                
+                guard let _ = self.userEndpoints["token_endpoint"] else {
+                    DispatchQueue.main.sync {
+                        let urlString = url!.absoluteString
+                        let alert = UIAlertController(title: "Error", message: "Token Endpoint not found on \(urlString)", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            self.cancelLogin()
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    return
+                }
+                
+                guard let _ = self.userEndpoints["micropub_endpoint"] else {
+                    DispatchQueue.main.sync {
+                        let urlString = url!.absoluteString
+                        let alert = UIAlertController(title: "Error", message: "Micropub Endpoint not found on \(urlString)", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            self.cancelLogin()
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    return
+                }
                 
                 if let authorizationEndpoints = meEndpoints["authorization_endpoint"] {
 //                    let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: "read follow mute block create update")
