@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA391FEB0A1A00CCBE2E /* TimelineApiResponse.swift */; };
+		C80AEA3C1FEB0A4C00CCBE2E /* TimelinePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA3B1FEB0A4B00CCBE2E /* TimelinePost.swift */; };
+		C80AEA3E1FEB0AC500CCBE2E /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA3D1FEB0AC500CCBE2E /* Author.swift */; };
+		C80AEA401FEB0B4100CCBE2E /* TimelinePostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA3F1FEB0B4100CCBE2E /* TimelinePostContent.swift */; };
+		C80AEA421FEB14C700CCBE2E /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */; };
+		C80AEA441FEB1B0900CCBE2E /* ChannelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */; };
 		C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */; };
 		C87B4DAE1FBBA6AB00181B62 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87B4DAD1FBBA6AB00181B62 /* IntentsUI.framework */; };
 		C87B4DB11FBBA6AB00181B62 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DB01FBBA6AB00181B62 /* IntentViewController.swift */; };
@@ -117,6 +123,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C80AEA391FEB0A1A00CCBE2E /* TimelineApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineApiResponse.swift; sourceTree = "<group>"; };
+		C80AEA3B1FEB0A4B00CCBE2E /* TimelinePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePost.swift; sourceTree = "<group>"; };
+		C80AEA3D1FEB0AC500CCBE2E /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
+		C80AEA3F1FEB0B4100CCBE2E /* TimelinePostContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePostContent.swift; sourceTree = "<group>"; };
+		C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTableViewCell.swift; sourceTree = "<group>"; };
 		C87B4DA21FBBA6AB00181B62 /* voice-notes.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "voice-notes.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		C87B4DA61FBBA6AB00181B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -260,6 +272,10 @@
 			children = (
 				C894F5EE1FEADCB2003D0A48 /* Channel.swift */,
 				C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */,
+				C80AEA391FEB0A1A00CCBE2E /* TimelineApiResponse.swift */,
+				C80AEA3B1FEB0A4B00CCBE2E /* TimelinePost.swift */,
+				C80AEA3D1FEB0AC500CCBE2E /* Author.swift */,
+				C80AEA3F1FEB0B4100CCBE2E /* TimelinePostContent.swift */,
 			);
 			path = Microsub;
 			sourceTree = "<group>";
@@ -372,6 +388,8 @@
 				C8CBEB3F1FAA9CAA00298113 /* Main.storyboard */,
 				C8CBEB401FAA9CAA00298113 /* MainViewController.swift */,
 				C894F5EB1FEAC7F0003D0A48 /* ChannelViewController.swift */,
+				C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */,
+				C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -693,11 +711,15 @@
 				C8CBEAFE1FAA9B4600298113 /* Indigenous.xcdatamodeld in Sources */,
 				C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */,
 				C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */,
+				C80AEA401FEB0B4100CCBE2E /* TimelinePostContent.swift in Sources */,
 				C894F5EF1FEADCB2003D0A48 /* Channel.swift in Sources */,
+				C80AEA441FEB1B0900CCBE2E /* ChannelTableViewCell.swift in Sources */,
 				C8B3B0871FAADAA90041C58E /* libxmlParserOption.swift in Sources */,
 				C8CBEB2C1FAA9BF700298113 /* IndieAuthLoginViewController.swift in Sources */,
 				C8B3B08B1FAADAA90041C58E /* libxmlHTMLDocument.swift in Sources */,
 				C8CBEB451FAA9CAA00298113 /* AccountViewController.swift in Sources */,
+				C80AEA421FEB14C700CCBE2E /* TimelineViewController.swift in Sources */,
+				C80AEA3C1FEB0A4C00CCBE2E /* TimelinePost.swift in Sources */,
 				C8CBEB281FAA9BDD00298113 /* RealLinkParser.swift in Sources */,
 				C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
 				C8B3B0881FAADAA90041C58E /* CSS.swift in Sources */,
@@ -707,9 +729,11 @@
 				C8CBEB441FAA9CAA00298113 /* MainViewController.swift in Sources */,
 				C8F431C61FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */,
 				C8F431CC1FB530010026B8D6 /* HalfModalTransitioningDelegate.swift in Sources */,
+				C80AEA3E1FEB0AC500CCBE2E /* Author.swift in Sources */,
 				C8B3B0891FAADAA90041C58E /* Kanna.swift in Sources */,
 				C8CBEB421FAA9CAA00298113 /* AppDelegate.swift in Sources */,
 				C8B3B08A1FAADAA90041C58E /* libxmlHTMLNode.swift in Sources */,
+				C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */,
 				C8CBEB2B1FAA9BF700298113 /* IndieAuth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

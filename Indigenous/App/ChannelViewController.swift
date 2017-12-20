@@ -19,6 +19,8 @@ class ChannelViewController: UITableViewController {
 //    var micropubActions = ["Like", "Repost", "Bookmark"]
     
     var channels: [[Channel]] = []
+    var selectedChannel: Channel? = nil
+    var timelines: [[TimelinePost]] = []
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return channels.count
@@ -41,8 +43,11 @@ class ChannelViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath)
-        
-        cell.textLabel?.text = channels[indexPath.section][indexPath.row].name
+     
+        if let channelCell = cell as? ChannelTableViewCell {
+            channelCell.data = channels[indexPath.section][indexPath.row]
+            cell.textLabel?.text = channels[indexPath.section][indexPath.row].name
+        }
         
         return cell
     }
@@ -62,9 +67,17 @@ class ChannelViewController: UITableViewController {
                 mainVC.showLoginScreen()
             }
         } else {
-            getSingleChannelData(channel: selectedChannel) {
-                print("All done with timeline")
-            }
+            self.selectedChannel = selectedChannel
+            
+            // todo this line is hacky, fix it
+//            let channelNumber = indexPath.row + channels[indexPath.section].count
+//            print("Channel Number")
+//            print(channelNumber)
+//            getSingleChannelData(channel: channelNumber, forTimeline: selectedChannel) {
+//                print("All done with timeline")
+//                print(channelNumber)
+////                self.performSegue(withIdentifier: "viewTimeline", sender: self)
+//            }
         }
         
 //        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
@@ -104,13 +117,16 @@ class ChannelViewController: UITableViewController {
 //        }
 //    }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showReplyView",
-//            let nextVC = segue.destination as? ReplyViewController {
-//            nextVC.replyUrl = sharingContent?.url
-//
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("performing segue")
+        if segue.identifier == "viewTimeline",
+            let channelCell = sender as? ChannelTableViewCell,
+            let nextVC = segue.destination as? TimelineViewController {
+                print("channel cell")
+                print(channelCell)
+                nextVC.channel = channelCell.data
+        }
+    }
     
     //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     //
@@ -148,7 +164,7 @@ class ChannelViewController: UITableViewController {
 //        }
 //    }
     
-    func getSingleChannelData(channel: Channel, callback: (() -> ())? = nil) {
+    func getSingleChannelData(channel: Int, forTimeline timeline: Channel, callback: (() -> ())? = nil) {
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
@@ -168,7 +184,7 @@ class ChannelViewController: UITableViewController {
         }
         
         microsubUrl.queryItems?.append(URLQueryItem(name: "action", value: "timeline"))
-        microsubUrl.queryItems?.append(URLQueryItem(name: "channel", value: channel.uid))
+        microsubUrl.queryItems?.append(URLQueryItem(name: "channel", value: timeline.uid))
         
         guard let microsub = microsubUrl.url else {
             print("Error making final url")
@@ -201,14 +217,18 @@ class ChannelViewController: UITableViewController {
                 if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
                     if httpResponse.statusCode == 200 {
                         if contentType == "application/json" {
-                            print("Get Timeline")
-                            print(body)
-//                            let channelResponse = try! JSONDecoder().decode(ChannelApiResponse.self, from: body.data(using: .utf8)!)
-//
-//                            channelResponse.channels.forEach { nextChannel in
-//                                self.channels.append(nextChannel)
-//                            }
+                            let timelineResponse = try! JSONDecoder().decode(TimelineApiResponse.self, from: body.data(using: .utf8)!)
                             
+//                            print(self.timelines)
+//                            print("should insert")
+//                            print(channel)
+                            
+                            self.timelines.append(timelineResponse.items)
+
+//                            timelineResponse.items.forEach { nextPost in
+//                                print(nextPost)
+//
+//                            }
                             //        movies.sort() { $0.title < $1.title }
                             
 //                            DispatchQueue.main.async {
