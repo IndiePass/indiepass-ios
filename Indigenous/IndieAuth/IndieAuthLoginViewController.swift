@@ -20,6 +20,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     var userAccessToken: String? = nil
     var userScope: String? = nil
     var authSession: SFAuthenticationSession?
+    var delegate: IndieAuthDelegate?
     
     enum IndieWebEndpointType: String {
         case Authorization = "authorization_endpoint"
@@ -69,8 +70,12 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 
                 // We need to save these endpoints for later use
                 self.userEndpoints = meEndpoints
+                var authScope = ["create"];
                 print("User Endponts")
                 print(self.userEndpoints)
+                
+                // todo: Figure out when these scopes would be added to the request
+                // "follow mute block update"
                 
                 if let newUrl = self.userEndpoints["url"]?[0] {
                     url = newUrl
@@ -94,8 +99,12 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                     return
                 }
                 
-//                    let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: "read follow mute block create update")
-                let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: "create")
+                if self.userEndpoints["microsub"] != nil {
+                    // if a microsub endpoint is found, request read authorization
+                    authScope.append("read")
+                }
+                
+                let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: authScope.joined(separator: " "))
                 
                 if let openUrl = authorizationUrl {
                     DispatchQueue.main.sync {
@@ -186,10 +195,8 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
                 defaults?.set(micropubAuth, forKey: "micropubAuth")
                 
-                DispatchQueue.main.sync {
-                    self.dismiss(animated: true, completion: nil)
-                }
-                
+                print("processing completed")
+                self.delegate?.loggedIn()
             }
         }
         

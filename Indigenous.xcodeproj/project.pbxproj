@@ -16,6 +16,10 @@
 		C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
 		C87B4DC51FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
 		C87B4DC61FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
+		C894F5EC1FEAC7F0003D0A48 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5EB1FEAC7F0003D0A48 /* ChannelViewController.swift */; };
+		C894F5EF1FEADCB2003D0A48 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5EE1FEADCB2003D0A48 /* Channel.swift */; };
+		C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */; };
+		C894F5F31FEAFC98003D0A48 /* IndieAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5F21FEAFC98003D0A48 /* IndieAuthDelegate.swift */; };
 		C8B3B0871FAADAA90041C58E /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0821FAADAA90041C58E /* libxmlParserOption.swift */; };
 		C8B3B0881FAADAA90041C58E /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0831FAADAA90041C58E /* CSS.swift */; };
 		C8B3B0891FAADAA90041C58E /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0841FAADAA90041C58E /* Kanna.swift */; };
@@ -27,7 +31,6 @@
 		C8CBDEEE1FB4E8E6001CF409 /* mf2parsing.js in Resources */ = {isa = PBXBuildFile; fileRef = C8CBDEEA1FB4E8E6001CF409 /* mf2parsing.js */; };
 		C8CBDEF01FB4E8E6001CF409 /* MicropubShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CBDEEC1FB4E8E6001CF409 /* MicropubShareViewController.swift */; };
 		C8CBDEF11FB4E8E6001CF409 /* ReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CBDEED1FB4E8E6001CF409 /* ReplyViewController.swift */; };
-		C8CBDEF21FB4EAAE001CF409 /* IndieAuthLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CBEB2A1FAA9BF700298113 /* IndieAuthLoginViewController.swift */; };
 		C8CBDEF31FB4EAB2001CF409 /* IndieAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CBEB291FAA9BF700298113 /* IndieAuth.swift */; };
 		C8CBDEF41FB4EAD4001CF409 /* RealLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CBEB271FAA9BDD00298113 /* RealLinkParser.swift */; };
 		C8CBDEF51FB4EAFD001CF409 /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0841FAADAA90041C58E /* Kanna.swift */; };
@@ -126,6 +129,10 @@
 		C87B4DC71FBBACBB00181B62 /* voice-notes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-notes.entitlements"; sourceTree = "<group>"; };
 		C8883C881FB4F26A005957E3 /* Indigenous.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Indigenous.entitlements; sourceTree = "<group>"; };
 		C8883C891FB4F278005957E3 /* share-micropub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "share-micropub.entitlements"; sourceTree = "<group>"; };
+		C894F5EB1FEAC7F0003D0A48 /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
+		C894F5EE1FEADCB2003D0A48 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAPIResponse.swift; sourceTree = "<group>"; };
+		C894F5F21FEAFC98003D0A48 /* IndieAuthDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndieAuthDelegate.swift; sourceTree = "<group>"; };
 		C8B3B0821FAADAA90041C58E /* libxmlParserOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = libxmlParserOption.swift; sourceTree = "<group>"; };
 		C8B3B0831FAADAA90041C58E /* CSS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSS.swift; sourceTree = "<group>"; };
 		C8B3B0841FAADAA90041C58E /* Kanna.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kanna.swift; sourceTree = "<group>"; };
@@ -248,6 +255,15 @@
 			path = Micropub;
 			sourceTree = "<group>";
 		};
+		C894F5ED1FEADC99003D0A48 /* Microsub */ = {
+			isa = PBXGroup;
+			children = (
+				C894F5EE1FEADCB2003D0A48 /* Channel.swift */,
+				C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */,
+			);
+			path = Microsub;
+			sourceTree = "<group>";
+		};
 		C8CBDEDB1FB4E858001CF409 /* share-micropub */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,6 +283,7 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
+				C894F5ED1FEADC99003D0A48 /* Microsub */,
 				C87B4DC21FBBAB0400181B62 /* Micropub */,
 				C8F431C01FB530010026B8D6 /* Presentation */,
 				C8F431C21FB530010026B8D6 /* Transitioning */,
@@ -342,6 +359,7 @@
 			children = (
 				C8CBEB291FAA9BF700298113 /* IndieAuth.swift */,
 				C8CBEB2A1FAA9BF700298113 /* IndieAuthLoginViewController.swift */,
+				C894F5F21FEAFC98003D0A48 /* IndieAuthDelegate.swift */,
 			);
 			path = IndieAuth;
 			sourceTree = "<group>";
@@ -353,6 +371,7 @@
 				C8CBEB3E1FAA9CAA00298113 /* AppDelegate.swift */,
 				C8CBEB3F1FAA9CAA00298113 /* Main.storyboard */,
 				C8CBEB401FAA9CAA00298113 /* MainViewController.swift */,
+				C894F5EB1FEAC7F0003D0A48 /* ChannelViewController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -648,7 +667,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8CBDEF21FB4EAAE001CF409 /* IndieAuthLoginViewController.swift in Sources */,
 				C87B4DC51FBBAB3900181B62 /* Micropub.swift in Sources */,
 				C8CBDEF01FB4E8E6001CF409 /* MicropubShareViewController.swift in Sources */,
 				C8CBDEF41FB4EAD4001CF409 /* RealLinkParser.swift in Sources */,
@@ -673,7 +691,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8CBEAFE1FAA9B4600298113 /* Indigenous.xcdatamodeld in Sources */,
+				C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */,
 				C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */,
+				C894F5EF1FEADCB2003D0A48 /* Channel.swift in Sources */,
 				C8B3B0871FAADAA90041C58E /* libxmlParserOption.swift in Sources */,
 				C8CBEB2C1FAA9BF700298113 /* IndieAuthLoginViewController.swift in Sources */,
 				C8B3B08B1FAADAA90041C58E /* libxmlHTMLDocument.swift in Sources */,
@@ -682,6 +702,8 @@
 				C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
 				C8B3B0881FAADAA90041C58E /* CSS.swift in Sources */,
 				C8F431CA1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,
+				C894F5EC1FEAC7F0003D0A48 /* ChannelViewController.swift in Sources */,
+				C894F5F31FEAFC98003D0A48 /* IndieAuthDelegate.swift in Sources */,
 				C8CBEB441FAA9CAA00298113 /* MainViewController.swift in Sources */,
 				C8F431C61FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */,
 				C8F431CC1FB530010026B8D6 /* HalfModalTransitioningDelegate.swift in Sources */,

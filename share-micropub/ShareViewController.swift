@@ -278,12 +278,12 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
 //        return deck
 //    }
     
-    func showLoginScreen() {
-        let loginViewController = storyboard?.instantiateViewController(withIdentifier: "indieAuthLoginView") as! IndieAuthLoginViewController
-        
-        DispatchQueue.main.async {
-            self.present(loginViewController, animated: true, completion: nil)
-        }
-    }
+//    func showLoginScreen() {
+//        let loginViewController = storyboard?.instantiateViewController(withIdentifier: "indieAuthLoginView") as! IndieAuthLoginViewController
+//        
+//        DispatchQueue.main.async {
+//            self.present(loginViewController, animated: true, completion: nil)
+//        }
+//    }
 
 }

@@ -8,24 +8,39 @@
 
 import UIKit
 
-class MainViewController: UITabBarController {
+class MainViewController: UINavigationController, IndieAuthDelegate {
     
     var loginViewController: UIViewController? = nil
+    var backupViewControllers: [UIViewController]? = nil
 
     func showLoginScreen() {
         let loginViewController = storyboard?.instantiateViewController(withIdentifier: "indieAuthLoginView") as! IndieAuthLoginViewController
         
+        loginViewController.delegate = self
+        
         DispatchQueue.main.async {
-            self.loginViewController = loginViewController
-            self.present(loginViewController, animated: true, completion: nil)
+            self.viewControllers = [loginViewController]
+            self.popViewController(animated: true)
         }
     }
 
+    func hideLoginScreen() {
+        DispatchQueue.main.async {
+            if let restoreViewControllers = self.backupViewControllers {
+                self.viewControllers = restoreViewControllers
+                self.popViewController(animated: true)
+            }
+        }
+    }
+    
+    func loggedIn() {
+        hideLoginScreen()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        self.backupViewControllers = [self.viewControllers.first!]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,6 +51,7 @@ class MainViewController: UITabBarController {
         if micropubAuth == nil {
             showLoginScreen()
         } else {
+            // todo: What we need to do if we are logged in
             print("Logged in")
             print(micropubAuth)
         }
