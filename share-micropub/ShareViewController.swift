@@ -29,7 +29,7 @@ import MobileCoreServices
 
 class ShareViewController: UITableViewController, HalfModalPresentable {
     
-    var micropubAuth: [String: Any]? = nil
+//    var micropubAuth: [String: Any]? = nil
     var sharingType: String? = nil
     var sharingContent: URLComponents? = nil
     var extensionItems: [NSExtensionItem]? = nil
@@ -55,9 +55,6 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
         
         switch(micropubActions[indexPath.row]) {
             case "Like":
@@ -140,9 +137,6 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        print("Loading View")
-//        print(extensionItems?.first)
-
         let itemProvider = extensionItems?.first?.attachments?.first as! NSItemProvider
         let propertyList = String(kUTTypePropertyList)
         let plainText = String(kUTTypePlainText)
@@ -175,115 +169,45 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
             })
         } else {
             print("error")
-            print(extensionItems?.first?.attachments)
+//            print(extensionItems?.first?.attachments)
         }
     }
     
     private func shareUrl(url: URLComponents) {
-//        print("Time to Share a URL")
-//        print(url)
-        
         sharingType = "url"
         sharingContent = url
-        
-//        textView?.text = " "
-//        reloadConfigurationItems()
-    }
-    
-    private func checkMicropubAuth() {
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        self.micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
-        if let meString = micropubAuth?["me"] as? String {
-            if (meString == "https://eddiehinkle.com/") {
-                micropubActions.append("Listen")
-            }
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+        
+                if (micropubDetails.me.absoluteString == "https://eddiehinkle.com/") {
+                    micropubActions.append("Listen")
+                }
+            
+                self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.size.height)
+            
+                UIView.animate(withDuration: 0.20, animations: { () -> Void in
+                    self.view.transform = .identity
+                })
         }
-        
-        self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.size.height)
-        
-        UIView.animate(withDuration: 0.20, animations: { () -> Void in
-            self.view.transform = .identity
-        })
-        
-        //checkMicropubAuth()
-//        self.reloadConfigurationItems()
-        //if self.micropubAuth == nil {
-//            self.textView?.text = "You have to log in before you can post using micropub"
-//            self.textView?.textColor = UIColor.red
-//            self.textView?.isUserInteractionEnabled = false
-        //}
         
     }
     
-//    override func isContentValid() -> Bool {
-//        // Do validation of contentText and/or NSExtensionContext attachments here
-//        
-//        if self.micropubAuth == nil {
-//            return false
-//        }
-//        
-//        return true
-//    }
-//
+
+
 //    override func didSelectPost() {
 //        // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
 //        print("Outpuing Content")
 //        print(contentText)
-//    
+//
 //        // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
 //        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-//    }
-//
-//    override func configurationItems() -> [Any]! {
-//        // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
-//        
-//        var deck: [SLComposeSheetConfigurationItem]? = []
-//        
-//        if self.micropubAuth == nil {
-//            print("CREATE LOGIN CONFIGURATION")
-//            let loginConfig = SLComposeSheetConfigurationItem()
-//            loginConfig?.title = "Log In"
-//            loginConfig?.value = nil
-//            loginConfig?.tapHandler = {
-//                // Need to find out how to send "Logged In" info back to the extension so it will make the screen dissapear
-//                // Maybe just redirect via URI scheme to the app login path, then return here via safari://
-//                self.showLoginScreen()
-//            }
-//            
-//            deck?.append(loginConfig!)
-//        } else {
-//            // todo: if h-event exists, add RSVP options in one of these
-//            // todo: if h-entry exists: decide what we can do with an h-entry
-//            
-//            let actionConfig = SLComposeSheetConfigurationItem()
-//            actionConfig?.title = "Action"
-//            actionConfig?.value = "👍 Like"
-//            actionConfig?.tapHandler = {
-//                
-//            }
-//            
-//            deck?.append(actionConfig!)
-//        }
-//        
-//        if deck?.count == 0 {
-//            deck = nil
-//        }
-//        return deck
-//    }
-    
-//    func showLoginScreen() {
-//        let loginViewController = storyboard?.instantiateViewController(withIdentifier: "indieAuthLoginView") as! IndieAuthLoginViewController
-//        
-//        DispatchQueue.main.async {
-//            self.present(loginViewController, animated: true, completion: nil)
-//        }
 //    }
 
 }

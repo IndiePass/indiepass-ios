@@ -82,7 +82,7 @@ public class RealLinkParser {
             }
             
             // Split the path into segments so we can seperate the host and the path
-            let pathSegments = meUrl?.path.characters.split(separator: "/").map(String.init)
+            let pathSegments = meUrl?.path.components(separatedBy: "/")
             
             meUrl?.host = pathSegments?.first;
             meUrl?.path = "/" + (pathSegments?.dropFirst().joined() ?? "")
@@ -142,10 +142,10 @@ public class RealLinkParser {
         // Get link field
         if let linkHeaderString = httpResponse.allHeaderFields["Link"] as? String {
             // Split Link String into the various segments
-            let linkHeaders = linkHeaderString.characters.split(separator: ",").map({charactersSequence in
-                // Run regex on each link segment
-                return self.linkMatches(for: "<([a-zA-Z:\\/\\.]+)>; rel=\"([a-zA-Z_-]+)\"", in: String.init(charactersSequence))
-            })
+            let linkHeaders = linkHeaderString.components(separatedBy: ",").map { componentString in
+                // RUn regex on each link segment
+                return self.linkMatches(for: "<([a-zA-Z:\\/\\.]+)>; rel=\"([a-zA-Z_-]+)\"", in: componentString)
+            }
             
             for headerLink in linkHeaders {
                 if (headerLink.count > 0) {
@@ -231,8 +231,9 @@ public class RealLinkParser {
             for match in results {
                 for n in 1..<match.numberOfRanges {
                     let range = match.range(at: n)
-                    let r = text.index(text.startIndex, offsetBy: range.location) ..< text.index(text.startIndex, offsetBy: range.location+range.length)
-                    matches.append(text.substring(with: r))
+                    let startIndex = text.index(text.startIndex, offsetBy: range.location)
+                    let endIndex = text.index(text.startIndex, offsetBy: range.location + range.length)
+                    matches.append(String(text[startIndex..<endIndex]))
                 }
             }
             

@@ -13,15 +13,16 @@ class AccountViewController: UIViewController {
     let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
 
     override func viewDidLoad() {
-        super.viewDidLoad()        
-//        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
-//        usernameDisplay.text = micropubAuth?["me"] as? String
+        super.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
-        usernameDisplay.text = micropubAuth?["me"] as? String
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+                usernameDisplay.text = micropubDetails.me.absoluteString
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,9 +33,16 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var usernameDisplay: UILabel!
 
     @IBAction func logOutAccount(_ sender: UIButton) {
-        defaults?.removeObject(forKey: "micropubAuth")
-        if let mainVC = self.parent as? MainViewController {
-            mainVC.showLoginScreen()
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data]
+        micropubAccounts?.remove(at: activeAccount)
+        defaults?.set(0, forKey: "activeAccount")
+        defaults?.set(micropubAccounts, forKey: "micropubAccounts")
+        
+        if let numberOfAccounts = micropubAccounts?.count, numberOfAccounts < 1 {
+            if let mainVC = self.parent as? MainViewController {
+                mainVC.showLoginScreen()
+            }
         }
     }
     

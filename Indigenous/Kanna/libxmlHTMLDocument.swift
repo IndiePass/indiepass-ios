@@ -1,39 +1,39 @@
 /**@file libxmlHTMLDocument.swift
-
-Kanna
-
-Copyright (c) 2015 Atsushi Kiwaki (@_tid_)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+ 
+ Kanna
+ 
+ Copyright (c) 2015 Atsushi Kiwaki (@_tid_)
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 import Foundation
 import CoreFoundation
 
 #if SWIFT_PACKAGE
-import SwiftClibxml2
+    import SwiftClibxml2
 #else
-import libxml2
+    import libxml2
 #endif
 
 /*
-libxmlHTMLDocument
-*/
+ libxmlHTMLDocument
+ */
 internal final class libxmlHTMLDocument: HTMLDocument {
     fileprivate var docPtr:   htmlDocPtr? = nil
     fileprivate var rootNode: XMLElement?
@@ -44,26 +44,26 @@ internal final class libxmlHTMLDocument: HTMLDocument {
     var text: String? {
         return rootNode?.text
     }
-
+    
     var toHTML: String? {
         let buf = xmlBufferCreate()
         defer {
             xmlBufferFree(buf)
         }
-
+        
         let outputBuf = xmlOutputBufferCreateBuffer(buf, nil)
         htmlDocContentDumpOutput(outputBuf, docPtr, nil)
         let html = String(cString: UnsafePointer(xmlOutputBufferGetContent(outputBuf)))
         return html
     }
-
+    
     var toXML: String? {
         var buf: UnsafeMutablePointer<xmlChar>? = nil
         let size: UnsafeMutablePointer<Int32>? = nil
         defer {
             xmlFree(buf)
         }
-
+        
         xmlDocDumpMemory(docPtr, &buf, size)
         let html = String(cString: UnsafePointer(buf!))
         return html
@@ -81,17 +81,17 @@ internal final class libxmlHTMLDocument: HTMLDocument {
         get {
             return nil
         }
-
+        
         set {
-
+            
         }
     }
-
+    
     var content: String? {
         get {
             return text
         }
-
+        
         set {
             rootNode?.content = newValue
         }
@@ -107,10 +107,10 @@ internal final class libxmlHTMLDocument: HTMLDocument {
         }
         
         let cfenc : CFStringEncoding = CFStringConvertNSStringEncodingToEncoding(encoding.rawValue)
-
+        
         guard let cfencstr = CFStringConvertEncodingToIANACharSetName(cfenc),
             let cur = html.cString(using: encoding) else {
-            throw ParseError.EncodingMismatch
+                throw ParseError.EncodingMismatch
         }
         
         let url : String = ""
@@ -126,7 +126,7 @@ internal final class libxmlHTMLDocument: HTMLDocument {
     deinit {
         xmlFreeDoc(self.docPtr)
     }
-
+    
     var title: String? { return at_xpath("//title")?.text }
     var head: XMLElement? { return at_xpath("//head") }
     var body: XMLElement? { return at_xpath("//body") }
@@ -165,8 +165,8 @@ internal final class libxmlHTMLDocument: HTMLDocument {
 }
 
 /*
-libxmlXMLDocument
-*/
+ libxmlXMLDocument
+ */
 internal final class libxmlXMLDocument: XMLDocument {
     fileprivate var docPtr:   xmlDocPtr? = nil
     fileprivate var rootNode: XMLElement?
@@ -183,20 +183,20 @@ internal final class libxmlXMLDocument: XMLDocument {
         defer {
             xmlBufferFree(buf)
         }
-
+        
         let outputBuf = xmlOutputBufferCreateBuffer(buf, nil)
         htmlDocContentDumpOutput(outputBuf, docPtr, nil)
         let html = String(cString: UnsafePointer(xmlOutputBufferGetContent(outputBuf)))
         return html
     }
-
+    
     var toXML: String? {
         var buf: UnsafeMutablePointer<xmlChar>? = nil
         let size: UnsafeMutablePointer<Int32>? = nil
         defer {
             xmlFree(buf)
         }
-
+        
         xmlDocDumpMemory(docPtr, &buf, size)
         let html = String(cString: UnsafePointer(buf!))
         return html
@@ -214,17 +214,17 @@ internal final class libxmlXMLDocument: XMLDocument {
         get {
             return nil
         }
-
+        
         set {
             
         }
     }
-
+    
     var content: String? {
         get {
             return text
         }
-
+        
         set {
             rootNode?.content = newValue
         }
@@ -248,7 +248,7 @@ internal final class libxmlXMLDocument: XMLDocument {
             throw ParseError.EncodingMismatch
         }
     }
-
+    
     deinit {
         xmlFreeDoc(self.docPtr)
     }

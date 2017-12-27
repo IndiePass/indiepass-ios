@@ -22,9 +22,9 @@ class MicropubShareViewController: UIViewController, UINavigationControllerDeleg
         super.viewDidLoad()
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
+        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         
-        guard micropubAuth != nil else {
+        guard micropubAccounts.count > 0 else {
             let alert = UIAlertController(title: "Not logged in", message: "You are not currently logged in. Please open Indigenous and log in before using the Share extension.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .default) { action in
                 self.cancelShareSheet()

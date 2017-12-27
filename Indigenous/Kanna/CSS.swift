@@ -1,33 +1,33 @@
 /**@file CSS.swift
-
-Kanna
-
-Copyright (c) 2015 Atsushi Kiwaki (@_tid_)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+ 
+ Kanna
+ 
+ Copyright (c) 2015 Atsushi Kiwaki (@_tid_)
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 import Foundation
 
 #if SWIFT_PACKAGE
-import SwiftClibxml2
+    import SwiftClibxml2
 #else
-import libxml2
+    import libxml2
 #endif
 
 typealias AKRegularExpression  = NSRegularExpression
@@ -38,21 +38,21 @@ public enum CSSError: Error {
 }
 
 /**
-CSS
-*/
+ CSS
+ */
 public struct CSS {
     /**
-    CSS3 selector to XPath
-    
-    @param selector CSS3 selector
-    
-    @return XPath
-    */
+     CSS3 selector to XPath
+     
+     @param selector CSS3 selector
+     
+     @return XPath
+     */
     public static func toXPath(_ selector: String) throws -> String {
         var xpath = "//"
         var str = selector
         var prev = str
-
+        
         while str.utf16.count > 0 {
             var attributes: [String] = []
             var combinator: String = ""
@@ -86,7 +86,7 @@ public struct CSS {
             } else {
                 xpath += "\(element)[\(attr)]\(combinator)"
             }
-
+            
             if str == prev {
                 throw CSSError.UnsupportSyntax(selector)
             }
@@ -105,7 +105,7 @@ private func firstMatch(_ pattern: String) -> (String) -> AKTextCheckingResult? 
                 return result
             }
         } catch _ {
-
+            
         }
         return nil
     }
@@ -204,7 +204,7 @@ private func getAttribute(_ str: inout String, skip: Bool = true) -> String? {
         let (attr, expr, text) = (substringWithRangeAtIndex(result, str: str, at: 1),
                                   substringWithRangeAtIndex(result, str: str, at: 2),
                                   substringWithRangeAtIndex(result, str: str, at: 3).replacingOccurrences(of: "[\'\"](.*)[\'\"]", with: "$1", options: .regularExpression, range: nil))
-
+        
         if skip {
             str = String(str[str.index(str.startIndex, offsetBy: result.range.length)..<str.endIndex])
         }
@@ -317,7 +317,7 @@ private func getAttrNot(_ str: inout String, skip: Bool = true) -> String? {
             let range = sub.range(at: 1)
             let startIndex = one.index(one.startIndex, offsetBy: range.location)
             let endIndex   = one.index(startIndex, offsetBy: range.length)
-
+            
             let elem = one[startIndex ..< endIndex]
             return "self::\(elem)"
         } else if let attr = getClassId(&one) {

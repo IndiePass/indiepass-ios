@@ -11,31 +11,40 @@ import Social
 import MobileCoreServices
 
 class ChannelViewController: UITableViewController {
-    
-//    var micropubAuth: [String: Any]? = nil
-//    var sharingType: String? = nil
-//    var sharingContent: URLComponents? = nil
-//    var extensionItems: [NSExtensionItem]? = nil
-//    var micropubActions = ["Like", "Repost", "Bookmark"]
-    
+        
     var channels: [[Channel]] = []
     var selectedChannel: Channel? = nil
     var timelines: [[TimelinePost]] = []
+    
+    @IBOutlet weak var profileIcon: UIBarButtonItem!
+    
+    @IBAction func notificationClicked(_ sender: Any) {
+        
+//    self.channels[0].append(Channel(uid: "notifications", name: "Notifications"))
+        //            performSegue(withIdentifier: "showReplyView", sender: self)
+    }
+    
+    @IBAction func profileClicked(_ sender: Any) {
+    }
+    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return channels.count
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-            case 1:
-                return "Channels"
-            case 2:
-                return "Accounts"
-            default:
-                return ""
-        }
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        switch section {
+//            case 0:
+//
+//                return ""
+////            case 1:
+////                return "Channels"
+////            case 2:
+////                return "Accounts"
+//            default:
+//                return ""
+//        }
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return channels[section].count
@@ -54,286 +63,180 @@ class ChannelViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        
+//        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         let selectedChannel = channels[indexPath.section][indexPath.row]
         
         print("Channel selected")
         print(selectedChannel)
         
-        if (selectedChannel.uid == "logout") {
-            defaults?.removeObject(forKey: "micropubAuth")
-            if let mainVC = self.parent as? MainViewController {
-                mainVC.showLoginScreen()
-            }
-        } else {
-            self.selectedChannel = selectedChannel
-            
-            // todo this line is hacky, fix it
-//            let channelNumber = indexPath.row + channels[indexPath.section].count
-//            print("Channel Number")
-//            print(channelNumber)
-//            getSingleChannelData(channel: channelNumber, forTimeline: selectedChannel) {
-//                print("All done with timeline")
-//                print(channelNumber)
-////                self.performSegue(withIdentifier: "viewTimeline", sender: self)
-//            }
-        }
-        
-//        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-//        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
-        
-//        switch(micropubActions[indexPath.row]) {
-//        case "Like":
-//            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
-//        case "Repost":
-//            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
-//        case "Bookmark":
-//            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
-//        case "Listen":
-//            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
-//        case "Reply":
-//            performSegue(withIdentifier: "showReplyView", sender: self)
-//        default:
-//            let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertControllerStyle.alert)
-//            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//        }
-        
+        self.selectedChannel = selectedChannel
     }
     
-//    func shareComplete() {
-//        if let delegate = self.navigationController?.transitioningDelegate as? HalfModalTransitioningDelegate {
-//            delegate.interactiveDismiss = false
-//        }
-//
-//        DispatchQueue.main.async {
-//            self.dismiss(animated: true) { () in
-//                if let presentingVC = self.parent?.transitioningDelegate as? HalfModalTransitioningDelegate,
-//                    let micropubVC = presentingVC.viewController as? MicropubShareViewController {
-//                    micropubVC.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
-//                }
-//            }
-//        }
-//    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("performing segue")
         if segue.identifier == "viewTimeline",
             let channelCell = sender as? ChannelTableViewCell,
             let nextVC = segue.destination as? TimelineViewController {
-                print("channel cell")
-                print(channelCell)
                 nextVC.channel = channelCell.data
+                nextVC.title = channelCell.data?.name
         }
     }
-    
-    //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    //
-    //        print(indexPath)
-    //
-    //        switch(micropubActions[indexPath.row]) {
-    //            case "Like":
-    //                print("Liking ")
-    ////                print(self.parent?.extensionContext!.inputItems)
-    //            case "Repost":
-    //                print("Reposting ")
-    ////                print(self.parent?.extensionContext!.inputItems)
-    //            case "Bookmark":
-    //                print("Bookmarking ")
-    ////                print(self.parent?.extensionContext!.inputItems)
-    //            default:
-    //                print("oops")
-    //        }
-    //
-    //        print(self.parent?.extensionContext!.inputItems)
-    //
-    //    }
-    
-//    @IBAction func cancelShare(_ sender: UIBarButtonItem) {
-//
-//        if let delegate = navigationController?.transitioningDelegate as? HalfModalTransitioningDelegate {
-//            delegate.interactiveDismiss = false
-//        }
-//
-//        dismiss(animated: true) { () in
-//            if let presentingVC = self.parent?.transitioningDelegate as? HalfModalTransitioningDelegate,
-//                let micropubVC = presentingVC.viewController as? MicropubShareViewController {
-//                micropubVC.extensionContext!.cancelRequest(withError: NSError(domain: "pub.abode.indigenous", code: 1))
-//            }
-//        }
-//    }
     
     func getSingleChannelData(channel: Int, forTimeline timeline: Channel, callback: (() -> ())? = nil) {
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
         
-        guard let microsubEndpoint = micropubAuth?["microsub_endpoint"] as? String else {
-            print("microsubEndpoint failure")
-            return
-        }
-        
-        guard var microsubUrl = URLComponents(string: microsubEndpoint) else {
-            print("Making url of microsub fails")
-            return
-        }
-        
-        if microsubUrl.queryItems == nil {
-            microsubUrl.queryItems = []
-        }
-        
-        microsubUrl.queryItems?.append(URLQueryItem(name: "action", value: "timeline"))
-        microsubUrl.queryItems?.append(URLQueryItem(name: "channel", value: timeline.uid))
-        
-        guard let microsub = microsubUrl.url else {
-            print("Error making final url")
-            return
-        }
-        
-        guard let access_token = micropubAuth?["access_token"] as? String else {
-            print("Access Token Error")
-            return
-        }
-        
-        var request = URLRequest(url: microsub)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(access_token)", forHTTPHeaderField: "Authorization")
-        
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
-        
-        let task = session.dataTask(with: request) { (data, response, error) in
-            // check for any errors
-            guard error == nil else {
-                print("error calling POST on \(microsubUrl)")
-                print(error ?? "No error present")
-                return
-            }
-            
-            // Check if endpoint is in the HTTP Header fields
-            if let httpResponse = response as? HTTPURLResponse, let body = String(data: data!, encoding: .utf8) {
-                if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
-                    if httpResponse.statusCode == 200 {
-                        if contentType == "application/json" {
-                            let timelineResponse = try! JSONDecoder().decode(TimelineApiResponse.self, from: body.data(using: .utf8)!)
-                            
-//                            print(self.timelines)
-//                            print("should insert")
-//                            print(channel)
-                            
-                            self.timelines.append(timelineResponse.items)
-
-//                            timelineResponse.items.forEach { nextPost in
-//                                print(nextPost)
-//
-//                            }
-                            //        movies.sort() { $0.title < $1.title }
-                            
-//                            DispatchQueue.main.async {
-//                                self.tableView.reloadData()
-//                            }
-                            
-                            callback?()
-                        }
-                    } else {
-                        print("Status Code not 200")
-                        print(httpResponse)
-                        print(body)
-                    }
+                guard let microsubUrl = micropubDetails.microsub_endpoint,
+                      var microsubComponents = URLComponents(url: microsubUrl, resolvingAgainstBaseURL: true) else {
+                        print("Microsub URL doesn't exist")
+                        return
                 }
-            }
             
+                if microsubComponents.queryItems == nil {
+                    microsubComponents.queryItems = []
+                }
+            
+                microsubComponents.queryItems?.append(URLQueryItem(name: "action", value: "timeline"))
+                microsubComponents.queryItems?.append(URLQueryItem(name: "channel", value: timeline.uid))
+            
+                guard let microsub = microsubComponents.url else {
+                    print("Error making final url")
+                    return
+                }
+            
+                var request = URLRequest(url: microsub)
+                request.httpMethod = "GET"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue("Bearer \(micropubDetails.access_token)", forHTTPHeaderField: "Authorization")
+            
+                let config = URLSessionConfiguration.default
+                let session = URLSession(configuration: config)
+            
+                let task = session.dataTask(with: request) { (data, response, error) in
+                    // check for any errors
+                    guard error == nil else {
+                        print("error calling POST on \(microsubComponents)")
+                        print(error ?? "No error present")
+                        return
+                    }
+                    
+                    // Check if endpoint is in the HTTP Header fields
+                    if let httpResponse = response as? HTTPURLResponse, let body = String(data: data!, encoding: .utf8) {
+                        if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
+                            if httpResponse.statusCode == 200 {
+                                if contentType == "application/json" {
+                                    let timelineResponse = try! JSONDecoder().decode(TimelineApiResponse.self, from: body.data(using: .utf8)!)
+                                    
+        //                            print(self.timelines)
+        //                            print("should insert")
+        //                            print(channel)
+                                    
+                                    self.timelines.append(timelineResponse.items)
+
+        //                            timelineResponse.items.forEach { nextPost in
+        //                                print(nextPost)
+        //
+        //                            }
+                                    //        movies.sort() { $0.title < $1.title }
+                                    
+        //                            DispatchQueue.main.async {
+        //                                self.tableView.reloadData()
+        //                            }
+                                    
+                                    callback?()
+                                }
+                            } else {
+                                print("Status Code not 200")
+                                print(httpResponse)
+                                print(body)
+                            }
+                        }
+                    }
+                    
+                }
+            
+                task.resume()
+        } else {
+            print("missing micropubDetails")
         }
-        
-        task.resume()
     }
     
     func getChannelData(callback: (() -> ())? = nil) {
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
         
-        self.channels = [[], [], []];
-        self.channels[0].append(Channel(uid: "default", name: "Home"))
-        self.channels[0].append(Channel(uid: "notifications", name: "Notifications"))
-        if micropubAuth != nil, let meUrl = micropubAuth?["me"] as? String {
-            self.channels[2].append(Channel(uid: "logout", name: "Log out (\(meUrl))"))
-        }
-        
-        guard let microsubEndpoint = micropubAuth?["microsub_endpoint"] as? String else {
-            print("microsubEndpoint failure")
-            return
-        }
-        
-        guard var microsubUrl = URLComponents(string: microsubEndpoint) else {
-            print("Making url of microsub fails")
-            return
-        }
-        
-        if microsubUrl.queryItems == nil {
-            microsubUrl.queryItems = []
-        }
-        
-        microsubUrl.queryItems?.append(URLQueryItem(name: "action", value: "channels"))
-        
-        guard let microsub = microsubUrl.url else {
-            print("Error making final url")
-            return
-        }
-        
-        guard let access_token = micropubAuth?["access_token"] as? String else {
-            print("Access Token Error")
-            return
-        }
-        
-        var request = URLRequest(url: microsub)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(access_token)", forHTTPHeaderField: "Authorization")
-        
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
-        
-        let task = session.dataTask(with: request) { (data, response, error) in
-            // check for any errors
-            guard error == nil else {
-                print("error calling POST on \(microsubUrl)")
-                print(error ?? "No error present")
-                return
-            }
+                self.channels = [[]];
+                self.channels[0].append(Channel(uid: "default", name: "Home"))
             
-            // Check if endpoint is in the HTTP Header fields
-            if let httpResponse = response as? HTTPURLResponse, let body = String(data: data!, encoding: .utf8) {
-                if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
-                    if httpResponse.statusCode == 200 {
-                        if contentType == "application/json" {
-                            let channelResponse = try! JSONDecoder().decode(ChannelApiResponse.self, from: body.data(using: .utf8)!)
-                            
-                            channelResponse.channels.forEach { nextChannel in
-                                self.channels[1].append(nextChannel)
-                            }
-                            
-                            //        movies.sort() { $0.title < $1.title }
-                        
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-
-                            callback?()
-                        }
-                    } else {
-                        print("Status Code not 200")
-                        print(httpResponse)
-                        print(body)
-                    }
+                guard let microsubUrl = micropubDetails.microsub_endpoint,
+                    var microsubComponents = URLComponents(url: microsubUrl, resolvingAgainstBaseURL: true) else {
+                        print("Microsub URL doesn't exist")
+                        return
                 }
-            }
             
+                if microsubComponents.queryItems == nil {
+                    microsubComponents.queryItems = []
+                }
+            
+                microsubComponents.queryItems?.append(URLQueryItem(name: "action", value: "channels"))
+            
+                guard let microsub = microsubComponents.url else {
+                    print("Error making final url")
+                    return
+                }
+            
+                var request = URLRequest(url: microsub)
+                request.httpMethod = "GET"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue("Bearer \(micropubDetails.access_token)", forHTTPHeaderField: "Authorization")
+            
+                let config = URLSessionConfiguration.default
+                let session = URLSession(configuration: config)
+            
+                let task = session.dataTask(with: request) { (data, response, error) in
+                    // check for any errors
+                    guard error == nil else {
+                        print("error calling POST on \(microsubUrl)")
+                        print(error ?? "No error present")
+                        return
+                    }
+                    
+                    // Check if endpoint is in the HTTP Header fields
+                    if let httpResponse = response as? HTTPURLResponse, let body = String(data: data!, encoding: .utf8) {
+                        if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
+                            if httpResponse.statusCode == 200 {
+                                if contentType == "application/json" {
+                                    let channelResponse = try! JSONDecoder().decode(ChannelApiResponse.self, from: body.data(using: .utf8)!)
+                                    
+                                    channelResponse.channels.forEach { nextChannel in
+                                        self.channels[0].append(nextChannel)
+                                    }
+                                    
+                                    //        movies.sort() { $0.title < $1.title }
+                                
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                    }
+
+                                    callback?()
+                                }
+                            } else {
+                                print("Status Code not 200")
+                                print(httpResponse)
+                                print(body)
+                            }
+                        }
+                    }
+                    
+                }
+            
+                task.resume()
         }
-        
-        task.resume()
     }
     
     @objc func handleRefresh(refreshControl: UIRefreshControl) {
@@ -347,10 +250,36 @@ class ChannelViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
-        getChannelData()
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+        if  micropubAccounts.count >= activeAccount + 1,
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+            
+            self.title = micropubDetails.me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
+            
+//        if let url = URL(string: "https://eddiehinkle.com/images/profile.jpg") {
+//            getDataFromUrl(url: url) { data, response, error in
+//                guard let data = data, error == nil else { return }
+//                print(response?.suggestedFilename ?? url.lastPathComponent)
+//                print("Download Finished")
+//                DispatchQueue.main.async() {
+//                    self.profileIcon?.image = UIImage(data: data)
+//                }
+//            }
+//        }
+        
+            tableView.delegate = self
+            tableView.dataSource = self
+            self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
+            getChannelData()
+        }
+    }
+    
+    func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            completion(data, response, error)
+            }.resume()
     }
     
     override func viewWillAppear(_ animated: Bool) {

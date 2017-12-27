@@ -47,13 +47,15 @@ class MainViewController: UINavigationController, IndieAuthDelegate {
         super.viewWillAppear(animated)
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let micropubAuth = defaults?.dictionary(forKey: "micropubAuth")
-        if micropubAuth == nil {
+        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+        
+        if micropubAccounts.count < 1 {
             showLoginScreen()
         } else {
             // todo: What we need to do if we are logged in
             print("Logged in")
-            print(micropubAuth)
+//            let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+//            let micropubAuth = micropubAccounts[activeAccount]
         }
     }
 
