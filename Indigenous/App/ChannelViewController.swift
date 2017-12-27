@@ -250,30 +250,30 @@ class ChannelViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
-        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
-        if  micropubAccounts.count >= activeAccount + 1,
-            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
-            
-            self.title = micropubDetails.me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
-            
-//        if let url = URL(string: "https://eddiehinkle.com/images/profile.jpg") {
-//            getDataFromUrl(url: url) { data, response, error in
-//                guard let data = data, error == nil else { return }
-//                print(response?.suggestedFilename ?? url.lastPathComponent)
-//                print("Download Finished")
-//                DispatchQueue.main.async() {
-//                    self.profileIcon?.image = UIImage(data: data)
-//                }
-//            }
+//        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+//        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+//        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+//        if  micropubAccounts.count >= activeAccount + 1,
+//            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+//            
+//            self.title = micropubDetails.me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
+//            
+////        if let url = URL(string: "https://eddiehinkle.com/images/profile.jpg") {
+////            getDataFromUrl(url: url) { data, response, error in
+////                guard let data = data, error == nil else { return }
+////                print(response?.suggestedFilename ?? url.lastPathComponent)
+////                print("Download Finished")
+////                DispatchQueue.main.async() {
+////                    self.profileIcon?.image = UIImage(data: data)
+////                }
+////            }
+////        }
+//        
+//            tableView.delegate = self
+//            tableView.dataSource = self
+//            self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
+//            getChannelData()
 //        }
-        
-            tableView.delegate = self
-            tableView.dataSource = self
-            self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
-            getChannelData()
-        }
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
@@ -284,6 +284,31 @@ class ChannelViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+        if  micropubAccounts.count >= activeAccount + 1,
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+            
+            self.title = micropubDetails.me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
+            
+            //        if let url = URL(string: "https://eddiehinkle.com/images/profile.jpg") {
+            //            getDataFromUrl(url: url) { data, response, error in
+            //                guard let data = data, error == nil else { return }
+            //                print(response?.suggestedFilename ?? url.lastPathComponent)
+            //                print("Download Finished")
+            //                DispatchQueue.main.async() {
+            //                    self.profileIcon?.image = UIImage(data: data)
+            //                }
+            //            }
+            //        }
+            
+            tableView.delegate = self
+            tableView.dataSource = self
+            self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
+            getChannelData()
+        }
     }
     
     //    override func isContentValid() -> Bool {

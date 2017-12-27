@@ -131,25 +131,41 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 // todo: Settings
                 
             } else {
-                let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-                let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
-                var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+                logOutCurrentUser()
+            }
+        }
         
+    }
+    
+    func logOutCurrentUser() {
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+        
+        if let accountToRemove = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+            IndieAuth.revokeIndieAuthToken(forAccount: accountToRemove) { errorMessage in
+                if errorMessage != nil {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+                
                 micropubAccounts.remove(at: activeAccount)
                 defaults?.set(0, forKey: "activeAccount")
                 defaults?.set(micropubAccounts, forKey: "micropubAccounts")
-
+                
                 if micropubAccounts.count < 1 {
-                    showLoginScreen(displayAsModal: true)
+                    self.showLoginScreen(displayAsModal: true)
                 } else {
-                    refreshAccountData()
+                    self.refreshAccountData()
                     DispatchQueue.main.async {
-                        tableView.reloadData()
+                        self.tableView.reloadData()
                     }
                 }
             }
         }
-        
     }
     
     func showLoginScreen(displayAsModal modal: Bool = false) {
