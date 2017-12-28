@@ -249,6 +249,10 @@ class ChannelViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+ 
+        self.navigationItem.rightBarButtonItems?[0].image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        self.navigationItem.rightBarButtonItems?[1].image = UIImage.fontAwesomeIcon(name: .globe, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        
         
 //        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
 //        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
@@ -286,7 +290,8 @@ class ChannelViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        let defaultAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? defaultAccount
         let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         if  micropubAccounts.count >= activeAccount + 1,
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {

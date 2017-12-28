@@ -50,7 +50,7 @@
                                 <rect key="frame" x="16" y="588" width="343" height="59"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This login uses IndieAuth and requires you to have a website on your domain that supports IndieAuth." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iTW-RP-loS">
-                                        <rect key="frame" x="-16" y="0.0" width="0.0" height="29"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="29"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -232,13 +232,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Channels" id="sYa-hz-v6H">
                         <rightBarButtonItems>
-                            <barButtonItem image="sample-986-ghost" id="uwG-7P-CVs">
+                            <barButtonItem title="Account" id="uwG-7P-CVs">
                                 <connections>
                                     <action selector="profileClicked:" destination="2BB-zu-A3B" id="Wgv-gv-05H"/>
                                     <segue destination="rFd-FV-C1X" kind="show" id="VGb-aN-gMQ"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Notifications" image="sample-583-broadcast" id="jEB-MT-R6K">
+                            <barButtonItem title="Notifications" id="jEB-MT-R6K">
                                 <connections>
                                     <action selector="notificationClicked:" destination="2BB-zu-A3B" id="S37-UE-dEJ"/>
                                 </connections>
@@ -454,7 +454,6 @@
     </scenes>
     <resources>
         <image name="sample-504-doghouse" width="28" height="28"/>
-        <image name="sample-583-broadcast" width="28" height="29"/>
         <image name="sample-986-ghost" width="24" height="28"/>
     </resources>
 </document>
