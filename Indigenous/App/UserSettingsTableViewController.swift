@@ -12,6 +12,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
 
     var userAccounts: [IndieAuthAccount] = []
     var activeUserAccount: Int = 0
+    var defaultUserAccount: Int = 0
     var userSettings: [String] = []
     var loginDisplayedAsModal: Bool? = nil
     
@@ -30,6 +31,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         userAccounts.removeAll()
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         activeUserAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        defaultUserAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
         let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         micropubAccounts.forEach { userData in
             if let newAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: userData) {
@@ -54,7 +56,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (section) {
             case 0:
-                return userSettings.count + 1
+                return userSettings.count + 2
             case 1:
                 return userAccounts.count + 1
             default:
@@ -76,7 +78,11 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                     cell.accessoryType = .none
                 }
                 
-                cell.imageView?.image =  UIImage(named: "sample-986-ghost")
+                if (defaultUserAccount == indexPath.row) {
+                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .userCircleO, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+                } else {
+                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+                }
             } else {
                 cell.textLabel?.text = "Add New Micropub Account"
                 cell.imageView?.image = nil
@@ -86,14 +92,27 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserSettingCell", for: indexPath)
-        if (indexPath.row < userSettings.count) {
+        if indexPath.row < userSettings.count {
             print(indexPath)
             print(userSettings.count)
         } else {
-            cell.textLabel?.text = "Log Out"
-            cell.textLabel?.textColor = UIColor(red: 1, green: 0.2196078431, blue: 0.137254902, alpha: 1)
-            cell.detailTextLabel?.text = userAccounts[activeUserAccount].me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
-            cell.detailTextLabel?.textColor = UIColor(red: 1, green: 0.2196078431, blue: 0.137254902, alpha: 1)
+            if indexPath.row == userSettings.count {
+                if (defaultUserAccount == activeUserAccount) {
+                    cell.textLabel?.text = "This account is the default"
+                    cell.isUserInteractionEnabled = false
+                    cell.textLabel?.isEnabled = false
+                } else {
+                    cell.textLabel?.text = "Make this account default"
+                    cell.isUserInteractionEnabled = true
+                    cell.textLabel?.isEnabled = true
+                }
+                cell.detailTextLabel?.text = ""
+            } else if indexPath.row == userSettings.count + 1 {
+                cell.textLabel?.text = "Log Out"
+                cell.textLabel?.textColor = UIColor(red: 1, green: 0.2196078431, blue: 0.137254902, alpha: 1)
+                cell.detailTextLabel?.text = userAccounts[activeUserAccount].me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
+                cell.detailTextLabel?.textColor = UIColor(red: 1, green: 0.2196078431, blue: 0.137254902, alpha: 1)
+            }
         }
         return cell
         
@@ -131,7 +150,11 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 // todo: Settings
                 
             } else {
-                logOutCurrentUser()
+                if indexPath.row == userSettings.count {
+                    makeCurrentUserDefault()
+                } else if indexPath.row == userSettings.count {
+                    logOutCurrentUser()
+                }
             }
         }
         
@@ -139,7 +162,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     
     func logOutCurrentUser() {
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        var activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        let defaultAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
         var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         
         if let accountToRemove = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
@@ -153,7 +177,14 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 }
                 
                 micropubAccounts.remove(at: activeAccount)
-                defaults?.set(0, forKey: "activeAccount")
+                if (activeAccount == defaultAccount) {
+                    activeAccount = 0
+                    defaults?.set(0, forKey: "defaultAccount")
+                } else {
+                    activeAccount = defaultAccount
+                }
+                
+                defaults?.set(activeAccount, forKey: "activeAccount")
                 defaults?.set(micropubAccounts, forKey: "micropubAccounts")
                 
                 if micropubAccounts.count < 1 {
@@ -165,6 +196,16 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                     }
                 }
             }
+        }
+    }
+    
+    func makeCurrentUserDefault() {
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        defaults?.set(activeAccount, forKey: "defaultAccount")
+        refreshAccountData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     

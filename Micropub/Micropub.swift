@@ -8,7 +8,7 @@
 
 import Foundation
 
-func sendMicropub(forAction: String, aboutUrl: URL, completion: @escaping () -> Swift.Void) {
+func sendMicropub(forAction: String, aboutUrl: URL, forUser user: IndieAuthAccount, completion: @escaping () -> Swift.Void) {
     
     DispatchQueue.global(qos: .background).async {
         var entryString = ""
@@ -35,56 +35,43 @@ func sendMicropub(forAction: String, aboutUrl: URL, completion: @escaping () -> 
                 print("ERROR")
         }
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
-        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
-           let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
-            
-                var request = URLRequest(url: micropubDetails.micropub_endpoint)
-                request.httpMethod = "POST"
-                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                let bodyString = "\(entryString)&access_token=\(micropubDetails.access_token)"
-                let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
-                request.httpBody = bodyData
-            
-                // set up the session
-                let config = URLSessionConfiguration.default
-                let session = URLSession(configuration: config)
-            
-                let task = session.dataTask(with: request) { (data, response, error) in
-                    completion()
-                }
-                task.resume()
+        var request = URLRequest(url: user.micropub_endpoint)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let bodyString = "\(entryString)&access_token=\(user.access_token)"
+        let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
+        request.httpBody = bodyData
+    
+        // set up the session
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+    
+        let task = session.dataTask(with: request) { (data, response, error) in
+            completion()
         }
+        task.resume()
     }
 }
 
-func sendMicropub(note: String, completion: @escaping () -> Swift.Void) {
-    
+func sendMicropub(note: String, forUser user: IndieAuthAccount, completion: @escaping () -> Swift.Void) {
     DispatchQueue.global(qos: .background).async {
         let entryString = "h=entry&content=\(note)"
-        
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
-        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
-            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
             
-                var request = URLRequest(url: micropubDetails.micropub_endpoint)
-                request.httpMethod = "POST"
-                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                let bodyString = "\(entryString)&access_token=\(micropubDetails.access_token)"
-                let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
-                request.httpBody = bodyData
-                
-                // set up the session
-                let config = URLSessionConfiguration.default
-                let session = URLSession(configuration: config)
-                
-                let task = session.dataTask(with: request) { (data, response, error) in
-                    completion()
-                }
-                task.resume()
+        var request = URLRequest(url: user.micropub_endpoint)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let bodyString = "\(entryString)&access_token=\(user.access_token)"
+        let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
+        request.httpBody = bodyData
+    
+        // set up the session
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+    
+        let task = session.dataTask(with: request) { (data, response, error) in
+            completion()
         }
+        task.resume()
     }
 }

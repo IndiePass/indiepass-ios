@@ -76,6 +76,29 @@
 		C8D171BC1FF447AF00134485 /* IndieAuthTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171BB1FF447AF00134485 /* IndieAuthTokenResponse.swift */; };
 		C8D171BD1FF449A400134485 /* IndieAuthTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171BB1FF447AF00134485 /* IndieAuthTokenResponse.swift */; };
 		C8D171BE1FF449A400134485 /* IndieAuthTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171BB1FF447AF00134485 /* IndieAuthTokenResponse.swift */; };
+		C8D171C01FF46DCC00134485 /* AccountSelectorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171BF1FF46DCC00134485 /* AccountSelectorTableViewController.swift */; };
+		C8D171CE1FF58BFB00134485 /* FontAwesomeImageRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C21FF58BFA00134485 /* FontAwesomeImageRepresentable.swift */; };
+		C8D171CF1FF58BFB00134485 /* FontAwesomeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C31FF58BFA00134485 /* FontAwesomeImageView.swift */; };
+		C8D171D01FF58BFB00134485 /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C51FF58BFA00134485 /* FontAwesome.swift */; };
+		C8D171D11FF58BFB00134485 /* FontAwesomeStateRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C61FF58BFB00134485 /* FontAwesomeStateRequirement.swift */; };
+		C8D171D21FF58BFB00134485 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = C8D171C71FF58BFB00134485 /* FontAwesome.otf */; };
+		C8D171D31FF58BFB00134485 /* FontAwesomeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C81FF58BFB00134485 /* FontAwesomeSegmentedControl.swift */; };
+		C8D171D41FF58BFB00134485 /* FontAwesomeTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C91FF58BFB00134485 /* FontAwesomeTabBarItem.swift */; };
+		C8D171D51FF58BFB00134485 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171CA1FF58BFB00134485 /* Enum.swift */; };
+		C8D171D61FF58BFB00134485 /* FontAwesomeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171CB1FF58BFB00134485 /* FontAwesomeBarButtonItem.swift */; };
+		C8D171D71FF58BFB00134485 /* FontAwesomeTextRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171CC1FF58BFB00134485 /* FontAwesomeTextRepresentable.swift */; };
+		C8D171D81FF58BFB00134485 /* FontAwesomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171CD1FF58BFB00134485 /* FontAwesomeView.swift */; };
+		C8D171D91FF58C2200134485 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171CA1FF58BFB00134485 /* Enum.swift */; };
+		C8D171DA1FF58C3900134485 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = C8D171C71FF58BFB00134485 /* FontAwesome.otf */; };
+		C8D171DB1FF58C3900134485 /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C51FF58BFA00134485 /* FontAwesome.swift */; };
+		C8D171DC1FF58C3900134485 /* FontAwesomeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171CB1FF58BFB00134485 /* FontAwesomeBarButtonItem.swift */; };
+		C8D171DD1FF58C3900134485 /* FontAwesomeImageRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C21FF58BFA00134485 /* FontAwesomeImageRepresentable.swift */; };
+		C8D171DE1FF58C3900134485 /* FontAwesomeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C31FF58BFA00134485 /* FontAwesomeImageView.swift */; };
+		C8D171DF1FF58C3900134485 /* FontAwesomeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C81FF58BFB00134485 /* FontAwesomeSegmentedControl.swift */; };
+		C8D171E01FF58C3900134485 /* FontAwesomeStateRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C61FF58BFB00134485 /* FontAwesomeStateRequirement.swift */; };
+		C8D171E11FF58C3900134485 /* FontAwesomeTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171C91FF58BFB00134485 /* FontAwesomeTabBarItem.swift */; };
+		C8D171E21FF58C3900134485 /* FontAwesomeTextRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171CC1FF58BFB00134485 /* FontAwesomeTextRepresentable.swift */; };
+		C8D171E31FF58C3900134485 /* FontAwesomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D171CD1FF58BFB00134485 /* FontAwesomeView.swift */; };
 		C8F431C61FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F431C11FB530010026B8D6 /* HalfModalPresentationController.swift */; };
 		C8F431C71FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F431C11FB530010026B8D6 /* HalfModalPresentationController.swift */; };
 		C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F431C31FB530010026B8D6 /* HalfModalInteractiveTransition.swift */; };
@@ -202,6 +225,19 @@
 		C8CBEB511FAA9DEE00298113 /* Modules */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Modules; sourceTree = "<group>"; };
 		C8D171B91FF40AE700134485 /* UserSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsTableViewController.swift; sourceTree = "<group>"; };
 		C8D171BB1FF447AF00134485 /* IndieAuthTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndieAuthTokenResponse.swift; sourceTree = "<group>"; };
+		C8D171BF1FF46DCC00134485 /* AccountSelectorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectorTableViewController.swift; sourceTree = "<group>"; };
+		C8D171C21FF58BFA00134485 /* FontAwesomeImageRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeImageRepresentable.swift; sourceTree = "<group>"; };
+		C8D171C31FF58BFA00134485 /* FontAwesomeImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeImageView.swift; sourceTree = "<group>"; };
+		C8D171C41FF58BFA00134485 /* FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontAwesome.h; sourceTree = "<group>"; };
+		C8D171C51FF58BFA00134485 /* FontAwesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesome.swift; sourceTree = "<group>"; };
+		C8D171C61FF58BFB00134485 /* FontAwesomeStateRequirement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeStateRequirement.swift; sourceTree = "<group>"; };
+		C8D171C71FF58BFB00134485 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
+		C8D171C81FF58BFB00134485 /* FontAwesomeSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeSegmentedControl.swift; sourceTree = "<group>"; };
+		C8D171C91FF58BFB00134485 /* FontAwesomeTabBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeTabBarItem.swift; sourceTree = "<group>"; };
+		C8D171CA1FF58BFB00134485 /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		C8D171CB1FF58BFB00134485 /* FontAwesomeBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeBarButtonItem.swift; sourceTree = "<group>"; };
+		C8D171CC1FF58BFB00134485 /* FontAwesomeTextRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeTextRepresentable.swift; sourceTree = "<group>"; };
+		C8D171CD1FF58BFB00134485 /* FontAwesomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeView.swift; sourceTree = "<group>"; };
 		C8F431C11FB530010026B8D6 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
 		C8F431C31FB530010026B8D6 /* HalfModalInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalInteractiveTransition.swift; sourceTree = "<group>"; };
 		C8F431C41FB530010026B8D6 /* HalfModalTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalTransitionAnimator.swift; sourceTree = "<group>"; };
@@ -326,6 +362,7 @@
 				C8883C891FB4F278005957E3 /* share-micropub.entitlements */,
 				C8CBDEE91FB4E8D3001CF409 /* Assets.xcassets */,
 				C8CBDEEC1FB4E8E6001CF409 /* MicropubShareViewController.swift */,
+				C8D171BF1FF46DCC00134485 /* AccountSelectorTableViewController.swift */,
 				C8CBDEED1FB4E8E6001CF409 /* ReplyViewController.swift */,
 				C8CBDEDC1FB4E858001CF409 /* ShareViewController.swift */,
 				C8CBDEEA1FB4E8E6001CF409 /* mf2parsing.js */,
@@ -339,6 +376,7 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
+				C8D171C11FF58BDC00134485 /* FontAwesome */,
 				C8CBEB2D1FAA9BFC00298113 /* IndieAuth */,
 				C8B36B581FED558700D92E3D /* mf2 */,
 				C8B36B521FED510F00D92E3D /* Accounts */,
@@ -451,6 +489,25 @@
 				C8B3B0821FAADAA90041C58E /* libxmlParserOption.swift */,
 			);
 			path = Kanna;
+			sourceTree = "<group>";
+		};
+		C8D171C11FF58BDC00134485 /* FontAwesome */ = {
+			isa = PBXGroup;
+			children = (
+				C8D171CA1FF58BFB00134485 /* Enum.swift */,
+				C8D171C41FF58BFA00134485 /* FontAwesome.h */,
+				C8D171C71FF58BFB00134485 /* FontAwesome.otf */,
+				C8D171C51FF58BFA00134485 /* FontAwesome.swift */,
+				C8D171CB1FF58BFB00134485 /* FontAwesomeBarButtonItem.swift */,
+				C8D171C21FF58BFA00134485 /* FontAwesomeImageRepresentable.swift */,
+				C8D171C31FF58BFA00134485 /* FontAwesomeImageView.swift */,
+				C8D171C81FF58BFB00134485 /* FontAwesomeSegmentedControl.swift */,
+				C8D171C61FF58BFB00134485 /* FontAwesomeStateRequirement.swift */,
+				C8D171C91FF58BFB00134485 /* FontAwesomeTabBarItem.swift */,
+				C8D171CC1FF58BFB00134485 /* FontAwesomeTextRepresentable.swift */,
+				C8D171CD1FF58BFB00134485 /* FontAwesomeView.swift */,
+			);
+			path = FontAwesome;
 			sourceTree = "<group>";
 		};
 		C8F431C01FB530010026B8D6 /* Presentation */ = {
@@ -680,6 +737,7 @@
 			files = (
 				C8CBDEE01FB4E858001CF409 /* MainInterface.storyboard in Resources */,
 				C8CBDEEE1FB4E8E6001CF409 /* mf2parsing.js in Resources */,
+				C8D171D21FF58BFB00134485 /* FontAwesome.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,6 +746,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8CBEB521FAA9DEF00298113 /* Modules in Resources */,
+				C8D171DA1FF58C3900134485 /* FontAwesome.otf in Resources */,
 				C8CBEB431FAA9CAA00298113 /* Main.storyboard in Resources */,
 				C8CBEB031FAA9B4600298113 /* LaunchScreen.storyboard in Resources */,
 				C8CBEB001FAA9B4600298113 /* Assets.xcassets in Resources */,
@@ -740,26 +799,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				C87B4DC51FBBAB3900181B62 /* Micropub.swift in Sources */,
+				C8D171CF1FF58BFB00134485 /* FontAwesomeImageView.swift in Sources */,
 				C8CBDEF01FB4E8E6001CF409 /* MicropubShareViewController.swift in Sources */,
+				C8D171D31FF58BFB00134485 /* FontAwesomeSegmentedControl.swift in Sources */,
 				C8CBDEF41FB4EAD4001CF409 /* RealLinkParser.swift in Sources */,
+				C8D171C01FF46DCC00134485 /* AccountSelectorTableViewController.swift in Sources */,
 				C8B36B6A1FED891300D92E3D /* Mf2Type.swift in Sources */,
 				C8CBDEF71FB4EAFD001CF409 /* libxmlHTMLNode.swift in Sources */,
+				C8D171D51FF58BFB00134485 /* Enum.swift in Sources */,
 				C8CBDEDD1FB4E858001CF409 /* ShareViewController.swift in Sources */,
 				C8B36B631FED886300D92E3D /* IndieAuthProfile.swift in Sources */,
 				C8F431CD1FB530010026B8D6 /* HalfModalTransitioningDelegate.swift in Sources */,
 				C8CBDEF91FB4EB01001CF409 /* CSS.swift in Sources */,
 				C8B36B681FED887100D92E3D /* IndieAuthDelegate.swift in Sources */,
+				C8D171D81FF58BFB00134485 /* FontAwesomeView.swift in Sources */,
+				C8D171D71FF58BFB00134485 /* FontAwesomeTextRepresentable.swift in Sources */,
+				C8D171D01FF58BFB00134485 /* FontAwesome.swift in Sources */,
 				C8F431CB1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,
+				C8D171D11FF58BFB00134485 /* FontAwesomeStateRequirement.swift in Sources */,
 				C8CBDEF81FB4EAFD001CF409 /* libxmlParserOption.swift in Sources */,
+				C8D171CE1FF58BFB00134485 /* FontAwesomeImageRepresentable.swift in Sources */,
 				C8B36B661FED886D00D92E3D /* IndieAuthScope.swift in Sources */,
 				C8B36B611FED885B00D92E3D /* IndieAuthAccount.swift in Sources */,
 				C8F431D01FB532890026B8D6 /* ModalNavController.swift in Sources */,
 				C8F431C91FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
 				C8CBDEF11FB4E8E6001CF409 /* ReplyViewController.swift in Sources */,
 				C8F431C71FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */,
+				C8D171D41FF58BFB00134485 /* FontAwesomeTabBarItem.swift in Sources */,
 				C8D171BD1FF449A400134485 /* IndieAuthTokenResponse.swift in Sources */,
 				C8CBDEF31FB4EAB2001CF409 /* IndieAuth.swift in Sources */,
 				C8CBDEF51FB4EAFD001CF409 /* Kanna.swift in Sources */,
+				C8D171D61FF58BFB00134485 /* FontAwesomeBarButtonItem.swift in Sources */,
 				C8CBDEF61FB4EAFD001CF409 /* libxmlHTMLDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,9 +840,15 @@
 			files = (
 				C8CBEAFE1FAA9B4600298113 /* Indigenous.xcdatamodeld in Sources */,
 				C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */,
+				C8D171E01FF58C3900134485 /* FontAwesomeStateRequirement.swift in Sources */,
+				C8D171E31FF58C3900134485 /* FontAwesomeView.swift in Sources */,
 				C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */,
+				C8D171E21FF58C3900134485 /* FontAwesomeTextRepresentable.swift in Sources */,
+				C8D171DE1FF58C3900134485 /* FontAwesomeImageView.swift in Sources */,
 				C80AEA401FEB0B4100CCBE2E /* TimelinePostContent.swift in Sources */,
+				C8D171DF1FF58C3900134485 /* FontAwesomeSegmentedControl.swift in Sources */,
 				C894F5EF1FEADCB2003D0A48 /* Channel.swift in Sources */,
+				C8D171DB1FF58C3900134485 /* FontAwesome.swift in Sources */,
 				C8B36B5A1FED55B000D92E3D /* Mf2Type.swift in Sources */,
 				C80AEA441FEB1B0900CCBE2E /* ChannelTableViewCell.swift in Sources */,
 				C8B3B0871FAADAA90041C58E /* libxmlParserOption.swift in Sources */,
@@ -783,6 +859,7 @@
 				C80AEA3C1FEB0A4C00CCBE2E /* TimelinePost.swift in Sources */,
 				C8CBEB281FAA9BDD00298113 /* RealLinkParser.swift in Sources */,
 				C8B36B541FED514800D92E3D /* IndieAuthAccount.swift in Sources */,
+				C8D171E11FF58C3900134485 /* FontAwesomeTabBarItem.swift in Sources */,
 				C8B36B5C1FED5AC900D92E3D /* IndieAuthScope.swift in Sources */,
 				C8B36B571FED54F400D92E3D /* IndieAuthProfile.swift in Sources */,
 				C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
@@ -790,14 +867,17 @@
 				C8F431CA1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,
 				C894F5EC1FEAC7F0003D0A48 /* ChannelViewController.swift in Sources */,
 				C894F5F31FEAFC98003D0A48 /* IndieAuthDelegate.swift in Sources */,
+				C8D171DD1FF58C3900134485 /* FontAwesomeImageRepresentable.swift in Sources */,
 				C8CBEB441FAA9CAA00298113 /* MainViewController.swift in Sources */,
 				C8D171BA1FF40AE700134485 /* UserSettingsTableViewController.swift in Sources */,
+				C8D171DC1FF58C3900134485 /* FontAwesomeBarButtonItem.swift in Sources */,
 				C8F431C61FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */,
 				C8F431CC1FB530010026B8D6 /* HalfModalTransitioningDelegate.swift in Sources */,
 				C80AEA3E1FEB0AC500CCBE2E /* Author.swift in Sources */,
 				C8B3B0891FAADAA90041C58E /* Kanna.swift in Sources */,
 				C8CBEB421FAA9CAA00298113 /* AppDelegate.swift in Sources */,
 				C8D171BC1FF447AF00134485 /* IndieAuthTokenResponse.swift in Sources */,
+				C8D171D91FF58C2200134485 /* Enum.swift in Sources */,
 				C8B3B08A1FAADAA90041C58E /* libxmlHTMLNode.swift in Sources */,
 				C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */,
 				C8CBEB2B1FAA9BF700298113 /* IndieAuth.swift in Sources */,

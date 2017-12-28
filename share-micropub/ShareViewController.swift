@@ -33,44 +33,82 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     var sharingType: String? = nil
     var sharingContent: URLComponents? = nil
     var extensionItems: [NSExtensionItem]? = nil
-    var micropubActions = ["Like", "Repost", "Bookmark"]
+    var micropubActions: [String] = []
+    var currentAccount: IndieAuthAccount? = nil
+    var activeAccount: Int = 0
+    var shouldAnimateIn: Bool = true
     
 //    var micropubActions = ["Like", "Repost", "Bookmark", "Reply"]
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Responses"
+        case 1:
+            return "Settings"
+        default:
+            return nil
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return micropubActions.count
+        switch (section) {
+            case 0:
+                return micropubActions.count
+            case 1:
+                return 1;
+            default:
+                return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "ResponseCell", for: indexPath)
         
-        cell.textLabel?.text = micropubActions[indexPath.row]
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ResponseCell", for: indexPath)
+            cell.textLabel?.text = micropubActions[indexPath.row]
+            return cell
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath)
+        if let accountDetails = currentAccount {
+            cell.textLabel?.text = "Account"
+            cell.detailTextLabel?.text = IndieAuth.getSimpleDomain(forAccount: accountDetails)
+        }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        switch(micropubActions[indexPath.row]) {
-            case "Like":
-                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
-            case "Repost":
-                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
-            case "Bookmark":
-                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
-            case "Listen":
-                sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, completion: shareComplete)
-            case "Reply":
-                performSegue(withIdentifier: "showReplyView", sender: self)
-            default:
-                let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        
+        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+        
+                if (indexPath.section == 0) {
+                    switch(micropubActions[indexPath.row]) {
+                        case "Like":
+                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                        case "Repost":
+                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                        case "Bookmark":
+                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                        case "Listen":
+                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                        case "Reply":
+                            performSegue(withIdentifier: "showReplyView", sender: self)
+                        default:
+                            let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                    }
+                }
         }
 
     }
@@ -95,6 +133,16 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         let nextVC = segue.destination as? ReplyViewController {
             nextVC.replyUrl = sharingContent?.url
             
+        }
+        
+        if segue.identifier == "showAccountSelection",
+            let nextVC = segue.destination as? AccountSelectorTableViewController {
+            nextVC.activeUserAccount = activeAccount
+            nextVC.userAccountChanged = { [weak self](user) in
+                if let vc = self {
+                    vc.activeAccount = user
+                }
+            }
         }
     }
     
@@ -136,6 +184,11 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        activeAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
+        
+        self.clearsSelectionOnViewWillAppear = false
         
         let itemProvider = extensionItems?.first?.attachments?.first as! NSItemProvider
         let propertyList = String(kUTTypePropertyList)
@@ -181,21 +234,30 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        micropubActions = ["Like", "Repost", "Bookmark"]
+        
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+            
+                currentAccount = micropubDetails
         
-                if (micropubDetails.me.absoluteString == "https://eddiehinkle.com/") {
+                if (currentAccount?.me.absoluteString == "https://eddiehinkle.com/") {
                     micropubActions.append("Listen")
                 }
             
-                self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.size.height)
-            
-                UIView.animate(withDuration: 0.20, animations: { () -> Void in
-                    self.view.transform = .identity
-                })
+                if (animated && shouldAnimateIn) {
+                    self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.size.height)
+                
+                    UIView.animate(withDuration: 0.20, animations: { () -> Void in
+                        self.view.transform = .identity
+                    })
+                    
+                    shouldAnimateIn = false
+                }
         }
+        
+        tableView.reloadData()
         
     }
     

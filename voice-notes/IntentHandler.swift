@@ -19,34 +19,38 @@ class IntentHandler: INExtension {
 extension IntentHandler: INCreateNoteIntentHandling {
     
     public func handle(intent: INCreateNoteIntent, completion: @escaping (INCreateNoteIntentResponse) -> Swift.Void) {
-//        let context = DatabaseHelper.shared.persistentContainer.viewContext
-//        let newNote = Note(context: context)
-//        newNote.title = intent.title?.spokenPhrase
-//        newNote.details = intent.content?.description
-        print("siri data")
-        print((intent.content as? INTextNoteContent)!.text!)
-//        ((intent.content as? INTextNoteContent)!.text!)
-        if let noteContent = intent.content as? INTextNoteContent,
-            let noteText = noteContent.text {
-            sendMicropub(note: noteText) { () in
-                print("micropub should be complete")
-            }
-        }
         
-        // Save the context.
-//        do {
-//            try context.save()
-//
-        let noteTitle = intent.title ?? INSpeakableString(spokenPhrase: "")
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         
-            let response = INCreateNoteIntentResponse(code: INCreateNoteIntentResponseCode.success, userActivity: nil)
-        response.createdNote = INNote(title: noteTitle, contents: [intent.content!], groupName: nil, createdDateComponents: nil, modifiedDateComponents: nil, identifier: nil)
+        if let activeAccount = defaults?.integer(forKey: "defaultAccount"),
+            let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+        
+            print("siri data")
+            print((intent.content as? INTextNoteContent)!.text!)
 
-            completion(response)
-//        } catch {
-//
-//            completion(INCreateNoteIntentResponse(code: INCreateNoteIntentResponseCode.failure, userActivity: nil))
-//        }
+            if let noteContent = intent.content as? INTextNoteContent,
+                let noteText = noteContent.text {
+                sendMicropub(note: noteText, forUser: micropubDetails) { () in
+                    print("micropub should be complete")
+                }
+            }
+            
+            // Save the context.
+    //        do {
+    //            try context.save()
+    //
+            let noteTitle = intent.title ?? INSpeakableString(spokenPhrase: "")
+            
+                let response = INCreateNoteIntentResponse(code: INCreateNoteIntentResponseCode.success, userActivity: nil)
+            response.createdNote = INNote(title: noteTitle, contents: [intent.content!], groupName: nil, createdDateComponents: nil, modifiedDateComponents: nil, identifier: nil)
+
+                completion(response)
+    //        } catch {
+    //
+    //            completion(INCreateNoteIntentResponse(code: INCreateNoteIntentResponseCode.failure, userActivity: nil))
+    //        }
+        }
         
     }
     
