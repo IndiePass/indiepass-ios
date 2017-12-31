@@ -13,6 +13,15 @@
 		C80AEA401FEB0B4100CCBE2E /* TimelinePostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA3F1FEB0B4100CCBE2E /* TimelinePostContent.swift */; };
 		C80AEA421FEB14C700CCBE2E /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */; };
 		C80AEA441FEB1B0900CCBE2E /* ChannelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */; };
+		C845B4661FF5E07300354391 /* xray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B4651FF5E07300354391 /* xray.swift */; };
+		C845B4671FF5E07300354391 /* xray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B4651FF5E07300354391 /* xray.swift */; };
+		C845B4681FF5E07300354391 /* xray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B4651FF5E07300354391 /* xray.swift */; };
+		C845B46A1FF5E50700354391 /* XRayParsingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B4691FF5E50700354391 /* XRayParsingResponse.swift */; };
+		C845B46B1FF5E50700354391 /* XRayParsingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B4691FF5E50700354391 /* XRayParsingResponse.swift */; };
+		C845B46C1FF5E50700354391 /* XRayParsingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B4691FF5E50700354391 /* XRayParsingResponse.swift */; };
+		C845B46E1FF5E6E400354391 /* Jf2Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B46D1FF5E6E400354391 /* Jf2Post.swift */; };
+		C845B46F1FF5E6E400354391 /* Jf2Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B46D1FF5E6E400354391 /* Jf2Post.swift */; };
+		C845B4701FF5E6E400354391 /* Jf2Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B46D1FF5E6E400354391 /* Jf2Post.swift */; };
 		C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */; };
 		C87B4DAE1FBBA6AB00181B62 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87B4DAD1FBBA6AB00181B62 /* IntentsUI.framework */; };
 		C87B4DB11FBBA6AB00181B62 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DB01FBBA6AB00181B62 /* IntentViewController.swift */; };
@@ -22,6 +31,9 @@
 		C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
 		C87B4DC51FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
 		C87B4DC61FBBAB3900181B62 /* Micropub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DC31FBBAB3900181B62 /* Micropub.swift */; };
+		C88F471C1FF6D15600933FE8 /* MicropubTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F471B1FF6D15600933FE8 /* MicropubTypes.swift */; };
+		C88F471D1FF6D15600933FE8 /* MicropubTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F471B1FF6D15600933FE8 /* MicropubTypes.swift */; };
+		C88F471E1FF6D15600933FE8 /* MicropubTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F471B1FF6D15600933FE8 /* MicropubTypes.swift */; };
 		C894F5EC1FEAC7F0003D0A48 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5EB1FEAC7F0003D0A48 /* ChannelViewController.swift */; };
 		C894F5EF1FEADCB2003D0A48 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5EE1FEADCB2003D0A48 /* Channel.swift */; };
 		C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */; };
@@ -171,6 +183,9 @@
 		C80AEA3F1FEB0B4100CCBE2E /* TimelinePostContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePostContent.swift; sourceTree = "<group>"; };
 		C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTableViewCell.swift; sourceTree = "<group>"; };
+		C845B4651FF5E07300354391 /* xray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xray.swift; sourceTree = "<group>"; };
+		C845B4691FF5E50700354391 /* XRayParsingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XRayParsingResponse.swift; sourceTree = "<group>"; };
+		C845B46D1FF5E6E400354391 /* Jf2Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jf2Post.swift; sourceTree = "<group>"; };
 		C87B4DA21FBBA6AB00181B62 /* voice-notes.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "voice-notes.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		C87B4DA61FBBA6AB00181B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -183,6 +198,7 @@
 		C87B4DC71FBBACBB00181B62 /* voice-notes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-notes.entitlements"; sourceTree = "<group>"; };
 		C8883C881FB4F26A005957E3 /* Indigenous.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Indigenous.entitlements; sourceTree = "<group>"; };
 		C8883C891FB4F278005957E3 /* share-micropub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "share-micropub.entitlements"; sourceTree = "<group>"; };
+		C88F471B1FF6D15600933FE8 /* MicropubTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubTypes.swift; sourceTree = "<group>"; };
 		C894F5EB1FEAC7F0003D0A48 /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 		C894F5EE1FEADCB2003D0A48 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAPIResponse.swift; sourceTree = "<group>"; };
@@ -292,6 +308,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C845B4641FF5E05700354391 /* xray */ = {
+			isa = PBXGroup;
+			children = (
+				C845B4651FF5E07300354391 /* xray.swift */,
+				C845B4691FF5E50700354391 /* XRayParsingResponse.swift */,
+			);
+			path = xray;
+			sourceTree = "<group>";
+		};
 		C87B4DA31FBBA6AB00181B62 /* voice-notes */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				C87B4DC31FBBAB3900181B62 /* Micropub.swift */,
+				C88F471B1FF6D15600933FE8 /* MicropubTypes.swift */,
 			);
 			path = Micropub;
 			sourceTree = "<group>";
@@ -352,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				C8B36B591FED55B000D92E3D /* Mf2Type.swift */,
+				C845B46D1FF5E6E400354391 /* Jf2Post.swift */,
 			);
 			path = mf2;
 			sourceTree = "<group>";
@@ -376,6 +403,7 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
+				C845B4641FF5E05700354391 /* xray */,
 				C8D171C11FF58BDC00134485 /* FontAwesome */,
 				C8CBEB2D1FAA9BFC00298113 /* IndieAuth */,
 				C8B36B581FED558700D92E3D /* mf2 */,
@@ -775,11 +803,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8B36B651FED886C00D92E3D /* IndieAuthScope.swift in Sources */,
+				C845B4681FF5E07300354391 /* xray.swift in Sources */,
 				C87B4DC61FBBAB3900181B62 /* Micropub.swift in Sources */,
 				C8B36B641FED886400D92E3D /* IndieAuthProfile.swift in Sources */,
+				C845B46C1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
 				C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */,
 				C8B36B671FED887100D92E3D /* IndieAuthDelegate.swift in Sources */,
 				C8D171BE1FF449A400134485 /* IndieAuthTokenResponse.swift in Sources */,
+				C845B4701FF5E6E400354391 /* Jf2Post.swift in Sources */,
+				C88F471E1FF6D15600933FE8 /* MicropubTypes.swift in Sources */,
 				C8B36B691FED887500D92E3D /* IndieAuth.swift in Sources */,
 				C8B36B621FED885D00D92E3D /* IndieAuthAccount.swift in Sources */,
 				C8B36B6B1FED891400D92E3D /* Mf2Type.swift in Sources */,
@@ -809,6 +841,8 @@
 				C8D171D51FF58BFB00134485 /* Enum.swift in Sources */,
 				C8CBDEDD1FB4E858001CF409 /* ShareViewController.swift in Sources */,
 				C8B36B631FED886300D92E3D /* IndieAuthProfile.swift in Sources */,
+				C88F471D1FF6D15600933FE8 /* MicropubTypes.swift in Sources */,
+				C845B46B1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
 				C8F431CD1FB530010026B8D6 /* HalfModalTransitioningDelegate.swift in Sources */,
 				C8CBDEF91FB4EB01001CF409 /* CSS.swift in Sources */,
 				C8B36B681FED887100D92E3D /* IndieAuthDelegate.swift in Sources */,
@@ -817,12 +851,14 @@
 				C8D171D01FF58BFB00134485 /* FontAwesome.swift in Sources */,
 				C8F431CB1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,
 				C8D171D11FF58BFB00134485 /* FontAwesomeStateRequirement.swift in Sources */,
+				C845B46F1FF5E6E400354391 /* Jf2Post.swift in Sources */,
 				C8CBDEF81FB4EAFD001CF409 /* libxmlParserOption.swift in Sources */,
 				C8D171CE1FF58BFB00134485 /* FontAwesomeImageRepresentable.swift in Sources */,
 				C8B36B661FED886D00D92E3D /* IndieAuthScope.swift in Sources */,
 				C8B36B611FED885B00D92E3D /* IndieAuthAccount.swift in Sources */,
 				C8F431D01FB532890026B8D6 /* ModalNavController.swift in Sources */,
 				C8F431C91FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
+				C845B4671FF5E07300354391 /* xray.swift in Sources */,
 				C8CBDEF11FB4E8E6001CF409 /* ReplyViewController.swift in Sources */,
 				C8F431C71FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */,
 				C8D171D41FF58BFB00134485 /* FontAwesomeTabBarItem.swift in Sources */,
@@ -846,11 +882,13 @@
 				C8D171E21FF58C3900134485 /* FontAwesomeTextRepresentable.swift in Sources */,
 				C8D171DE1FF58C3900134485 /* FontAwesomeImageView.swift in Sources */,
 				C80AEA401FEB0B4100CCBE2E /* TimelinePostContent.swift in Sources */,
+				C845B46E1FF5E6E400354391 /* Jf2Post.swift in Sources */,
 				C8D171DF1FF58C3900134485 /* FontAwesomeSegmentedControl.swift in Sources */,
 				C894F5EF1FEADCB2003D0A48 /* Channel.swift in Sources */,
 				C8D171DB1FF58C3900134485 /* FontAwesome.swift in Sources */,
 				C8B36B5A1FED55B000D92E3D /* Mf2Type.swift in Sources */,
 				C80AEA441FEB1B0900CCBE2E /* ChannelTableViewCell.swift in Sources */,
+				C845B4661FF5E07300354391 /* xray.swift in Sources */,
 				C8B3B0871FAADAA90041C58E /* libxmlParserOption.swift in Sources */,
 				C8CBEB2C1FAA9BF700298113 /* IndieAuthLoginViewController.swift in Sources */,
 				C8B3B08B1FAADAA90041C58E /* libxmlHTMLDocument.swift in Sources */,
@@ -868,6 +906,7 @@
 				C894F5EC1FEAC7F0003D0A48 /* ChannelViewController.swift in Sources */,
 				C894F5F31FEAFC98003D0A48 /* IndieAuthDelegate.swift in Sources */,
 				C8D171DD1FF58C3900134485 /* FontAwesomeImageRepresentable.swift in Sources */,
+				C845B46A1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
 				C8CBEB441FAA9CAA00298113 /* MainViewController.swift in Sources */,
 				C8D171BA1FF40AE700134485 /* UserSettingsTableViewController.swift in Sources */,
 				C8D171DC1FF58C3900134485 /* FontAwesomeBarButtonItem.swift in Sources */,
@@ -876,6 +915,7 @@
 				C80AEA3E1FEB0AC500CCBE2E /* Author.swift in Sources */,
 				C8B3B0891FAADAA90041C58E /* Kanna.swift in Sources */,
 				C8CBEB421FAA9CAA00298113 /* AppDelegate.swift in Sources */,
+				C88F471C1FF6D15600933FE8 /* MicropubTypes.swift in Sources */,
 				C8D171BC1FF447AF00134485 /* IndieAuthTokenResponse.swift in Sources */,
 				C8D171D91FF58C2200134485 /* Enum.swift in Sources */,
 				C8B3B08A1FAADAA90041C58E /* libxmlHTMLNode.swift in Sources */,

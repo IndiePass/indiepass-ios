@@ -152,7 +152,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
             } else {
                 if indexPath.row == userSettings.count {
                     makeCurrentUserDefault()
-                } else if indexPath.row == userSettings.count {
+                } else if indexPath.row == userSettings.count + 1 {
                     logOutCurrentUser()
                 }
             }

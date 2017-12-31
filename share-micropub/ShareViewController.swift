@@ -33,7 +33,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     var sharingType: String? = nil
     var sharingContent: URLComponents? = nil
     var extensionItems: [NSExtensionItem]? = nil
-    var micropubActions: [String] = []
+    var micropubActions: [MicropubTypes] = []
     var currentAccount: IndieAuthAccount? = nil
     var activeAccount: Int = 0
     var shouldAnimateIn: Bool = true
@@ -71,7 +71,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ResponseCell", for: indexPath)
-            cell.textLabel?.text = micropubActions[indexPath.row]
+            cell.textLabel?.text = micropubActions[indexPath.row].rawValue
             return cell
         }
         
@@ -93,15 +93,15 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         
                 if (indexPath.section == 0) {
                     switch(micropubActions[indexPath.row]) {
-                        case "Like":
-                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
-                        case "Repost":
-                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
-                        case "Bookmark":
-                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
-                        case "Listen":
-                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
-                        case "Reply":
+                        case .like:
+                            sendMicropub(forAction: micropubActions[indexPath.row].rawValue, aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                        case .repost:
+                            sendMicropub(forAction: micropubActions[indexPath.row].rawValue, aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                        case .bookmark:
+                            sendMicropub(forAction: micropubActions[indexPath.row].rawValue, aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                        case .listen:
+                            sendMicropub(forAction: micropubActions[indexPath.row].rawValue, aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                        case .reply:
                             performSegue(withIdentifier: "showReplyView", sender: self)
                         default:
                             let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertControllerStyle.alert)
@@ -189,52 +189,96 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         activeAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
         
         self.clearsSelectionOnViewWillAppear = false
-        
+    
         let itemProvider = extensionItems?.first?.attachments?.first as! NSItemProvider
         let propertyList = String(kUTTypePropertyList)
         let plainText = String(kUTTypePlainText)
         let urlAttachment = String(kUTTypeURL)
-        if itemProvider.hasItemConformingToTypeIdentifier(propertyList) {
-            itemProvider.loadItem(forTypeIdentifier: propertyList, options: nil, completionHandler: { (item, error) -> Void in
-                guard let dictionary = item as? NSDictionary else { return }
-                OperationQueue.main.addOperation {
-                    print();
-                    if let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary,
-                        let urlString = results["URL"] as? String,
-                        let itemUrl = URLComponents(string: urlString){
-                            self.shareUrl(url: itemUrl)
+        
+        DispatchQueue.global(qos: .background).async {
+            if itemProvider.hasItemConformingToTypeIdentifier(propertyList) {
+                itemProvider.loadItem(forTypeIdentifier: propertyList, options: nil, completionHandler: { (item, error) -> Void in
+                    guard let dictionary = item as? NSDictionary else { return }
+                    OperationQueue.main.addOperation {
+                        print();
+                        if let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary,
+                            let urlString = results["URL"] as? String,
+                            let itemUrl = URLComponents(string: urlString){
+                                self.shareUrl(url: itemUrl)
+                        }
                     }
-                }
-            })
-        } else if itemProvider.hasItemConformingToTypeIdentifier(plainText) {
-            itemProvider.loadItem(forTypeIdentifier: plainText, options: nil, completionHandler: { (item, error) -> Void in
-                if let itemString = item as? String,
-                   let itemUrl = URLComponents(string: itemString) {
-                    self.shareUrl(url: itemUrl)
-                }
-            })
-        } else if itemProvider.hasItemConformingToTypeIdentifier(urlAttachment) {
-            itemProvider.loadItem(forTypeIdentifier: urlAttachment, options: nil, completionHandler: { (item, error) -> Void in
-                if let url = item as? URL,
-                   let itemUrl = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-                    self.shareUrl(url: itemUrl)
-                }
-            })
-        } else {
-            print("error")
-//            print(extensionItems?.first?.attachments)
+                })
+            } else if itemProvider.hasItemConformingToTypeIdentifier(plainText) {
+                itemProvider.loadItem(forTypeIdentifier: plainText, options: nil, completionHandler: { (item, error) -> Void in
+                    if let itemString = item as? String,
+                       let itemUrl = URLComponents(string: itemString) {
+                        self.shareUrl(url: itemUrl)
+                    }
+                })
+            } else if itemProvider.hasItemConformingToTypeIdentifier(urlAttachment) {
+                itemProvider.loadItem(forTypeIdentifier: urlAttachment, options: nil, completionHandler: { (item, error) -> Void in
+                    if let url = item as? URL,
+                       let itemUrl = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                        self.shareUrl(url: itemUrl)
+                    }
+                })
+            } else {
+                print("error")
+    //            print(extensionItems?.first?.attachments)
+            }
         }
     }
     
     private func shareUrl(url: URLComponents) {
         sharingType = "url"
         sharingContent = url
+        if let parsingUrl = url.url {
+            XRay.parse(url: parsingUrl) { parsedData, error in
+                print("Done Parsing!")
+                if error != nil {
+                    print("Error")
+                    print(error ?? "")
+                }
+                if let post = parsedData?.data {
+                    self.updateOptions(forPost: post)
+                }
+            }
+        }
+    }
+    
+    private func updateOptions(forPost post: Jf2Post) {
+        
+        micropubActions = []
+        
+        switch post.type {
+            case .event:
+                micropubActions.append(MicropubTypes.rsvp)
+                micropubActions.append(MicropubTypes.like)
+                micropubActions.append(MicropubTypes.repost)
+                micropubActions.append(MicropubTypes.bookmark)
+            case .entry:
+                micropubActions.append(MicropubTypes.like)
+                micropubActions.append(MicropubTypes.repost)
+                micropubActions.append(MicropubTypes.bookmark)
+                if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
+                    micropubActions.append(MicropubTypes.listen)
+                    micropubActions.append(MicropubTypes.watch)
+                    micropubActions.append(MicropubTypes.read)
+                }
+            case .card:
+                micropubActions.append(MicropubTypes.poke)
+                micropubActions.append(MicropubTypes.bookmark)
+        }
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        micropubActions = ["Like", "Repost", "Bookmark"]
+        micropubActions = [MicropubTypes.like, MicropubTypes.repost, MicropubTypes.bookmark]
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
@@ -243,7 +287,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
                 currentAccount = micropubDetails
         
                 if (currentAccount?.me.absoluteString == "https://eddiehinkle.com/") {
-                    micropubActions.append("Listen")
+                    micropubActions.append(MicropubTypes.listen)
                 }
             
                 if (animated && shouldAnimateIn) {
