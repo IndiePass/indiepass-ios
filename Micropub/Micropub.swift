@@ -8,7 +8,7 @@
 
 import Foundation
 
-func sendMicropub(forAction: String, aboutUrl: URL, forUser user: IndieAuthAccount, completion: @escaping () -> Swift.Void) {
+func sendMicropub(forAction: MicropubTypes, aboutUrl: URL, forUser user: IndieAuthAccount, completion: @escaping () -> Swift.Void) {
     
     DispatchQueue.global(qos: .background).async {
         var entryString = ""
@@ -23,13 +23,13 @@ func sendMicropub(forAction: String, aboutUrl: URL, forUser user: IndieAuthAccou
         print(encodedUrl)
         
         switch(forAction) {
-            case "Like":
+            case .like:
                 entryString = "h=entry&like-of=\(encodedUrl)"
-            case "Repost":
+            case .repost:
                 entryString = "h=entry&repost-of=\(encodedUrl)"
-            case "Bookmark":
+            case .bookmark:
                 entryString = "h=entry&bookmark-of=\(encodedUrl)"
-            case "Listen":
+            case .listen:
                 entryString = "h=entry&listen-of=\(encodedUrl)"
             default:
                 print("ERROR")

@@ -15,6 +15,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     var defaultUserAccount: Int = 0
     var userSettings: [String] = []
     var loginDisplayedAsModal: Bool? = nil
+    var fetchingSyndicateTargets = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +39,6 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 userAccounts.append(newAccount)
             }
         }
-        print("accounts?")
-        print(userAccounts.count)
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,7 +55,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (section) {
             case 0:
-                return userSettings.count + 2
+                return userSettings.count + 3
             case 1:
                 return userAccounts.count + 1
             default:
@@ -97,6 +96,9 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
             print(userSettings.count)
         } else {
             if indexPath.row == userSettings.count {
+                cell.textLabel?.text = "Refresh Syndication Targets"
+                cell.detailTextLabel?.text = fetchingSyndicateTargets ? "Loading" : ""
+            } else if indexPath.row == userSettings.count + 1 {
                 if (defaultUserAccount == activeUserAccount) {
                     cell.textLabel?.text = "This account is the default"
                     cell.isUserInteractionEnabled = false
@@ -107,7 +109,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                     cell.textLabel?.isEnabled = true
                 }
                 cell.detailTextLabel?.text = ""
-            } else if indexPath.row == userSettings.count + 1 {
+            } else if indexPath.row == userSettings.count + 2 {
                 cell.textLabel?.text = "Log Out"
                 cell.textLabel?.textColor = UIColor(red: 1, green: 0.2196078431, blue: 0.137254902, alpha: 1)
                 cell.detailTextLabel?.text = userAccounts[activeUserAccount].me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
@@ -151,13 +153,42 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 
             } else {
                 if indexPath.row == userSettings.count {
-                    makeCurrentUserDefault()
+                    refreshSyndicationTargets()
                 } else if indexPath.row == userSettings.count + 1 {
+                    makeCurrentUserDefault()
+                } else if indexPath.row == userSettings.count + 2 {
                     logOutCurrentUser()
                 }
             }
         }
         
+    }
+    
+    func refreshSyndicationTargets() {
+        fetchingSyndicateTargets = true
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let activeAccountId = defaults?.integer(forKey: "activeAccount") ?? 0
+        var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+        if var activeAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccountId]) {
+            IndieAuth.getSyndicationTargets(forEndpoint: activeAccount.micropub_endpoint, withToken: activeAccount.access_token) { syndicateTargets, error in
+                activeAccount.micropub_config?.syndicateTo = syndicateTargets
+                // todo: save account info
+                if let activeAccountData = try? JSONEncoder().encode(activeAccount) {
+                    micropubAccounts[activeAccountId] = activeAccountData
+                    defaults?.set(micropubAccounts, forKey: "micropubAccounts")
+                    self.fetchingSyndicateTargets = false
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+                
+            }
+        }
+    
     }
     
     func logOutCurrentUser() {
@@ -169,11 +200,13 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         if let accountToRemove = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
             IndieAuth.revokeIndieAuthToken(forAccount: accountToRemove) { errorMessage in
                 if errorMessage != nil {
-                    DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    }
+//                    DispatchQueue.main.async {
+//                        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
+//                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+//                        self.present(alert, animated: true, completion: nil)
+//                    }
+                    print("Error while reokving auth token")
+                    print(errorMessage)
                 }
                 
                 micropubAccounts.remove(at: activeAccount)

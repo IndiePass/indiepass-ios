@@ -16,17 +16,8 @@ class ChannelViewController: UITableViewController {
     var selectedChannel: Channel? = nil
     var timelines: [[TimelinePost]] = []
     
-    @IBOutlet weak var profileIcon: UIBarButtonItem!
-    
-    @IBAction func notificationClicked(_ sender: Any) {
-        
-//    self.channels[0].append(Channel(uid: "notifications", name: "Notifications"))
-        //            performSegue(withIdentifier: "showReplyView", sender: self)
-    }
-    
-    @IBAction func profileClicked(_ sender: Any) {
-    }
-    
+    @IBOutlet weak var notificationButton: UIBarButtonItem!
+    @IBOutlet weak var accountButton: UIBarButtonItem!
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return channels.count
@@ -249,10 +240,6 @@ class ChannelViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-        self.navigationItem.rightBarButtonItems?[0].image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
-        self.navigationItem.rightBarButtonItems?[1].image = UIImage.fontAwesomeIcon(name: .globe, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
-        
         
 //        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
 //        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
@@ -288,6 +275,9 @@ class ChannelViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        accountButton.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        notificationButton.image = UIImage.fontAwesomeIcon(name: .globe, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         let defaultAccount = defaults?.integer(forKey: "defaultAccount") ?? 0

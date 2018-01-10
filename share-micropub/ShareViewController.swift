@@ -94,13 +94,13 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
                 if (indexPath.section == 0) {
                     switch(micropubActions[indexPath.row]) {
                         case .like:
-                            sendMicropub(forAction: micropubActions[indexPath.row].rawValue, aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .repost:
-                            sendMicropub(forAction: micropubActions[indexPath.row].rawValue, aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .bookmark:
-                            sendMicropub(forAction: micropubActions[indexPath.row].rawValue, aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .listen:
-                            sendMicropub(forAction: micropubActions[indexPath.row].rawValue, aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
+                            sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .reply:
                             performSegue(withIdentifier: "showReplyView", sender: self)
                         default:
@@ -268,6 +268,8 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
             case .card:
                 micropubActions.append(MicropubTypes.poke)
                 micropubActions.append(MicropubTypes.bookmark)
+        case .cite:
+                print("Cite not supported")
         }
 
         DispatchQueue.main.async {

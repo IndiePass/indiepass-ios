@@ -22,6 +22,22 @@
 		C845B46E1FF5E6E400354391 /* Jf2Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B46D1FF5E6E400354391 /* Jf2Post.swift */; };
 		C845B46F1FF5E6E400354391 /* Jf2Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B46D1FF5E6E400354391 /* Jf2Post.swift */; };
 		C845B4701FF5E6E400354391 /* Jf2Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845B46D1FF5E6E400354391 /* Jf2Post.swift */; };
+		C85B2445200596D60097E577 /* PostingView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C85B2444200596D60097E577 /* PostingView.storyboard */; };
+		C85B2446200596D60097E577 /* PostingView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C85B2444200596D60097E577 /* PostingView.storyboard */; };
+		C85B24482005975C0097E577 /* PostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B24472005975C0097E577 /* PostingViewController.swift */; };
+		C85B24492005975C0097E577 /* PostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B24472005975C0097E577 /* PostingViewController.swift */; };
+		C85B244C20059F6D0097E577 /* MicropubPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B244B20059F6D0097E577 /* MicropubPost.swift */; };
+		C85B244D20059F6D0097E577 /* MicropubPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B244B20059F6D0097E577 /* MicropubPost.swift */; };
+		C85B244E20059F6D0097E577 /* MicropubPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B244B20059F6D0097E577 /* MicropubPost.swift */; };
+		C85B24542005A4440097E577 /* MicropubSendType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B24532005A4440097E577 /* MicropubSendType.swift */; };
+		C85B24552005A4440097E577 /* MicropubSendType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B24532005A4440097E577 /* MicropubSendType.swift */; };
+		C85B24562005A4440097E577 /* MicropubSendType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B24532005A4440097E577 /* MicropubSendType.swift */; };
+		C85B245820067E530097E577 /* MicropubConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245720067E530097E577 /* MicropubConfig.swift */; };
+		C85B245920067E530097E577 /* MicropubConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245720067E530097E577 /* MicropubConfig.swift */; };
+		C85B245A20067E530097E577 /* MicropubConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245720067E530097E577 /* MicropubConfig.swift */; };
+		C85B245C20067EE60097E577 /* SyndicateTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245B20067EE60097E577 /* SyndicateTarget.swift */; };
+		C85B245D20067EE60097E577 /* SyndicateTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245B20067EE60097E577 /* SyndicateTarget.swift */; };
+		C85B245E20067EE60097E577 /* SyndicateTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245B20067EE60097E577 /* SyndicateTarget.swift */; };
 		C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */; };
 		C87B4DAE1FBBA6AB00181B62 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87B4DAD1FBBA6AB00181B62 /* IntentsUI.framework */; };
 		C87B4DB11FBBA6AB00181B62 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B4DB01FBBA6AB00181B62 /* IntentViewController.swift */; };
@@ -186,6 +202,12 @@
 		C845B4651FF5E07300354391 /* xray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xray.swift; sourceTree = "<group>"; };
 		C845B4691FF5E50700354391 /* XRayParsingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XRayParsingResponse.swift; sourceTree = "<group>"; };
 		C845B46D1FF5E6E400354391 /* Jf2Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jf2Post.swift; sourceTree = "<group>"; };
+		C85B2444200596D60097E577 /* PostingView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostingView.storyboard; sourceTree = "<group>"; };
+		C85B24472005975C0097E577 /* PostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingViewController.swift; sourceTree = "<group>"; };
+		C85B244B20059F6D0097E577 /* MicropubPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubPost.swift; sourceTree = "<group>"; };
+		C85B24532005A4440097E577 /* MicropubSendType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubSendType.swift; sourceTree = "<group>"; };
+		C85B245720067E530097E577 /* MicropubConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubConfig.swift; sourceTree = "<group>"; };
+		C85B245B20067EE60097E577 /* SyndicateTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyndicateTarget.swift; sourceTree = "<group>"; };
 		C87B4DA21FBBA6AB00181B62 /* voice-notes.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "voice-notes.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		C87B4DA61FBBA6AB00181B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -317,6 +339,22 @@
 			path = xray;
 			sourceTree = "<group>";
 		};
+		C85B242B20042EEF0097E577 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = vendor;
+			sourceTree = "<group>";
+		};
+		C85B2443200596AA0097E577 /* PostingInterface */ = {
+			isa = PBXGroup;
+			children = (
+				C85B2444200596D60097E577 /* PostingView.storyboard */,
+				C85B24472005975C0097E577 /* PostingViewController.swift */,
+			);
+			path = PostingInterface;
+			sourceTree = "<group>";
+		};
 		C87B4DA31FBBA6AB00181B62 /* voice-notes */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +388,10 @@
 			children = (
 				C87B4DC31FBBAB3900181B62 /* Micropub.swift */,
 				C88F471B1FF6D15600933FE8 /* MicropubTypes.swift */,
+				C85B244B20059F6D0097E577 /* MicropubPost.swift */,
+				C85B24532005A4440097E577 /* MicropubSendType.swift */,
+				C85B245720067E530097E577 /* MicropubConfig.swift */,
+				C85B245B20067EE60097E577 /* SyndicateTarget.swift */,
 			);
 			path = Micropub;
 			sourceTree = "<group>";
@@ -403,6 +445,8 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
+				C85B2443200596AA0097E577 /* PostingInterface */,
+				C85B242B20042EEF0097E577 /* vendor */,
 				C845B4641FF5E05700354391 /* xray */,
 				C8D171C11FF58BDC00134485 /* FontAwesome */,
 				C8CBEB2D1FAA9BFC00298113 /* IndieAuth */,
@@ -763,6 +807,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C85B2446200596D60097E577 /* PostingView.storyboard in Resources */,
 				C8CBDEE01FB4E858001CF409 /* MainInterface.storyboard in Resources */,
 				C8CBDEEE1FB4E8E6001CF409 /* mf2parsing.js in Resources */,
 				C8D171D21FF58BFB00134485 /* FontAwesome.otf in Resources */,
@@ -777,6 +822,7 @@
 				C8D171DA1FF58C3900134485 /* FontAwesome.otf in Resources */,
 				C8CBEB431FAA9CAA00298113 /* Main.storyboard in Resources */,
 				C8CBEB031FAA9B4600298113 /* LaunchScreen.storyboard in Resources */,
+				C85B2445200596D60097E577 /* PostingView.storyboard in Resources */,
 				C8CBEB001FAA9B4600298113 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -808,6 +854,8 @@
 				C8B36B641FED886400D92E3D /* IndieAuthProfile.swift in Sources */,
 				C845B46C1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
 				C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */,
+				C85B245A20067E530097E577 /* MicropubConfig.swift in Sources */,
+				C85B244E20059F6D0097E577 /* MicropubPost.swift in Sources */,
 				C8B36B671FED887100D92E3D /* IndieAuthDelegate.swift in Sources */,
 				C8D171BE1FF449A400134485 /* IndieAuthTokenResponse.swift in Sources */,
 				C845B4701FF5E6E400354391 /* Jf2Post.swift in Sources */,
@@ -815,6 +863,8 @@
 				C8B36B691FED887500D92E3D /* IndieAuth.swift in Sources */,
 				C8B36B621FED885D00D92E3D /* IndieAuthAccount.swift in Sources */,
 				C8B36B6B1FED891400D92E3D /* Mf2Type.swift in Sources */,
+				C85B245E20067EE60097E577 /* SyndicateTarget.swift in Sources */,
+				C85B24562005A4440097E577 /* MicropubSendType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -833,6 +883,7 @@
 				C87B4DC51FBBAB3900181B62 /* Micropub.swift in Sources */,
 				C8D171CF1FF58BFB00134485 /* FontAwesomeImageView.swift in Sources */,
 				C8CBDEF01FB4E8E6001CF409 /* MicropubShareViewController.swift in Sources */,
+				C85B24492005975C0097E577 /* PostingViewController.swift in Sources */,
 				C8D171D31FF58BFB00134485 /* FontAwesomeSegmentedControl.swift in Sources */,
 				C8CBDEF41FB4EAD4001CF409 /* RealLinkParser.swift in Sources */,
 				C8D171C01FF46DCC00134485 /* AccountSelectorTableViewController.swift in Sources */,
@@ -843,6 +894,8 @@
 				C8B36B631FED886300D92E3D /* IndieAuthProfile.swift in Sources */,
 				C88F471D1FF6D15600933FE8 /* MicropubTypes.swift in Sources */,
 				C845B46B1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
+				C85B245920067E530097E577 /* MicropubConfig.swift in Sources */,
+				C85B24552005A4440097E577 /* MicropubSendType.swift in Sources */,
 				C8F431CD1FB530010026B8D6 /* HalfModalTransitioningDelegate.swift in Sources */,
 				C8CBDEF91FB4EB01001CF409 /* CSS.swift in Sources */,
 				C8B36B681FED887100D92E3D /* IndieAuthDelegate.swift in Sources */,
@@ -861,10 +914,12 @@
 				C845B4671FF5E07300354391 /* xray.swift in Sources */,
 				C8CBDEF11FB4E8E6001CF409 /* ReplyViewController.swift in Sources */,
 				C8F431C71FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */,
+				C85B244D20059F6D0097E577 /* MicropubPost.swift in Sources */,
 				C8D171D41FF58BFB00134485 /* FontAwesomeTabBarItem.swift in Sources */,
 				C8D171BD1FF449A400134485 /* IndieAuthTokenResponse.swift in Sources */,
 				C8CBDEF31FB4EAB2001CF409 /* IndieAuth.swift in Sources */,
 				C8CBDEF51FB4EAFD001CF409 /* Kanna.swift in Sources */,
+				C85B245D20067EE60097E577 /* SyndicateTarget.swift in Sources */,
 				C8D171D61FF58BFB00134485 /* FontAwesomeBarButtonItem.swift in Sources */,
 				C8CBDEF61FB4EAFD001CF409 /* libxmlHTMLDocument.swift in Sources */,
 			);
@@ -908,15 +963,20 @@
 				C8D171DD1FF58C3900134485 /* FontAwesomeImageRepresentable.swift in Sources */,
 				C845B46A1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
 				C8CBEB441FAA9CAA00298113 /* MainViewController.swift in Sources */,
+				C85B24542005A4440097E577 /* MicropubSendType.swift in Sources */,
+				C85B244C20059F6D0097E577 /* MicropubPost.swift in Sources */,
 				C8D171BA1FF40AE700134485 /* UserSettingsTableViewController.swift in Sources */,
 				C8D171DC1FF58C3900134485 /* FontAwesomeBarButtonItem.swift in Sources */,
 				C8F431C61FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */,
+				C85B245820067E530097E577 /* MicropubConfig.swift in Sources */,
 				C8F431CC1FB530010026B8D6 /* HalfModalTransitioningDelegate.swift in Sources */,
 				C80AEA3E1FEB0AC500CCBE2E /* Author.swift in Sources */,
 				C8B3B0891FAADAA90041C58E /* Kanna.swift in Sources */,
 				C8CBEB421FAA9CAA00298113 /* AppDelegate.swift in Sources */,
+				C85B24482005975C0097E577 /* PostingViewController.swift in Sources */,
 				C88F471C1FF6D15600933FE8 /* MicropubTypes.swift in Sources */,
 				C8D171BC1FF447AF00134485 /* IndieAuthTokenResponse.swift in Sources */,
+				C85B245C20067EE60097E577 /* SyndicateTarget.swift in Sources */,
 				C8D171D91FF58C2200134485 /* Enum.swift in Sources */,
 				C8B3B08A1FAADAA90041C58E /* libxmlHTMLNode.swift in Sources */,
 				C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */,

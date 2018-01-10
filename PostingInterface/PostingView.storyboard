@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fnh-Wh-ofZ">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--New Post-->
+        <scene sceneID="Gwu-In-smi">
+            <objects>
+                <viewController id="naI-gX-XzM" customClass="PostingViewController" customModule="Indigenous" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5da-vQ-kj4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QWK-gd-qRc">
+                                <rect key="frame" x="16" y="88" width="343" height="690"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="twitter"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QWK-gd-qRc" firstAttribute="top" secondItem="wuZ-fg-DHS" secondAttribute="top" id="3Vr-F1-ydV"/>
+                            <constraint firstItem="wuZ-fg-DHS" firstAttribute="trailing" secondItem="QWK-gd-qRc" secondAttribute="trailing" constant="16" id="7Ul-BL-oEn"/>
+                            <constraint firstItem="wuZ-fg-DHS" firstAttribute="bottom" secondItem="QWK-gd-qRc" secondAttribute="bottom" id="JGe-oB-279"/>
+                            <constraint firstItem="QWK-gd-qRc" firstAttribute="leading" secondItem="wuZ-fg-DHS" secondAttribute="leading" constant="16" id="S98-Ps-7Qo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wuZ-fg-DHS"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Post" id="Ke6-Uu-FBs">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Mvt-vU-Y2t">
+                            <connections>
+                                <action selector="cancelModal:" destination="naI-gX-XzM" id="FZV-iO-Ez7"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="1WR-WR-U96">
+                            <connections>
+                                <action selector="sendPost:" destination="naI-gX-XzM" id="muZ-82-vEA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="postContentField" destination="QWK-gd-qRc" id="X2g-6f-ZU2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ih5-ys-8UK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="495.19999999999999" y="173.64532019704436"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Fwy-if-Aa8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Fnh-Wh-ofZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gma-5l-myI">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="naI-gX-XzM" kind="relationship" relationship="rootViewController" id="cJu-5y-KNK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y9J-5y-ws3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-308" y="174"/>
+        </scene>
+    </scenes>
+</document>
