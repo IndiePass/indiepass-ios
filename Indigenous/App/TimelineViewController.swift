@@ -10,7 +10,7 @@ import Social
 import MobileCoreServices
 import SafariServices
 
-class TimelineViewController: UITableViewController, UITableViewDataSourcePrefetching {
+class TimelineViewController: UITableViewController, UITableViewDataSourcePrefetching, PostingViewDelegate {
     
     var channel: Channel? = nil
     var timeline: [Jf2Post] = []
@@ -33,6 +33,41 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 post.author?.downloadPhoto(photoIndex: 0)
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let replyAction = UIContextualAction(style: .normal, title:  "Reply", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            
+            let post = self.timeline[indexPath.row]
+            
+            self.performSegue(withIdentifier: "showReplyView", sender: post)
+            success(true)
+        })
+        
+        replyAction.image = UIImage(named: "tick")
+        replyAction.backgroundColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+
+        return UISwipeActionsConfiguration(actions: [replyAction])
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let viewAction = UIContextualAction(style: .normal, title:  "View", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            
+            let post = self.timeline[indexPath.row]
+            
+            if let postUrl = post.url {
+                let safariVC = SFSafariViewController(url: postUrl)
+                self.present(safariVC, animated: true)
+                success(true)
+            } else {
+                success(false)
+            }
+        })
+        viewAction.image = UIImage(named: "tick")
+        viewAction.backgroundColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+        
+        return UISwipeActionsConfiguration(actions: [viewAction])
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,12 +149,12 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
         
         //let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         
-        let post = timeline[indexPath.row]
-        
-        if let postUrl = post.url {
-            let safariVC = SFSafariViewController(url: postUrl)
-            present(safariVC, animated: true, completion: nil)
-        }
+//        let post = timeline[indexPath.row]
+//
+//        if let postUrl = post.url {
+//            let safariVC = SFSafariViewController(url: postUrl)
+//            present(safariVC, animated: true, completion: nil)
+//        }
     }
     
     @objc func handleRefresh(refreshControl: UIRefreshControl) {
@@ -218,6 +253,32 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             
                 task.resume()
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var destinationViewController: UIViewController? = segue.destination
+        if let navigationController = destinationViewController as? UINavigationController {
+            destinationViewController = navigationController.visibleViewController
+        }
+        
+        if segue.identifier == "showReplyView" {
+            if let postingVC = destinationViewController as? PostingViewController {
+                postingVC.currentPost = MicropubPost(type: .entry,
+                                                     properties: MicropubPostProperties())
+                
+                if let replyPost = sender as? Jf2Post {
+                    postingVC.currentPost?.properties.inReplyTo = replyPost.url?.absoluteString
+                }
+                
+                postingVC.displayAsModal = false
+                postingVC.delegate = self
+                postingVC.title = "New Reply"
+            }
+        }
+    }
+    
+    func removePostingView() {
+        navigationController?.popViewController(animated: true)
     }
     
 }

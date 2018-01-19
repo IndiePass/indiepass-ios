@@ -16,7 +16,7 @@ class ChannelViewController: UITableViewController {
     var selectedChannel: Channel? = nil
     var timelines: [[Jf2Post]] = []
     
-    @IBOutlet weak var notificationButton: UIBarButtonItem!
+//    @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var accountButton: UIBarButtonItem!
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -287,7 +287,8 @@ class ChannelViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         accountButton.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
-        notificationButton.image = UIImage.fontAwesomeIcon(name: .globe, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        accountButton.tintColor = self.view.tintColor
+//        notificationButton.image = UIImage.fontAwesomeIcon(name: .globe, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         let defaultAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
@@ -298,16 +299,18 @@ class ChannelViewController: UITableViewController {
             
             self.title = micropubDetails.me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
             
-            //        if let url = URL(string: "https://eddiehinkle.com/images/profile.jpg") {
-            //            getDataFromUrl(url: url) { data, response, error in
-            //                guard let data = data, error == nil else { return }
-            //                print(response?.suggestedFilename ?? url.lastPathComponent)
-            //                print("Download Finished")
-            //                DispatchQueue.main.async() {
-            //                    self.profileIcon?.image = UIImage(data: data)
-            //                }
-            //            }
-            //        }
+//            micropubDetails.profile.downloadPhoto(photoIndex: 0) { photo in
+//                if let authorPhoto = photo {
+//                    DispatchQueue.main.async {
+//                        let button: UIButton = UIButton(type: .custom)
+//                        button.setImage(authorPhoto.withRenderingMode(.alwaysOriginal), for: .normal)
+//                        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+//                        button.contentMode = .scaleAspectFit
+//                        self.accountButton.customView = button
+//                        
+//                    }
+//                }
+//            }
             
             tableView.delegate = self
             tableView.dataSource = self

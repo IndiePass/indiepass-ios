@@ -8,7 +8,6 @@
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Baseline standard spacing" minToolsVersion="9.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -233,14 +232,11 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Channels" id="sYa-hz-v6H">
-                        <leftBarButtonItems>
-                            <barButtonItem title="Notifications" id="jEB-MT-R6K"/>
-                            <barButtonItem title="Account" id="uwG-7P-CVs">
-                                <connections>
-                                    <segue destination="rFd-FV-C1X" kind="show" id="VGb-aN-gMQ"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="Account" width="30" id="uwG-7P-CVs">
+                            <connections>
+                                <segue destination="rFd-FV-C1X" kind="show" id="VGb-aN-gMQ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="XDM-wc-9XD">
                             <connections>
                                 <segue destination="bDQ-l4-ykq" kind="presentation" identifier="showPostingInterface" id="P3B-zX-XfX"/>
@@ -254,7 +250,6 @@
                     </refreshControl>
                     <connections>
                         <outlet property="accountButton" destination="uwG-7P-CVs" id="swG-Mn-Dbb"/>
-                        <outlet property="notificationButton" destination="jEB-MT-R6K" id="c6M-jt-NWA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lt1-LR-giJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -438,6 +433,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="iBk-9N-Qme" kind="show" identifier="showReplyView" id="EbK-Su-yi0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ous-eF-r2b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -450,6 +448,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i8f-ej-kLu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="654" y="1990"/>
+        </scene>
+        <!--postingView-->
+        <scene sceneID="uY5-Sl-W7w">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PostingView" referencedIdentifier="postingView" id="iBk-9N-Qme" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0HP-Ac-zls" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1232" y="1979"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="gRs-aR-8lc">

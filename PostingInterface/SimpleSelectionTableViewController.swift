@@ -65,8 +65,6 @@ class SimpleSelectionTableViewController: UITableViewController {
      }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("table view")
-        print(selectedOptions)
         if (options[indexPath.row].selected) {
             if let indexOfSelected = selectedOptions.index(of: indexPath.row) {
                 selectedOptions.remove(at: indexOfSelected)

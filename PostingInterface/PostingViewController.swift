@@ -336,6 +336,9 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         photoUploads.dataSource = self
         setupKeyboardObservers()
         
+        tagsButton.image = UIImage.fontAwesomeIcon(name: .tags, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        syndicateButton.image = UIImage.fontAwesomeIcon(name: .shareAlt, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        
         if !displayAsModal {
             navigationItem.leftBarButtonItem = nil
         }
@@ -378,20 +381,40 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         super.viewWillAppear(animated)
         postContentField.becomeFirstResponder()
         updatePostingView(withAnimation: false)
+        
+        if let categoryCount = currentPost?.properties.category?.count, categoryCount > 0 {
+            tagsButton.tintColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+        } else {
+            tagsButton.tintColor = self.view.tintColor
+        }
+        
+        if let syndicateCount = currentPost?.properties.mpSyndicateTo?.count, syndicateCount > 0 {
+            syndicateButton.tintColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+        } else {
+            syndicateButton.tintColor = self.view.tintColor
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        if hasPostChanged() == false {
-            // Post hasn't changed since load, so we don't want to save it
-            self.currentPost = nil
-        }
+        if self.isMovingFromParentViewController {
+            if hasPostChanged() == false {
+                // Post hasn't changed since load, so we don't want to save it
+                self.currentPost = nil
+            }
 
-        if var post = currentPost {
-            post.properties.content = postContentField.text
-            print("Saved post draft")
-            savePostDraft(post: post)
+            if var post = currentPost {
+                post.properties.content = postContentField.text
+                print("Saved post draft")
+                savePostDraft(post: post)
+            }
+        } else {
+            if currentPost != nil, hasPostChanged(), var post = currentPost {
+                post.properties.content = postContentField.text
+                print("Saved post draft")
+                savePostDraft(post: post)
+            }
         }
     }
     
@@ -401,9 +424,6 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     }
     
     func hasPostChanged() -> Bool {
-        print("has changed?")
-        print(currentPost)
-        print(originalPost)
         if let firstPost = currentPost, let secondPost = originalPost {
             return !(firstPost == secondPost)
         }
