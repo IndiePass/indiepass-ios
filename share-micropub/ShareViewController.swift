@@ -27,13 +27,13 @@ import MobileCoreServices
 
 //SLComposeServiceViewController
 
-class ShareViewController: UITableViewController, HalfModalPresentable {
+class ShareViewController: UITableViewController, HalfModalPresentable, PostingViewDelegate {
     
 //    var micropubAuth: [String: Any]? = nil
     var sharingType: String? = nil
     var sharingContent: URLComponents? = nil
     var extensionItems: [NSExtensionItem]? = nil
-    var micropubActions: [MicropubTypes] = []
+    var micropubActions: [MicropubResponseType] = []
     var currentAccount: IndieAuthAccount? = nil
     var activeAccount: Int = 0
     var shouldAnimateIn: Bool = true
@@ -128,15 +128,26 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         }
     }
     
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showReplyView",
-        let nextVC = segue.destination as? ReplyViewController {
-            nextVC.replyUrl = sharingContent?.url
-            
+        var destinationViewController: UIViewController? = segue.destination
+        if let navigationController = destinationViewController as? UINavigationController {
+            destinationViewController = navigationController.visibleViewController
+        }
+        
+        if segue.identifier == "showReplyView" {
+            if let postingVC = destinationViewController as? PostingViewController {
+                postingVC.currentPost = MicropubPost(type: .entry,
+                                                     properties: MicropubPostProperties())
+                postingVC.currentPost?.properties.inReplyTo = sharingContent?.string
+                postingVC.displayAsModal = false
+                postingVC.delegate = self
+                postingVC.title = "New Reply"
+            }
         }
         
         if segue.identifier == "showAccountSelection",
-            let nextVC = segue.destination as? AccountSelectorTableViewController {
+            let nextVC = destinationViewController as? AccountSelectorTableViewController {
             nextVC.activeUserAccount = activeAccount
             nextVC.userAccountChanged = { [weak self](user) in
                 if let vc = self {
@@ -146,27 +157,9 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         }
     }
     
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//        print(indexPath)
-//        
-//        switch(micropubActions[indexPath.row]) {
-//            case "Like":
-//                print("Liking ")
-////                print(self.parent?.extensionContext!.inputItems)
-//            case "Repost":
-//                print("Reposting ")
-////                print(self.parent?.extensionContext!.inputItems)
-//            case "Bookmark":
-//                print("Bookmarking ")
-////                print(self.parent?.extensionContext!.inputItems)
-//            default:
-//                print("oops")
-//        }
-//        
-//        print(self.parent?.extensionContext!.inputItems)
-//        
-//    }
+    func removePostingView() {
+        navigationController?.popViewController(animated: true)
+    }
     
     @IBAction func cancelShare(_ sender: UIBarButtonItem) {
         
@@ -252,22 +245,23 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
         
         switch post.type {
             case .event:
-                micropubActions.append(MicropubTypes.rsvp)
-                micropubActions.append(MicropubTypes.like)
-                micropubActions.append(MicropubTypes.repost)
-                micropubActions.append(MicropubTypes.bookmark)
+                micropubActions.append(.rsvp)
+                micropubActions.append(.like)
+                micropubActions.append(.repost)
+                micropubActions.append(.bookmark)
+                micropubActions.append(.reply)
             case .entry:
-                micropubActions.append(MicropubTypes.like)
-                micropubActions.append(MicropubTypes.repost)
-                micropubActions.append(MicropubTypes.bookmark)
+                micropubActions.append(.reply)
+                micropubActions.append(.like)
+                micropubActions.append(.repost)
+                micropubActions.append(.bookmark)
                 if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
-                    micropubActions.append(MicropubTypes.listen)
-                    micropubActions.append(MicropubTypes.watch)
-                    micropubActions.append(MicropubTypes.read)
+                    micropubActions.append(.listen)
+                    micropubActions.append(.watch)
+                    micropubActions.append(.read)
                 }
             case .card:
-                micropubActions.append(MicropubTypes.poke)
-                micropubActions.append(MicropubTypes.bookmark)
+                micropubActions.append(.bookmark)
         case .cite:
                 print("Cite not supported")
         }
@@ -280,7 +274,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        micropubActions = [MicropubTypes.like, MicropubTypes.repost, MicropubTypes.bookmark]
+        micropubActions = [.reply, .like, .repost, .bookmark]
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
@@ -289,7 +283,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable {
                 currentAccount = micropubDetails
         
                 if (currentAccount?.me.absoluteString == "https://eddiehinkle.com/") {
-                    micropubActions.append(MicropubTypes.listen)
+                    micropubActions.append(.listen)
                 }
             
                 if (animated && shouldAnimateIn) {

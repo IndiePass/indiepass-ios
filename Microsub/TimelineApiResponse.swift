@@ -9,5 +9,5 @@
 import Foundation
 
 struct TimelineApiResponse: Codable {
-    let items: [TimelinePost]
+    let items: [Jf2Post]
 }

@@ -10,10 +10,10 @@ import Social
 import MobileCoreServices
 import SafariServices
 
-class TimelineViewController: UITableViewController {
+class TimelineViewController: UITableViewController, UITableViewDataSourcePrefetching {
     
     var channel: Channel? = nil
-    var timeline: [TimelinePost] = []
+    var timeline: [Jf2Post] = []
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -23,17 +23,81 @@ class TimelineViewController: UITableViewController {
         return timeline.count
     }
     
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            let post = timeline[indexPath.row]
+            if post.photo != nil, post.photo!.count > 0 {
+                post.downloadPhoto(photoIndex: 0)
+            }
+            if post.author?.photo != nil, post.author!.photo!.count > 0 {
+                post.author?.downloadPhoto(photoIndex: 0)
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTimelineCell", for: indexPath) as? TimelineTableViewCell {
+            
+            let post = timeline[indexPath.row]
+            cell.postContent.text = post.name ?? post.content?.text ?? post.summary ?? "Content Can't Display"
+            cell.authorName.text = post.author?.name ?? "Unknown"
+            
+            cell.postImage.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
+            cell.postImage.isHidden = false
+            
+            if let imageUrl = post.photo?[0], let image = post.photoImage?[imageUrl] {
+                // display the downloaded photo
+                cell.postImage.image = image.image
+            } else {
+                if post.photo != nil, post.photo!.count > 0 {
+                    // if we are here, then there is an unloaded photo
+                    post.downloadPhoto(photoIndex: 0) { returnedImage in
+                        DispatchQueue.main.async {
+                            cell.postImage.image = returnedImage
+                        }
+                    }
+                } else {
+                    // this means there are no photos to load
+                    cell.postImage.image = nil
+                    cell.postImage.isHidden = true
+                }
+            }
+            
+            if let authorImageUrl = post.author?.photo?[0],
+               let authorImage = post.author?.photoImage?[authorImageUrl] {
+                    cell.authorPhoto.image = authorImage.image
+            } else {
+                if post.author?.photo != nil, post.author!.photo!.count > 0 {
+                    post.author?.downloadPhoto(photoIndex: 0) { returnedAuthorPhoto in
+                        DispatchQueue.main.async {
+                            cell.authorPhoto.image = returnedAuthorPhoto
+                        }
+                    }
+                } else {
+                    cell.authorPhoto.image = nil
+                }
+            }
+            
+            if let publishedDate = post.published {
+//               let publishedDate = ISO8601DateFormatter().date(from: dateString) {
+            
+                if Calendar.current.isDateInToday(publishedDate) {
+                    cell.postDate.text = "Today at " + DateFormatter.localizedString(from: publishedDate, dateStyle: .none, timeStyle: .short)
+                } else {
+                    cell.postDate.text = " " + DateFormatter.localizedString(from: publishedDate, dateStyle: .medium, timeStyle: .short)
+                }
+            }
+            
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineCell", for: indexPath)
-        
         let post = timeline[indexPath.row]
-        
         cell.textLabel?.text = post.name ?? post.content?.text ?? post.summary ?? "Content Can't Display"
-        
         var subtitle = post.author?.name ?? "Unknown"
-        
-        if let dateString = post.published,
-           let publishedDate = ISO8601DateFormatter().date(from: dateString) {
+        if let publishedDate = post.published {
+//            let publishedDate = ISO8601DateFormatter().date(from: dateString) {
             
             if Calendar.current.isDateInToday(publishedDate) {
                 subtitle += " Today at " + DateFormatter.localizedString(from: publishedDate, dateStyle: .none, timeStyle: .short)
@@ -41,10 +105,9 @@ class TimelineViewController: UITableViewController {
                 subtitle += " " + DateFormatter.localizedString(from: publishedDate, dateStyle: .medium, timeStyle: .short)
             }
         }
-        
         cell.detailTextLabel?.text = subtitle
-        
         return cell
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -54,7 +117,7 @@ class TimelineViewController: UITableViewController {
         let post = timeline[indexPath.row]
         
         if let postUrl = post.url {
-            let safariVC = SFSafariViewController(url: URL(string: postUrl)! )
+            let safariVC = SFSafariViewController(url: postUrl)
             present(safariVC, animated: true, completion: nil)
         }
     }
@@ -72,6 +135,7 @@ class TimelineViewController: UITableViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.prefetchDataSource = self
 //        self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
 //        getChannelData()
         

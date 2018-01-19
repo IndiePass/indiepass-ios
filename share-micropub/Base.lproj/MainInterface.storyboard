@@ -115,7 +115,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="bff-9w-CMr" kind="show" identifier="showReplyView" id="UMY-LI-bep"/>
+                        <segue destination="G3o-VN-as5" kind="show" identifier="showReplyView" id="bgc-aj-tWG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CJT-ca-fNg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -135,13 +135,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" text="dd" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i5V-KT-DDH">
-                                <rect key="frame" x="16" y="101" width="343" height="566"/>
+                                <rect key="frame" x="16" y="57" width="343" height="610"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="In Reply To: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6h-Gz-6Xf">
-                                <rect key="frame" x="16" y="72" width="343" height="21"/>
+                                <rect key="frame" x="16" y="28" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -163,7 +163,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kMx-Wa-RT4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1479" y="-338"/>
+            <point key="canvasLocation" x="1454" y="-769"/>
+        </scene>
+        <!--postingView-->
+        <scene sceneID="Sir-wg-6rp">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PostingView" referencedIdentifier="postingView" id="G3o-VN-as5" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3hg-Fm-WJZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1263" y="-202"/>
         </scene>
         <!--Account Selector Table View Controller-->
         <scene sceneID="gb8-od-UZ0">
@@ -257,17 +265,17 @@
                                 </subviews>
                             </stackView>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xdH-bA-vOV">
-                                <rect key="frame" x="83" y="323" width="208" height="20"/>
+                                <rect key="frame" x="83" y="323" width="208" height="20.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Authorizing with Server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kMx-Ys-Rbf">
-                                        <rect key="frame" x="0.0" y="0.0" width="178" height="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="178" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Npd-YD-rni">
-                                        <rect key="frame" x="188" y="0.0" width="20" height="20"/>
+                                        <rect key="frame" x="188" y="0.0" width="20" height="20.5"/>
                                     </activityIndicatorView>
                                 </subviews>
                             </stackView>

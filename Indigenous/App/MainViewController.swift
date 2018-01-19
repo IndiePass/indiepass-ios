@@ -51,9 +51,12 @@ class MainViewController: UINavigationController, IndieAuthDelegate {
         
         if micropubAccounts.count < 1 {
             showLoginScreen()
+            UIApplication.shared.shortcutItems = []
         } else {
             // todo: What we need to do if we are logged in
             print("Logged in")
+            let shortcutItem = UIApplicationShortcutItem(type: ShortcutItemType.NewPost.rawValue, localizedTitle: "New Post")
+            UIApplication.shared.shortcutItems = [shortcutItem]
 //            let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
 //            let micropubAuth = micropubAccounts[activeAccount]
         }

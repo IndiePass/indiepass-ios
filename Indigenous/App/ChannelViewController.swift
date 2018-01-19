@@ -14,7 +14,7 @@ class ChannelViewController: UITableViewController {
         
     var channels: [[Channel]] = []
     var selectedChannel: Channel? = nil
-    var timelines: [[TimelinePost]] = []
+    var timelines: [[Jf2Post]] = []
     
     @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var accountButton: UIBarButtonItem!
@@ -238,8 +238,18 @@ class ChannelViewController: UITableViewController {
         }
     }
     
+    @objc func handleCreateNewPost() {
+        performSegue(withIdentifier: "showPostingInterface", sender: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self,
+               selector: #selector(handleCreateNewPost),
+               name: NSNotification.Name(rawValue: "createNewPost"),
+               object: nil)
+
         
 //        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
 //        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0

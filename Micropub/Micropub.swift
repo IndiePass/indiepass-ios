@@ -8,7 +8,7 @@
 
 import Foundation
 
-func sendMicropub(forAction: MicropubTypes, aboutUrl: URL, forUser user: IndieAuthAccount, completion: @escaping () -> Swift.Void) {
+func sendMicropub(forAction: MicropubResponseType, aboutUrl: URL, forUser user: IndieAuthAccount, completion: @escaping () -> Swift.Void) {
     
     DispatchQueue.global(qos: .background).async {
         var entryString = ""

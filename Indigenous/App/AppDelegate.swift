@@ -24,6 +24,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        if let itemType = ShortcutItemType(rawValue: shortcutItem.type) {
+        
+            switch itemType {
+            case .NewPost:
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "createNewPost"), object: self)
+            }
+        }
+    }
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
         print("Attempting URL Call in App Delegate")
