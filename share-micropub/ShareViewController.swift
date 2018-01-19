@@ -143,6 +143,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
                 postingVC.displayAsModal = false
                 postingVC.delegate = self
                 postingVC.title = "New Reply"
+                self.maximizeToFullScreen()
             }
         }
         
@@ -273,6 +274,10 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if self.isHalfModalFullscreen() {
+            self.reduceToHalfScreen()
+        }
         
         micropubActions = [.reply, .like, .repost, .bookmark]
         

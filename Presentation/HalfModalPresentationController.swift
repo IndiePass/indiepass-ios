@@ -10,6 +10,7 @@ import UIKit
 
 class HalfModalPresentationController : UIPresentationController {
     var isMaximized: Bool = false
+    var isFullscreen: Bool = false
     
     var _dimmingView: UIView?
     var dimmingView: UIView {
@@ -44,6 +45,7 @@ class HalfModalPresentationController : UIPresentationController {
         if let presentedView = presentedView, let containerView = self.containerView {
             UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: { () -> Void in
                 presentedView.frame = containerView.frame
+                self.isFullscreen = true
                 
                 if let navController = self.presentedViewController as? UINavigationController {
                     self.isMaximized = true
@@ -55,6 +57,26 @@ class HalfModalPresentationController : UIPresentationController {
                     navController.isNavigationBarHidden = false
                 }
                 }, completion: nil)
+        }
+    }
+    
+    func adjustToHalfScreen() {
+        if let presentedView = presentedView, let containerView = self.containerView {
+            UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: { () -> Void in
+                
+                presentedView.frame.origin.y = containerView.frame.height / 2
+                self.isFullscreen = false
+                
+                if let navController = self.presentedViewController as? UINavigationController {
+                    self.isMaximized = false
+                    
+                    navController.setNeedsStatusBarAppearanceUpdate()
+                    
+                    // Force the navigation bar to update its size
+                    navController.isNavigationBarHidden = true
+                    navController.isNavigationBarHidden = false
+                }
+            }, completion: nil)
         }
     }
     
@@ -110,6 +132,18 @@ extension HalfModalPresentable where Self: UIViewController {
         if let presetation = navigationController?.presentationController as? HalfModalPresentationController {
             presetation.adjustToFullScreen()
         }
+    }
+    func reduceToHalfScreen() -> Void {
+        if let presetation = navigationController?.presentationController as? HalfModalPresentationController {
+            presetation.adjustToHalfScreen()
+        }
+    }
+    func isHalfModalFullscreen() -> Bool {
+        if let presetation = navigationController?.presentationController as? HalfModalPresentationController {
+            return presetation.isFullscreen
+        }
+        
+        return false
     }
 }
 

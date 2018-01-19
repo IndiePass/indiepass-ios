@@ -334,7 +334,6 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         
         postContentField.delegate = self
         photoUploads.dataSource = self
-//        postInputView.addConstraint(postInputViewHeight)
         setupKeyboardObservers()
         
         if !displayAsModal {
@@ -347,7 +346,10 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
             let currentAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccountId]) {
             
                 activeAccount = currentAccount
-                currentPost = getPostDraft()
+            
+                if currentPost == nil {
+                    currentPost = getPostDraft()
+                }
             
                 if currentPost == nil {
                     currentPost = MicropubPost(type: .entry, properties: MicropubPostProperties())
@@ -380,8 +382,15 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
+        if hasPostChanged() == false {
+            // Post hasn't changed since load, so we don't want to save it
+            self.currentPost = nil
+        }
+
         if var post = currentPost {
             post.properties.content = postContentField.text
+            print("Saved post draft")
             savePostDraft(post: post)
         }
     }
@@ -392,6 +401,9 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     }
     
     func hasPostChanged() -> Bool {
+        print("has changed?")
+        print(currentPost)
+        print(originalPost)
         if let firstPost = currentPost, let secondPost = originalPost {
             return !(firstPost == secondPost)
         }
