@@ -75,56 +75,9 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTimelineCell", for: indexPath) as? TimelineTableViewCell {
             
             let post = timeline[indexPath.row]
-            cell.postContent.text = post.name ?? post.content?.text ?? post.summary ?? "Content Can't Display"
-            cell.authorName.text = post.author?.name ?? "Unknown"
-            
-            cell.postImage.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
-            cell.postImage.isHidden = false
-            
-            if let imageUrl = post.photo?[0], let image = post.photoImage?[imageUrl] {
-                // display the downloaded photo
-                cell.postImage.image = image.image
-            } else {
-                if post.photo != nil, post.photo!.count > 0 {
-                    // if we are here, then there is an unloaded photo
-                    post.downloadPhoto(photoIndex: 0) { returnedImage in
-                        DispatchQueue.main.async {
-                            cell.postImage.image = returnedImage
-                        }
-                    }
-                } else {
-                    // this means there are no photos to load
-                    cell.postImage.image = nil
-                    cell.postImage.isHidden = true
-                }
-            }
-            
-            if let authorImageUrl = post.author?.photo?[0],
-               let authorImage = post.author?.photoImage?[authorImageUrl] {
-                    cell.authorPhoto.image = authorImage.image
-            } else {
-                if post.author?.photo != nil, post.author!.photo!.count > 0 {
-                    post.author?.downloadPhoto(photoIndex: 0) { returnedAuthorPhoto in
-                        DispatchQueue.main.async {
-                            cell.authorPhoto.image = returnedAuthorPhoto
-                        }
-                    }
-                } else {
-                    cell.authorPhoto.image = nil
-                }
-            }
-            
-            if let publishedDate = post.published {
-//               let publishedDate = ISO8601DateFormatter().date(from: dateString) {
-            
-                if Calendar.current.isDateInToday(publishedDate) {
-                    cell.postDate.text = "Today at " + DateFormatter.localizedString(from: publishedDate, dateStyle: .none, timeStyle: .short)
-                } else {
-                    cell.postDate.text = " " + DateFormatter.localizedString(from: publishedDate, dateStyle: .medium, timeStyle: .short)
-                }
-            }
-            
+            cell.setContent(ofPost: post)
             return cell
+            
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineCell", for: indexPath)
@@ -175,7 +128,17 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
 //        getChannelData()
         
         getSingleChannelData(channel: self.channel!) {
-            print("All done with timeline")
+            let totalRowsToPrefetch = self.timeline.count < 9 ? self.timeline.count : 8
+            for row in 0..<totalRowsToPrefetch {
+                print("Prefetching for row \(row)")
+                let post = self.timeline[row]
+                if post.photo != nil, post.photo!.count > 0 {
+                    post.downloadPhoto(photoIndex: 0)
+                }
+                if post.author?.photo != nil, post.author!.photo!.count > 0 {
+                    post.author?.downloadPhoto(photoIndex: 0)
+                }
+            }
         }
     }
     
