@@ -37,7 +37,9 @@
 		<true/>
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo LIbrary access allows you to choose specific photos to upload to your media endpoint.</string>
+	<string>Upload photos from your library to your media endpoint</string>
+	<key>NSSiriUsageDescription</key>
+	<string>Post notes to your micropub endpoint using your voice</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
