@@ -18,7 +18,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     
     func setContent(ofPost post: Jf2Post) {
         
-        postContent.text = post.name ?? post.content?.text ?? post.summary ?? "Content Can't Display"
+        postContent.text = post.name ?? post.content?.text ?? post.summary ?? ""
         authorName.text = post.author?.name ?? "Unknown"
         
         postImage.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]

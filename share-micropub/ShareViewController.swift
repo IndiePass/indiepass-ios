@@ -244,7 +244,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
         
         micropubActions = []
         
-        switch post.type {
+        switch post.type! {
             case .event:
                 micropubActions.append(.rsvp)
                 micropubActions.append(.like)
