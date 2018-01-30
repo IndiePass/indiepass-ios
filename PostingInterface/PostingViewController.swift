@@ -474,7 +474,10 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
                 self.photoUploadsHeight.constant = 0
             }
             
-            self.toolbarBottomHeight.constant = (self.keyboardHeight == 0 ? 0 : 30 - self.keyboardHeight)
+            // TODO: iPhone X needs +30 to the keyboard height, but only if height > 0
+            self.toolbarBottomHeight.constant = -self.keyboardHeight
+            
+            //(self.keyboardHeight == 0 ? 0 : self.keyboardHeight)
             
             self.title = newTitle
             
