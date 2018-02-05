@@ -257,11 +257,13 @@ public class IndieAuth {
                     if httpResponse.statusCode == 200, let retrievedData = data {
                         print(httpResponse)
                         do {
-                            let syndicateTargets = try JSONDecoder().decode([SyndicateTarget].self, from: retrievedData)
-                            completion(syndicateTargets, nil)
-                        } catch {
-                            print("Failed")
-                            completion(nil, "Could not convert to Micropub Config Object")
+                            let syndicationQueryResponse = try JSONDecoder().decode(MicropubSyndicationQueryResponse.self, from: retrievedData)
+                            completion(syndicationQueryResponse.syndicateTo, nil)
+                        } catch let error {
+                            print(String(describing: error))
+                            print(String(data: retrievedData, encoding: .utf8))
+                            print("Failed: \(error.localizedDescription)")
+                            completion(nil, "Could not convert to Micropub Config Object: \(error.localizedDescription)")
                         }
                     } else {
                         completion(nil, "Recieved the following HTTP Status Code " + String(httpResponse.statusCode))

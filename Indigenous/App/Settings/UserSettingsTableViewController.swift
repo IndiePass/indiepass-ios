@@ -55,7 +55,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (section) {
             case 0:
-                return userSettings.count + 3
+                return userSettings.count + 4
             case 1:
                 return userAccounts.count + 1
             default:
@@ -99,6 +99,9 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 cell.textLabel?.text = "Refresh Syndication Targets"
                 cell.detailTextLabel?.text = fetchingSyndicateTargets ? "Loading" : ""
             } else if indexPath.row == userSettings.count + 1 {
+                cell.textLabel?.text = "View Account Debug Info"
+                cell.detailTextLabel?.text = ""
+            } else if indexPath.row == userSettings.count + 2 {
                 if (defaultUserAccount == activeUserAccount) {
                     cell.textLabel?.text = "This account is the default"
                     cell.isUserInteractionEnabled = false
@@ -109,7 +112,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                     cell.textLabel?.isEnabled = true
                 }
                 cell.detailTextLabel?.text = ""
-            } else if indexPath.row == userSettings.count + 2 {
+            } else if indexPath.row == userSettings.count + 3 {
                 cell.textLabel?.text = "Log Out"
                 cell.textLabel?.textColor = UIColor(red: 1, green: 0.2196078431, blue: 0.137254902, alpha: 1)
                 cell.detailTextLabel?.text = userAccounts[activeUserAccount].me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
@@ -155,13 +158,20 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 if indexPath.row == userSettings.count {
                     refreshSyndicationTargets()
                 } else if indexPath.row == userSettings.count + 1 {
-                    makeCurrentUserDefault()
+                    // TODO: View DEBUG INFO
+                    viewAccountDebug()
                 } else if indexPath.row == userSettings.count + 2 {
+                    makeCurrentUserDefault()
+                } else if indexPath.row == userSettings.count + 3 {
                     logOutCurrentUser()
                 }
             }
         }
         
+    }
+    
+    func viewAccountDebug() {
+        performSegue(withIdentifier: "showAccountDebug", sender: nil)
     }
     
     func refreshSyndicationTargets() {
@@ -175,6 +185,16 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         if var activeAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccountId]) {
             IndieAuth.getSyndicationTargets(forEndpoint: activeAccount.micropub_endpoint, withToken: activeAccount.access_token) { syndicateTargets, error in
+                
+                guard error == nil else {
+                    DispatchQueue.main.sync {
+                        let alert = UIAlertController(title: "Syndication Targets Failed", message: error ?? "no message", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    return
+                }
+                
                 activeAccount.micropub_config?.syndicateTo = syndicateTargets
                 // todo: save account info
                 if let activeAccountData = try? JSONEncoder().encode(activeAccount) {
@@ -245,7 +265,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     func showLoginScreen(displayAsModal modal: Bool = false) {
         loginDisplayedAsModal = modal
         
-        let loginViewController = storyboard?.instantiateViewController(withIdentifier: "indieAuthLoginView") as! IndieAuthLoginViewController
+        let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "indieAuthLoginView") as! IndieAuthLoginViewController
     
         loginViewController.delegate = self
         loginViewController.displayedAsModal = loginDisplayedAsModal
@@ -308,14 +328,24 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     }
     */
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        var destinationViewController: UIViewController? = segue.destination
+        if let navigationController = destinationViewController as? UINavigationController {
+            destinationViewController = navigationController.visibleViewController
+        }
+        
+        if segue.identifier == "showAccountDebug",
+            let debugVC = destinationViewController as? AccountDebugViewController {
+                    let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+                    let activeAccountId = defaults?.integer(forKey: "activeAccount") ?? 0
+                    var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+                    if var activeAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccountId]) {
+                        
+                            debugVC.debugAccount = activeAccount
+                        
+                    }
+        }
     }
-    */
 
 }

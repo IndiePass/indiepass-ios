@@ -117,11 +117,11 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="MVn-7L-y78" secondAttribute="bottom" constant="20" symbolic="YES" id="2T3-Eg-A9s"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="XKk-zV-aZv" secondAttribute="bottom" constant="20" symbolic="YES" id="6Yw-ra-iJx"/>
-                                        <constraint firstItem="MVn-7L-y78" firstAttribute="firstBaseline" secondItem="bhR-Lh-yak" secondAttribute="baseline" constant="12.333333333333334" symbolType="layoutAnchor" id="6hd-rA-rOM"/>
+                                        <constraint firstItem="MVn-7L-y78" firstAttribute="firstBaseline" secondItem="bhR-Lh-yak" secondAttribute="baseline" constant="12.5" symbolType="layoutAnchor" id="6hd-rA-rOM"/>
                                         <constraint firstAttribute="trailing" secondItem="bhR-Lh-yak" secondAttribute="trailing" constant="20" symbolic="YES" id="CRm-08-AND"/>
                                         <constraint firstItem="bhR-Lh-yak" firstAttribute="leading" secondItem="XKk-zV-aZv" secondAttribute="trailing" constant="8" symbolic="YES" id="GBp-L3-T5m"/>
                                         <constraint firstItem="MVn-7L-y78" firstAttribute="leading" secondItem="bhR-Lh-yak" secondAttribute="leading" id="MH9-JN-gsj"/>
-                                        <constraint firstItem="bhR-Lh-yak" firstAttribute="firstBaseline" secondItem="XKk-zV-aZv" secondAttribute="top" constant="24.333333333333332" symbolType="layoutAnchor" id="Vqg-QN-FlE"/>
+                                        <constraint firstItem="bhR-Lh-yak" firstAttribute="firstBaseline" secondItem="XKk-zV-aZv" secondAttribute="top" constant="24.5" symbolType="layoutAnchor" id="Vqg-QN-FlE"/>
                                         <constraint firstItem="7ZC-X0-L49" firstAttribute="top" secondItem="3mC-ku-rgJ" secondAttribute="top" constant="20" symbolic="YES" id="awC-Ui-4jc"/>
                                         <constraint firstAttribute="trailing" secondItem="MVn-7L-y78" secondAttribute="trailing" constant="16" id="mBb-01-nYY"/>
                                         <constraint firstItem="95m-mZ-DT3" firstAttribute="leading" secondItem="3mC-ku-rgJ" secondAttribute="leading" constant="20" symbolic="YES" id="mb9-fM-ONg"/>
@@ -134,9 +134,12 @@
                                 <connections>
                                     <outlet property="authorName" destination="95m-mZ-DT3" id="D7B-F6-eu7"/>
                                     <outlet property="authorPhoto" destination="XKk-zV-aZv" id="VMS-K2-gkT"/>
+                                    <outlet property="authorPhotoHeight" destination="igz-aF-S8S" id="cSj-kY-NpQ"/>
+                                    <outlet property="authorPhotoWidth" destination="JOf-MZ-iVO" id="Rxa-AO-zcN"/>
                                     <outlet property="postContent" destination="bhR-Lh-yak" id="7Ww-KE-5bM"/>
                                     <outlet property="postDate" destination="7ZC-X0-L49" id="cCP-6L-M4D"/>
                                     <outlet property="postImage" destination="MVn-7L-y78" id="Ozh-xz-YMz"/>
+                                    <outlet property="postImageHeight" destination="uDG-dM-jhW" id="5eY-Y1-Ele"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LoadMoreTimelineCell" textLabel="RNF-2P-f6I" rowHeight="50" style="IBUITableViewCellStyleDefault" id="bSO-1I-rpe">

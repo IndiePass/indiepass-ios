@@ -9,6 +9,7 @@
 import UIKit
 import Social
 import MobileCoreServices
+import Crashlytics
 
 class ChannelViewController: UITableViewController {
         
@@ -45,6 +46,11 @@ class ChannelViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath)
      
         if let channelCell = cell as? ChannelTableViewCell {
+            // TODO: I believe this issue https://github.com/EdwardHinkle/indigenous-ios/issues/79 is here somewhere
+            // Index out of range?
+            print("Total Channels: \(channels.count)")
+            print("Total Rows in Section: \(channels[indexPath.section])")
+            print("IndexPath: \(indexPath)")
             channelCell.data = channels[indexPath.section][indexPath.row]
             cell.textLabel?.text = channels[indexPath.section][indexPath.row].name
         }
@@ -160,9 +166,6 @@ class ChannelViewController: UITableViewController {
         let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
-        
-                self.channels = [[]];
-                self.channels[0].append(Channel(uid: "default", name: "Home"))
             
                 guard let microsubUrl = micropubDetails.microsub_endpoint,
                     var microsubComponents = URLComponents(url: microsubUrl, resolvingAgainstBaseURL: true) else {
@@ -204,9 +207,14 @@ class ChannelViewController: UITableViewController {
                                 if contentType == "application/json" {
                                     let channelResponse = try! JSONDecoder().decode(ChannelApiResponse.self, from: body.data(using: .utf8)!)
                                     
+                                    self.channels = [[]];
+                                    self.channels[0].append(Channel(uid: "default", name: "Home"))
+                                    
                                     channelResponse.channels.forEach { nextChannel in
                                         self.channels[0].append(nextChannel)
                                     }
+                                    
+                                    print(self.channels)
                                     
                                     //        movies.sort() { $0.title < $1.title }
                                 
@@ -231,8 +239,10 @@ class ChannelViewController: UITableViewController {
     }
     
     @objc func handleRefresh(refreshControl: UIRefreshControl) {
+        print("Beginning Refresh")
         getChannelData {
             DispatchQueue.main.async {
+                print("Ending Refresh")
                 refreshControl.endRefreshing()
             }
         }
@@ -298,6 +308,11 @@ class ChannelViewController: UITableViewController {
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
             
             self.title = micropubDetails.me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
+            
+            // log current domain for crash analytics
+            Crashlytics.sharedInstance().setUserName(micropubDetails.me.absoluteString)
+            CLSLogv("Viewed Channel VC", getVaList([]))
+
             
 //            micropubDetails.profile.downloadPhoto(photoIndex: 0) { photo in
 //                if let authorPhoto = photo {

@@ -160,15 +160,15 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
         
         let post = timeline!.posts[indexPath.row]
         
-        if let photoCount = post.photo?.count, photoCount > 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoTimelineCell", for: indexPath) as! TimelinePhotoTableViewCell
-            cell.setContent(ofPost: post)
-            return cell
-        }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TextTimelineCell", for: indexPath) as! TimelineTextTableViewCell
+//        if let photoCount = post.photo?.count, photoCount > 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoTimelineCell", for: indexPath) as! TimelinePhotoTableViewCell
         cell.setContent(ofPost: post)
         return cell
+//        }
+        
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TextTimelineCell", for: indexPath) as! TimelineTextTableViewCell
+//        cell.setContent(ofPost: post)
+//        return cell
         
     }
     

@@ -16,13 +16,20 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDate: UILabel!
     
+    @IBOutlet weak var authorPhotoWidth: NSLayoutConstraint!
+    @IBOutlet weak var authorPhotoHeight: NSLayoutConstraint!
+    @IBOutlet weak var postImageHeight: NSLayoutConstraint!
+    
+    
     func setContent(ofPost post: Jf2Post) {
         
-        postContent.text = post.name ?? post.content?.text ?? post.summary ?? ""
+        postContent.text = post.name ?? post.content?.text ?? post.summary ?? nil
+        
         authorName.text = post.author?.name ?? "Unknown"
         
-        postImage.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
         postImage.isHidden = false
+        postImageHeight.constant = 200
+        postImage.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
         
         if let imageUrl = post.photo?[0], let image = post.photoImage?[imageUrl] {
             // display the downloaded photo
@@ -38,9 +45,15 @@ class TimelinePhotoTableViewCell: UITableViewCell {
                 }
             } else {
                 // this means there are no photos to load
+                postImage.image = nil
                 postImage.isHidden = true
+                postImageHeight.constant = 0
             }
         }
+        
+        authorPhoto.isHidden = false
+        authorPhotoHeight.constant = 50
+        authorPhotoWidth.constant = 50
         
         if let authorImageUrl = post.author?.photo?[0],
             let authorImage = post.author?.photoImage?[authorImageUrl] {
@@ -54,6 +67,9 @@ class TimelinePhotoTableViewCell: UITableViewCell {
                 }
             } else {
                 authorPhoto.image = nil
+                authorPhoto.isHidden = true
+                authorPhotoHeight.constant = 0
+                authorPhotoWidth.constant = 0
             }
         }
         
@@ -65,6 +81,12 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             } else {
                 postDate.text = " " + DateFormatter.localizedString(from: publishedDate, dateStyle: .medium, timeStyle: .short)
             }
+        }
+        
+        if postContent.text == nil || postContent.text == "" {
+            postContent.isHidden = true
+        } else {
+            postContent.isHidden = false
         }
     }
 
