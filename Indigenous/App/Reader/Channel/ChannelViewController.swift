@@ -46,11 +46,6 @@ class ChannelViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath)
      
         if let channelCell = cell as? ChannelTableViewCell {
-            // TODO: I believe this issue https://github.com/EdwardHinkle/indigenous-ios/issues/79 is here somewhere
-            // Index out of range?
-            print("Total Channels: \(channels.count)")
-            print("Total Rows in Section: \(channels[indexPath.section])")
-            print("IndexPath: \(indexPath)")
             channelCell.data = channels[indexPath.section][indexPath.row]
             cell.textLabel?.text = channels[indexPath.section][indexPath.row].name
         }
@@ -62,9 +57,6 @@ class ChannelViewController: UITableViewController {
 
 //        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         let selectedChannel = channels[indexPath.section][indexPath.row]
-        
-        print("Channel selected")
-        print(selectedChannel)
         
         self.selectedChannel = selectedChannel
     }
@@ -214,8 +206,6 @@ class ChannelViewController: UITableViewController {
                                         self.channels[0].append(nextChannel)
                                     }
                                     
-                                    print(self.channels)
-                                    
                                     //        movies.sort() { $0.title < $1.title }
                                 
                                     DispatchQueue.main.async {
@@ -239,10 +229,8 @@ class ChannelViewController: UITableViewController {
     }
     
     @objc func handleRefresh(refreshControl: UIRefreshControl) {
-        print("Beginning Refresh")
         getChannelData {
             DispatchQueue.main.async {
-                print("Ending Refresh")
                 refreshControl.endRefreshing()
             }
         }
