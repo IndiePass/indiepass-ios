@@ -31,21 +31,19 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     }
     
     @IBOutlet weak var indieAuthDomain: UITextField?
-    @IBOutlet weak var progressDisplay: UIStackView!
-    @IBOutlet weak var loginDisplay: UIStackView!
     @IBOutlet weak var domainInput: UITextField!
-    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var progressView: UIView!
+    @IBOutlet weak var loginView: UIView!
     
     @IBAction func cancelLogin(_ sender: UIButton = UIButton()) {
         authSession?.cancel()
-        cancelButton?.isHidden = true
-        loginDisplay?.isHidden = false
-        progressDisplay?.isHidden = true
+        progressView?.isHidden = true
+        loginView?.isHidden = false
     }
     
     @IBAction func readAboutIndieAuth(_ sender: UIButton) {
         if let openUrl = URL(string: indieAuthSetupUrl) {
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 let safariVC = SFSafariViewController(url: openUrl)
                 self.present(safariVC, animated: true, completion: nil)
             }
@@ -54,10 +52,9 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func loginWithIndieAuth(_ sender: UIButton?) {
         
-        cancelButton?.isHidden = false;
-        loginDisplay?.isHidden = true
-        progressDisplay?.isHidden = false
-    
+        progressView?.isHidden = false
+        loginView?.isHidden = true
+        
         var url: URL? = nil
         
         if let urlDescription = indieAuthDomain?.text {
@@ -109,7 +106,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: authScope.joined(separator: " "))
                 
                 if let openUrl = authorizationUrl {
-                    DispatchQueue.main.sync {
+                    DispatchQueue.main.async {
                         self.authSession = SFAuthenticationSession(url: openUrl, callbackURLScheme: callbackUrl?.absoluteString) { (callback: URL?, error: Error? ) in
                             //Handle auth
                             print("completion called")
@@ -117,9 +114,8 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                                 print("In guard statement")
                                 print(callback)
                                 print(error)
-                                self.cancelButton?.isHidden = true
-                                self.loginDisplay?.isHidden = false
-                                self.progressDisplay?.isHidden = true
+                                self.progressView?.isHidden = true
+                                self.loginView?.isHidden = false
                                 return
                             }
                             
