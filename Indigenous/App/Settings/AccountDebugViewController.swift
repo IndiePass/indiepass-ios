@@ -20,6 +20,8 @@ class AccountDebugViewController: UIViewController {
             print(String(describing: debugAccount))
             textView.text = "Debugging: \(account.profile.name ?? ""): \(account.profile.url?.absoluteString ?? "")\n\n"
             
+            textView.text = textView.text + "Access Token: \(account.access_token)\n\n"
+            
             if let config = account.micropub_config {
                 if let mediaEndpoint = config.mediaEndpoint {
                     textView.text = textView.text + "Media Endpoint: \(mediaEndpoint)\n\n"
