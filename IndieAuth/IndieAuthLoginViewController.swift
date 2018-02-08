@@ -217,37 +217,48 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 }
                 
                 IndieAuth.getMicropubConfig(forEndpoint: micropubEndpoint, withToken: accessToken) { config, error in
-                    print("Got Micropub Config")
-                    print(config);
                     
-                    if let newAccount = try? JSONEncoder().encode(IndieAuthAccount(profile: accountProfile,
-                                                                                   access_token: accessToken,
-                                                                                   scope: accountScopes,
-                                                                                   me: meUrl,
-                                                                                   micropub_endpoint: micropubEndpoint,
-                                                                                   authorization_endpoint: authorizationEndpoint,
-                                                                                   token_endpoint: tokenEndpoint,
-                                                                                   microsub_endpoint: copyOfUserEndpoints["microsub"]?.first,
-                                                                                   micropub_config: config)) {
-                        micropubAccounts.append(newAccount)
-                    }
+                    var micropubConfig = config
                     
-                    // The active account should now be the last item in the accounts array
-                    let activeAccount = micropubAccounts.count - 1
-                    
-                    let defaultAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
-                    
-                    defaults?.set(defaultAccount, forKey: "defaultAccount")
-                    defaults?.set(micropubAccounts, forKey: "micropubAccounts")
-                    defaults?.set(activeAccount, forKey: "activeAccounts")
-                    
-                    print("processing completed")
-                    self.delegate?.loggedIn()
-                    
-                    if let displayedModal = self.displayedAsModal, displayedModal == true {
-                        DispatchQueue.main.async {
-                            self.dismiss(animated: true, completion: nil)
+                    IndieAuth.getSyndicationTargets(forEndpoint: micropubEndpoint, withToken: accessToken) { syndicateTargets, error in
+                        
+                        if error != nil && syndicateTargets == nil {
+                            print("Error on Syndication Targets")
+                            print(error)
+                        } else {
+                            micropubConfig?.syndicateTo = syndicateTargets
                         }
+                    
+                        if let newAccount = try? JSONEncoder().encode(IndieAuthAccount(profile: accountProfile,
+                                                                                       access_token: accessToken,
+                                                                                       scope: accountScopes,
+                                                                                       me: meUrl,
+                                                                                       micropub_endpoint: micropubEndpoint,
+                                                                                       authorization_endpoint: authorizationEndpoint,
+                                                                                       token_endpoint: tokenEndpoint,
+                                                                                       microsub_endpoint: copyOfUserEndpoints["microsub"]?.first,
+                                                                                       micropub_config: micropubConfig)) {
+                            micropubAccounts.append(newAccount)
+                        }
+                        
+                        // The active account should now be the last item in the accounts array
+                        let activeAccount = micropubAccounts.count - 1
+                        
+                        let defaultAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
+                        
+                        defaults?.set(defaultAccount, forKey: "defaultAccount")
+                        defaults?.set(micropubAccounts, forKey: "micropubAccounts")
+                        defaults?.set(activeAccount, forKey: "activeAccounts")
+                        
+                        print("processing completed")
+                        self.delegate?.loggedIn()
+                        
+                        if let displayedModal = self.displayedAsModal, displayedModal == true {
+                            DispatchQueue.main.async {
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                        
                     }
                 }
             }

@@ -59,6 +59,9 @@
 		C85B245C20067EE60097E577 /* SyndicateTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245B20067EE60097E577 /* SyndicateTarget.swift */; };
 		C85B245D20067EE60097E577 /* SyndicateTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245B20067EE60097E577 /* SyndicateTarget.swift */; };
 		C85B245E20067EE60097E577 /* SyndicateTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B245B20067EE60097E577 /* SyndicateTarget.swift */; };
+		C86424F1202CEA6500E8AC96 /* MicropubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86424F0202CEA6400E8AC96 /* MicropubError.swift */; };
+		C86424F2202CEFBD00E8AC96 /* MicropubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86424F0202CEA6400E8AC96 /* MicropubError.swift */; };
+		C86424F3202CEFBD00E8AC96 /* MicropubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86424F0202CEA6400E8AC96 /* MicropubError.swift */; };
 		C8667405202230D50076DB8E /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8667403202230D40076DB8E /* Crashlytics.framework */; };
 		C8667406202230D50076DB8E /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8667404202230D50076DB8E /* Fabric.framework */; };
 		C8667408202254E50076DB8E /* MicropubSyndicationQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8667407202254E50076DB8E /* MicropubSyndicationQueryResponse.swift */; };
@@ -258,6 +261,7 @@
 		C85B24532005A4440097E577 /* MicropubSendType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubSendType.swift; sourceTree = "<group>"; };
 		C85B245720067E530097E577 /* MicropubConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubConfig.swift; sourceTree = "<group>"; };
 		C85B245B20067EE60097E577 /* SyndicateTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyndicateTarget.swift; sourceTree = "<group>"; };
+		C86424F0202CEA6400E8AC96 /* MicropubError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubError.swift; sourceTree = "<group>"; };
 		C8667403202230D40076DB8E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		C8667404202230D50076DB8E /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		C8667407202254E50076DB8E /* MicropubSyndicationQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubSyndicationQueryResponse.swift; sourceTree = "<group>"; };
@@ -521,6 +525,7 @@
 				C87B1A33200A73B000F3E79C /* MicropubRsvpValue.swift */,
 				C8DAA8B3201127D7002B7083 /* MicropubPhoto.swift */,
 				C8667407202254E50076DB8E /* MicropubSyndicationQueryResponse.swift */,
+				C86424F0202CEA6400E8AC96 /* MicropubError.swift */,
 			);
 			path = Micropub;
 			sourceTree = "<group>";
@@ -1020,6 +1025,7 @@
 				C8B36B691FED887500D92E3D /* IndieAuth.swift in Sources */,
 				C8B36B621FED885D00D92E3D /* IndieAuthAccount.swift in Sources */,
 				C8B36B6B1FED891400D92E3D /* Mf2Type.swift in Sources */,
+				C86424F3202CEFBD00E8AC96 /* MicropubError.swift in Sources */,
 				C85B245E20067EE60097E577 /* SyndicateTarget.swift in Sources */,
 				C85B24562005A4440097E577 /* MicropubSendType.swift in Sources */,
 			);
@@ -1076,6 +1082,7 @@
 				C840A2C9200BC77200CD2091 /* SimpleSelectionViewController.swift in Sources */,
 				C8B36B611FED885B00D92E3D /* IndieAuthAccount.swift in Sources */,
 				C8F431D01FB532890026B8D6 /* ModalNavController.swift in Sources */,
+				C86424F2202CEFBD00E8AC96 /* MicropubError.swift in Sources */,
 				C840A2D8200E5D3F00CD2091 /* PostingViewDelegate.swift in Sources */,
 				C8F431C91FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
 				C845B4671FF5E07300354391 /* xray.swift in Sources */,
@@ -1162,6 +1169,7 @@
 				C840A2CE200BDD5500CD2091 /* SimpleSelectionItem.swift in Sources */,
 				C8D171D91FF58C2200134485 /* Enum.swift in Sources */,
 				C8B3B08A1FAADAA90041C58E /* libxmlHTMLNode.swift in Sources */,
+				C86424F1202CEA6500E8AC96 /* MicropubError.swift in Sources */,
 				C840A2D4200D12EF00CD2091 /* SimpleSelectionReadOnlyDelegate.swift in Sources */,
 				C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */,
 				C840A2D7200E5D3F00CD2091 /* PostingViewDelegate.swift in Sources */,
