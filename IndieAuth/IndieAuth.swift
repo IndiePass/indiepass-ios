@@ -261,7 +261,7 @@ public class IndieAuth {
                             completion(syndicationQueryResponse.syndicateTo, nil)
                         } catch let error {
                             print(String(describing: error))
-                            print(String(data: retrievedData, encoding: .utf8))
+                            print(String(data: retrievedData, encoding: .utf8) as Any)
                             print("Failed: \(error.localizedDescription)")
                             completion(nil, "Could not convert to Micropub Config Object: \(error.localizedDescription)")
                         }

@@ -7,38 +7,153 @@
 //
 
 import UIKit
+import AVFoundation
 
 class TimelinePhotoTableViewCell: UITableViewCell {
 
+    var post: Jf2Post? = nil
+    var player: AVPlayer? = nil
+    var playerToken: Any? = nil
+    var mediaControlCallback: ((_ currentTime: Int?) -> ())?
+    
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
     @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDate: UILabel!
     
+    
     @IBOutlet weak var authorPhotoWidth: NSLayoutConstraint!
     @IBOutlet weak var authorPhotoHeight: NSLayoutConstraint!
     @IBOutlet weak var postImageHeight: NSLayoutConstraint!
+    @IBOutlet weak var audioPlayerView: UIView!
+    @IBOutlet weak var audioControl: UIButton!
+    @IBOutlet weak var audioPlayerCurrentTime: UILabel!
+    @IBOutlet weak var audioPlayerProgressBar: UIProgressView!
+    @IBOutlet weak var audioPlayerHeight: NSLayoutConstraint!
+    @IBOutlet weak var audioLoading: UIActivityIndicatorView!
     
+    @IBAction func activatedAudioControl(_ sender: Any) {
+        if player == nil {
+            if let audioUrl = post?.audio?[0] {
+                audioControl?.isHidden = true
+                audioLoading?.isHidden = false
+                let playerItem = AVPlayerItem(url: audioUrl)
+                
+                // TODO: When status changes it should say: Loading, Play or Pause
+                playerItem.addObserver(self,
+                                       forKeyPath: #keyPath(AVPlayerItem.status),
+                                       options: [.old, .new],
+                                       context: nil)
+                
+                player = AVPlayer(playerItem: playerItem)
+                player?.volume = 1.0
+                playAudio()
+            }
+        } else if player?.timeControlStatus == .paused  {
+            playAudio()
+        } else {
+            pauseAudio()
+        }
+    }
     
-    func setContent(ofPost post: Jf2Post) {
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
         
-        postContent.text = post.name ?? post.content?.text ?? post.summary ?? nil
+        // Only handle observations for the playerItemContext
+//        guard context ==  else {
+//            super.observeValue(forKeyPath: keyPath,
+//                               of: object,
+//                               change: change,
+//                               context: context)
+//            return
+//        }
         
-        authorName.text = post.author?.name ?? "Unknown"
+        if keyPath == #keyPath(AVPlayerItem.status) {
+            let status: AVPlayerItemStatus
+            
+            // Get the status change from the change dictionary
+            if let statusNumber = change?[.newKey] as? NSNumber {
+                status = AVPlayerItemStatus(rawValue: statusNumber.intValue)!
+            } else {
+                status = .unknown
+            }
+            
+            // Switch over the status
+            switch status {
+            case .readyToPlay:
+                audioControl?.isHidden = false
+                audioLoading?.isHidden = true
+            case .failed:
+                // TODO: Need to do something about the error
+                print("ERROR!")
+            case .unknown:
+                audioControl?.isHidden = true
+                audioLoading?.isHidden = false
+            }
+        }
+    }
+    
+    func playAudio() {
+        let session: AVAudioSession = AVAudioSession.sharedInstance();
+        try? session.setActive(true)
+        player?.play()
+        audioControl?.setTitle(String.fontAwesomeIcon(name: .pause), for: .normal)
+        
+        let interval = CMTime(seconds: 1,
+                              preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        
+        playerToken =
+            player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) {
+                [weak self] time in
+                
+                if self?.player?.timeControlStatus == .playing {
+                    var totalSeconds = Int(time.seconds)
+                    let totalMinutes = totalSeconds / 60
+                    totalSeconds = totalSeconds % 60
+                    self?.audioPlayerCurrentTime.text = "\(totalMinutes):\(totalSeconds < 10 ? "0" : "")\(totalSeconds)"
+                    if let totalSeconds = self?.player?.currentItem?.duration.seconds {
+                        let currentSeconds = time.seconds
+                        self?.audioPlayerProgressBar.setProgress(Float(currentSeconds / totalSeconds), animated: true)
+                        self?.mediaControlCallback?(Int(currentSeconds))
+                    }
+                }
+        }
+    }
+    
+    func pauseAudio() {
+        player?.pause()
+        audioControl?.setTitle(String.fontAwesomeIcon(name: .play), for: .normal)
+        if let token = playerToken {
+            player?.removeTimeObserver(token)
+        }
+        playerToken = nil
+        let session: AVAudioSession = AVAudioSession.sharedInstance();
+        try? session.setActive(false)
+    }
+    
+    func setContent(ofPost postData: Jf2Post) {
+        
+        post = postData
+        
+        postContent.text = post?.name ?? post?.content?.text ?? post?.summary ?? nil
+        
+        authorName.text = post?.author?.name ?? "Unknown"
         
         postImage.isHidden = false
         postImageHeight.constant = 200
         postImage.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
         
-        if let imageUrl = post.photo?[0], let image = post.photoImage?[imageUrl] {
+        if let imageUrl = post?.photo?[0], let image = post?.photoImage?[imageUrl] {
             // display the downloaded photo
             postImage.image = image.image
         } else {
-            if post.photo != nil, post.photo!.count > 0 {
+            if post?.photo != nil, post!.photo!.count > 0 {
                 postImage.image = nil
                 // if we are here, then there is an unloaded photo
-                post.downloadPhoto(photoIndex: 0) { returnedImage in
+                post?.downloadPhoto(photoIndex: 0) { returnedImage in
                     DispatchQueue.main.async {
                         self.postImage.image = returnedImage
                     }
@@ -55,12 +170,12 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         authorPhotoHeight.constant = 50
         authorPhotoWidth.constant = 50
         
-        if let authorImageUrl = post.author?.photo?[0],
-            let authorImage = post.author?.photoImage?[authorImageUrl] {
+        if let authorImageUrl = post?.author?.photo?[0],
+            let authorImage = post?.author?.photoImage?[authorImageUrl] {
             authorPhoto.image = authorImage.image
         } else {
-            if post.author?.photo != nil, post.author!.photo!.count > 0 {
-                post.author?.downloadPhoto(photoIndex: 0) { returnedAuthorPhoto in
+            if post?.author?.photo != nil, post!.author!.photo!.count > 0 {
+                post?.author?.downloadPhoto(photoIndex: 0) { returnedAuthorPhoto in
                     DispatchQueue.main.async {
                         self.authorPhoto.image = returnedAuthorPhoto
                     }
@@ -73,7 +188,17 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             }
         }
         
-        if let publishedDate = post.published {
+        if let totalAudios = post?.audio?.count, totalAudios > 0 {
+            audioPlayerView.isHidden = false
+            audioPlayerHeight.constant = 50
+            audioControl?.titleLabel?.font = UIFont.fontAwesome(ofSize: 25)
+            audioControl?.setTitle(String.fontAwesomeIcon(name: .play), for: .normal)
+        } else {
+            audioPlayerView.isHidden = true
+            audioPlayerHeight.constant = 0
+        }
+        
+        if let publishedDate = post?.published {
             //               let publishedDate = ISO8601DateFormatter().date(from: dateString) {
             
             if Calendar.current.isDateInToday(publishedDate) {
@@ -88,6 +213,14 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         } else {
             postContent.isHidden = false
         }
+    }
+    
+    public func getMediaFragment() -> (attribute: String, fragmentTime: String)? {
+        if let currentTime = self.player?.currentItem?.currentTime().seconds {
+            return (attribute: "audio", fragmentTime: String(currentTime))
+        }
+     
+        return nil
     }
 
 }

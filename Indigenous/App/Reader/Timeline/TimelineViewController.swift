@@ -17,6 +17,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     var fetchingOlderData: Bool = false
     var fetchingNewerData: Bool = false
     var previousDataAvailable: Bool = true
+    var mediaTimeTracking: [Int: String] = [:]
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -116,9 +117,24 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let post = self.timeline!.posts[indexPath.row]
+        
+        guard post.url != nil else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
+        
         let replyAction = UIContextualAction(style: .normal, title:  "Reply", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            
-            let post = self.timeline!.posts[indexPath.row]
+
+            if let fragmentTime = self.mediaTimeTracking[indexPath.row] {
+                if post.url != nil {
+                    print("#t=\(fragmentTime)")
+                    var urlComponent = URLComponents(url: post.url!, resolvingAgainstBaseURL: false)
+                    urlComponent?.fragment = "t=\(fragmentTime)"
+                    print("Full URL: \(urlComponent?.string)")
+                    post.url = urlComponent?.url
+                }
+            }
             
             self.performSegue(withIdentifier: "showReplyView", sender: post)
             success(true)
@@ -131,9 +147,14 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let post = self.timeline!.posts[indexPath.row]
+        
+        guard post.url != nil else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
+        
         let viewAction = UIContextualAction(style: .normal, title:  "View", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            
-            let post = self.timeline!.posts[indexPath.row]
             
             if let postUrl = post.url {
                 let safariVC = SFSafariViewController(url: postUrl)
@@ -163,6 +184,13 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
 //        if let photoCount = post.photo?.count, photoCount > 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoTimelineCell", for: indexPath) as! TimelinePhotoTableViewCell
         cell.setContent(ofPost: post)
+        cell.mediaControlCallback = { [weak self] currentTime in
+            if let time = currentTime {
+                self?.mediaTimeTracking[indexPath.row] = String(describing: time)
+            } else {
+                self?.mediaTimeTracking.removeValue(forKey: indexPath.row)
+            }
+        }
         return cell
 //        }
         

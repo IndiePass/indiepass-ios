@@ -11,4 +11,5 @@ import Foundation
 struct Channel: Codable {
     let uid: String
     let name: String
+    let unread: Int
 }

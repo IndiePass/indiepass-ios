@@ -18,6 +18,8 @@
 		C8254C47201A55FB000AC32A /* TimelineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8254C46201A55FB000AC32A /* TimelineOptions.swift */; };
 		C8254C49201A7E6A000AC32A /* TimelineTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8254C48201A7E6A000AC32A /* TimelineTextTableViewCell.swift */; };
 		C8254C50201A7F4E000AC32A /* Timeline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8254C4F201A7F4E000AC32A /* Timeline.storyboard */; };
+		C8336412203394CB004022B5 /* CommandTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8336411203394CB004022B5 /* CommandTableViewCell.swift */; };
+		C83364142033957E004022B5 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83364132033957E004022B5 /* Command.swift */; };
 		C840A2C8200BC77200CD2091 /* SimpleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C840A2C7200BC77200CD2091 /* SimpleSelectionViewController.swift */; };
 		C840A2C9200BC77200CD2091 /* SimpleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C840A2C7200BC77200CD2091 /* SimpleSelectionViewController.swift */; };
 		C840A2CB200BCBB400CD2091 /* SimpleSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C840A2CA200BCBB400CD2091 /* SimpleSelectionTableViewController.swift */; };
@@ -244,6 +246,8 @@
 		C8254C46201A55FB000AC32A /* TimelineOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineOptions.swift; sourceTree = "<group>"; };
 		C8254C48201A7E6A000AC32A /* TimelineTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTextTableViewCell.swift; sourceTree = "<group>"; };
 		C8254C4F201A7F4E000AC32A /* Timeline.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Timeline.storyboard; sourceTree = "<group>"; };
+		C8336411203394CB004022B5 /* CommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTableViewCell.swift; sourceTree = "<group>"; };
+		C83364132033957E004022B5 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C840A2C7200BC77200CD2091 /* SimpleSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSelectionViewController.swift; sourceTree = "<group>"; };
 		C840A2CA200BCBB400CD2091 /* SimpleSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSelectionTableViewController.swift; sourceTree = "<group>"; };
 		C840A2CD200BDD5500CD2091 /* SimpleSelectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSelectionItem.swift; sourceTree = "<group>"; };
@@ -423,6 +427,8 @@
 			children = (
 				C894F5EB1FEAC7F0003D0A48 /* ChannelViewController.swift */,
 				C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */,
+				C8336411203394CB004022B5 /* CommandTableViewCell.swift */,
+				C83364132033957E004022B5 /* Command.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -885,6 +891,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Siri = {
 								enabled = 1;
 							};
@@ -988,7 +997,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		C8667402202230830076DB8E /* Run Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -996,7 +1005,7 @@
 			name = "Run Fabric";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 7ec553483ab72c66d57b9e378897c03b5d2d8618 f3631eb5866bb4d673056557f7270f97ef049a55e577fbc5f9c6f01ae0af6b7c";
 		};
@@ -1127,6 +1136,7 @@
 				C80AEA441FEB1B0900CCBE2E /* ChannelTableViewCell.swift in Sources */,
 				C845B4661FF5E07300354391 /* xray.swift in Sources */,
 				C8B3B0871FAADAA90041C58E /* libxmlParserOption.swift in Sources */,
+				C83364142033957E004022B5 /* Command.swift in Sources */,
 				C8CBEB2C1FAA9BF700298113 /* IndieAuthLoginViewController.swift in Sources */,
 				C8B3B08B1FAADAA90041C58E /* libxmlHTMLDocument.swift in Sources */,
 				C8254C45201A4B41000AC32A /* Timeline.swift in Sources */,
@@ -1169,6 +1179,7 @@
 				C840A2CE200BDD5500CD2091 /* SimpleSelectionItem.swift in Sources */,
 				C8D171D91FF58C2200134485 /* Enum.swift in Sources */,
 				C8B3B08A1FAADAA90041C58E /* libxmlHTMLNode.swift in Sources */,
+				C8336412203394CB004022B5 /* CommandTableViewCell.swift in Sources */,
 				C86424F1202CEA6500E8AC96 /* MicropubError.swift in Sources */,
 				C840A2D4200D12EF00CD2091 /* SimpleSelectionReadOnlyDelegate.swift in Sources */,
 				C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */,

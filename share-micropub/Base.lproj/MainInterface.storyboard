@@ -122,49 +122,6 @@
             </objects>
             <point key="canvasLocation" x="468" y="68"/>
         </scene>
-        <!--Reply-->
-        <scene sceneID="GnO-uX-m0L">
-            <objects>
-                <viewController title="Reply" id="bff-9w-CMr" customClass="ReplyViewController" customModule="share_micropub" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SFd-MB-daS"/>
-                        <viewControllerLayoutGuide type="bottom" id="8xv-Hv-0sR"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="BB4-qB-emY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" text="dd" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i5V-KT-DDH">
-                                <rect key="frame" x="16" y="57" width="343" height="610"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="In Reply To: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6h-Gz-6Xf">
-                                <rect key="frame" x="16" y="28" width="343" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="J6h-Gz-6Xf" firstAttribute="top" secondItem="SFd-MB-daS" secondAttribute="bottom" constant="8" id="ZKy-Pe-ScM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="i5V-KT-DDH" secondAttribute="trailing" id="gxD-bI-aFj"/>
-                            <constraint firstItem="i5V-KT-DDH" firstAttribute="top" secondItem="J6h-Gz-6Xf" secondAttribute="bottom" constant="8" id="iN2-m5-dxH"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="i5V-KT-DDH" secondAttribute="leading" id="jzf-dk-JPr"/>
-                            <constraint firstItem="8xv-Hv-0sR" firstAttribute="top" secondItem="i5V-KT-DDH" secondAttribute="bottom" id="k43-wJ-58Z"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="noteText" destination="i5V-KT-DDH" id="DeJ-mc-Z0W"/>
-                        <outlet property="replyLabel" destination="J6h-Gz-6Xf" id="aTS-9m-TO9"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kMx-Wa-RT4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1454" y="-769"/>
-        </scene>
         <!--postingView-->
         <scene sceneID="Sir-wg-6rp">
             <objects>

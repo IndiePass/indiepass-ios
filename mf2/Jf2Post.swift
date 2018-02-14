@@ -16,6 +16,7 @@ public class Jf2Post: Codable {
     var start: Date? = nil
     var url: URL? = nil
     var photo: [URL]? = nil
+    var audio: [URL]? = nil
     var photoImage: [URL: MicropubPhoto]? = nil
     var category: [String]? = nil
     var location: [String]? = nil
@@ -39,6 +40,7 @@ public class Jf2Post: Codable {
         if photo == nil {
             photo = try? [values.decode(URL.self, forKey: .photo)]
         }
+        audio = try? values.decode([URL].self, forKey: .audio)
         category = try? values.decode([String].self, forKey: .category)
         location = try? values.decode([String].self, forKey: .location)
         attendee = try? values.decode([URL].self, forKey: .attendee)
@@ -62,7 +64,7 @@ public class Jf2Post: Codable {
             start = ISO8601DateFormatter().date(from: dateString) ?? iso601SpaceVariant.date(from: dateString)
             print("start date?")
             print(dateString)
-            print(start)
+            print(start as Any)
         } else {
             start = nil
         }
@@ -115,8 +117,8 @@ public class Jf2Post: Codable {
         let task = session.dataTask(with: request) { (data, response, error) in
             guard error == nil, let imageData = data else {
                 print("error parsing photo \(url)")
-                print(response)
-                print(error)
+                print(response as Any)
+                print(error as Any)
                 completion(nil)
                 return
             }

@@ -13,41 +13,62 @@ import Crashlytics
 
 class ChannelViewController: UITableViewController {
         
-    var channels: [[Channel]] = []
+    var channels: [Channel] = []
     var selectedChannel: Channel? = nil
     var timelines: [[Jf2Post]] = []
+    var commands: [Command] = []
+    
+    var currentAccount: IndieAuthAccount? = nil
     
 //    @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var accountButton: UIBarButtonItem!
     
     override func numberOfSections(in tableView: UITableView) -> Int {
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
+            return 2
+        }
+        
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", section == 1 {
+            return "Remote Commands"
+        }
+        
+        return ""
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", section == 1 {
+            return commands.count
+        }
+        
+        print(section)
+        print(channels)
+        
         return channels.count
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        switch section {
-//            case 0:
-//
-//                return ""
-////            case 1:
-////                return "Channels"
-////            case 2:
-////                return "Accounts"
-//            default:
-//                return ""
-//        }
-//    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels[section].count
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommandCell", for: indexPath)
+            
+            if let commandCell = cell as? CommandTableViewCell {
+                let command = commands[indexPath.row]
+                commandCell.setContent(ofCommand: command)
+            }
+            
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath)
      
         if let channelCell = cell as? ChannelTableViewCell {
-            channelCell.data = channels[indexPath.section][indexPath.row]
-            cell.textLabel?.text = channels[indexPath.section][indexPath.row].name
+            let channelData = channels[indexPath.row]
+            channelCell.setContent(ofChannel: channelData)
         }
         
         return cell
@@ -55,8 +76,13 @@ class ChannelViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", indexPath.section == 1 {
+            let command = commands[indexPath.row]
+            command.sendCommand()
+        }
+        
 //        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let selectedChannel = channels[indexPath.section][indexPath.row]
+        let selectedChannel = channels[indexPath.row]
         
         self.selectedChannel = selectedChannel
     }
@@ -199,11 +225,10 @@ class ChannelViewController: UITableViewController {
                                 if contentType == "application/json" {
                                     let channelResponse = try! JSONDecoder().decode(ChannelApiResponse.self, from: body.data(using: .utf8)!)
                                     
-                                    self.channels = [[]];
-                                    self.channels[0].append(Channel(uid: "default", name: "Home"))
+                                    self.channels = [];
                                     
                                     channelResponse.channels.forEach { nextChannel in
-                                        self.channels[0].append(nextChannel)
+                                        self.channels.append(nextChannel)
                                     }
                                     
                                     //        movies.sort() { $0.title < $1.title }
@@ -295,6 +320,8 @@ class ChannelViewController: UITableViewController {
         if  micropubAccounts.count >= activeAccount + 1,
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
             
+            self.currentAccount = micropubDetails
+            
             self.title = micropubDetails.me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
             
             // log current domain for crash analytics
@@ -319,6 +346,14 @@ class ChannelViewController: UITableViewController {
             tableView.dataSource = self
             self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
             getChannelData()
+            
+            if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
+                commands = [
+                    Command(name: "Rebuild Site",
+                            url: URL(string: "https://eddiehinkle.com/abode/rebuild/slack/")!,
+                            body: ["token": "h0uOKoXJklurbaIY6AbqW9PZ"])
+                ]
+            }
         }
     }
     

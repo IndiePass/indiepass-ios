@@ -9,6 +9,7 @@
 import UIKit
 import Fabric
 import Crashlytics
+import AVKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Fabric.with([Crashlytics.self])
         UINavigationBar.appearance().shadowImage = UIImage()
+        
+        let session: AVAudioSession = AVAudioSession.sharedInstance();
+        try? session.setCategory(AVAudioSessionCategoryPlayback)
+        
         return true
     }
     

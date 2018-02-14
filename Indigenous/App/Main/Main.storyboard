@@ -243,17 +243,46 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPM-kx-Bu1">
-                                            <rect key="frame" x="16" y="11" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channel Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPM-kx-Bu1">
+                                            <rect key="frame" x="16" y="11" width="343" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="zPM-kx-Bu1" secondAttribute="trailing" constant="16" id="3Is-E8-VZi"/>
+                                        <constraint firstItem="zPM-kx-Bu1" firstAttribute="leading" secondItem="RmB-wL-eVc" secondAttribute="leading" constant="16" id="XJ6-xm-IoJ"/>
+                                        <constraint firstItem="zPM-kx-Bu1" firstAttribute="centerY" secondItem="RmB-wL-eVc" secondAttribute="centerY" id="ckI-6t-SbR"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="channelName" destination="zPM-kx-Bu1" id="HXf-Vh-w0F"/>
                                     <segue destination="8hF-7f-nyg" kind="show" identifier="viewTimeline" id="8Yn-0P-4aS"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommandCell" id="uek-C0-JSd" customClass="CommandTableViewCell" customModule="Indigenous" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uek-C0-JSd" id="9Uz-fD-QhL">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Command Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8s-Ac-6Ed">
+                                            <rect key="frame" x="16" y="11" width="343" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="S8s-Ac-6Ed" firstAttribute="leading" secondItem="9Uz-fD-QhL" secondAttribute="leading" constant="16" id="1Ae-5j-mOQ"/>
+                                        <constraint firstItem="S8s-Ac-6Ed" firstAttribute="centerY" secondItem="9Uz-fD-QhL" secondAttribute="centerY" id="qxs-og-FPu"/>
+                                        <constraint firstAttribute="trailing" secondItem="S8s-Ac-6Ed" secondAttribute="trailing" constant="16" id="tKa-2F-VTZ"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="commandName" destination="S8s-Ac-6Ed" id="C28-EL-jhS"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -286,7 +315,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lt1-LR-giJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="252" y="1084"/>
+            <point key="canvasLocation" x="252" y="1083.9901477832514"/>
         </scene>
         <!--PostingView-->
         <scene sceneID="ZtE-e4-beB">
