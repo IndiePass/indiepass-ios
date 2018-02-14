@@ -271,9 +271,6 @@
 		C8667407202254E50076DB8E /* MicropubSyndicationQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubSyndicationQueryResponse.swift; sourceTree = "<group>"; };
 		C866740B202259CF0076DB8E /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		C866740D20225C030076DB8E /* AccountDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDebugViewController.swift; sourceTree = "<group>"; };
-		C866740F202271210076DB8E /* IndigenousBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IndigenousBeta.entitlements; sourceTree = "<group>"; };
-		C8667410202271A70076DB8E /* voice-notesBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-notesBeta.entitlements"; sourceTree = "<group>"; };
-		C8667411202271C30076DB8E /* share-micropubBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "share-micropubBeta.entitlements"; sourceTree = "<group>"; };
 		C8753BF5200FDDE5005C1E28 /* ShortcutItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutItemType.swift; sourceTree = "<group>"; };
 		C87B1A33200A73B000F3E79C /* MicropubRsvpValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubRsvpValue.swift; sourceTree = "<group>"; };
 		C87B4DA21FBBA6AB00181B62 /* voice-notes.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "voice-notes.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -494,7 +491,6 @@
 			isa = PBXGroup;
 			children = (
 				C87B4DC71FBBACBB00181B62 /* voice-notes.entitlements */,
-				C8667410202271A70076DB8E /* voice-notesBeta.entitlements */,
 				C87B4DA41FBBA6AB00181B62 /* IntentHandler.swift */,
 				C87B4DA61FBBA6AB00181B62 /* Info.plist */,
 			);
@@ -572,7 +568,6 @@
 			isa = PBXGroup;
 			children = (
 				C8883C891FB4F278005957E3 /* share-micropub.entitlements */,
-				C8667411202271C30076DB8E /* share-micropubBeta.entitlements */,
 				C8CBDEE91FB4E8D3001CF409 /* Assets.xcassets */,
 				C8CBDEEC1FB4E8E6001CF409 /* MicropubShareViewController.swift */,
 				C8D171BF1FF46DCC00134485 /* AccountSelectorTableViewController.swift */,
@@ -629,7 +624,6 @@
 			isa = PBXGroup;
 			children = (
 				C8883C881FB4F26A005957E3 /* Indigenous.entitlements */,
-				C866740F202271210076DB8E /* IndigenousBeta.entitlements */,
 				C8CBEB461FAA9DB900298113 /* Kanna */,
 				C8CBEB2E1FAA9C1D00298113 /* App */,
 				C8CBEB261FAA9BB600298113 /* RelLinkParser */,
@@ -997,7 +991,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		C8667402202230830076DB8E /* Run Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -1005,7 +999,7 @@
 			name = "Run Fabric";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 7ec553483ab72c66d57b9e378897c03b5d2d8618 f3631eb5866bb4d673056557f7270f97ef049a55e577fbc5f9c6f01ae0af6b7c";
 		};
@@ -1262,166 +1256,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C86673FB202221FE0076DB8E /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Beta;
-		};
-		C86673FC202221FE0076DB8E /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BUNDLE_ID_SUFFIX = .beta;
-				CODE_SIGN_ENTITLEMENTS = Indigenous/IndigenousBeta.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 26VU3UTL8J;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
-				INFOPLIST_FILE = Indigenous/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = software.studioh.Indigenous;
-				PRODUCT_NAME = "$(TARGET_NAME) Beta";
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules/**";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Beta;
-		};
-		C86673FD202221FE0076DB8E /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = IndigenousTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = software.studioh.IndigenousTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Indigenous.app/Indigenous";
-			};
-			name = Beta;
-		};
-		C86673FE202221FE0076DB8E /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = IndigenousUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = software.studioh.IndigenousUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Indigenous;
-			};
-			name = Beta;
-		};
-		C86673FF202221FE0076DB8E /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "share-micropub/share-micropubBeta.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 26VU3UTL8J;
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = "share-micropub/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.beta.share-micropub";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Beta;
-		};
-		C8667400202221FE0076DB8E /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "voice-notes/voice-notesBeta.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 26VU3UTL8J;
-				INFOPLIST_FILE = "voice-notes/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.beta.voice-notes";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Beta;
-		};
-		C8667401202221FE0076DB8E /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 26VU3UTL8J;
-				INFOPLIST_FILE = "voice-notesUI/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.beta.voice-notesUI";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Beta;
-		};
 		C87B4DBD1FBBA6AB00181B62 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1430,7 +1264,7 @@
 				INFOPLIST_FILE = "voice-notesUI/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.dev.voice-notesUI";
+				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.voice-notesUI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -1463,7 +1297,7 @@
 				INFOPLIST_FILE = "voice-notes/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.dev.voice-notes";
+				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.voice-notes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -1498,7 +1332,7 @@
 				INFOPLIST_FILE = "share-micropub/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.dev.share-micropub";
+				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.share-micropub";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules";
@@ -1643,7 +1477,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BUNDLE_ID_SUFFIX = .dev;
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = Indigenous/Indigenous.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 26VU3UTL8J;
@@ -1757,7 +1591,6 @@
 			buildConfigurations = (
 				C87B4DBD1FBBA6AB00181B62 /* Debug */,
 				C87B4DBE1FBBA6AB00181B62 /* Release */,
-				C8667401202221FE0076DB8E /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1767,7 +1600,6 @@
 			buildConfigurations = (
 				C87B4DC01FBBA6AB00181B62 /* Debug */,
 				C87B4DC11FBBA6AB00181B62 /* Release */,
-				C8667400202221FE0076DB8E /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1777,7 +1609,6 @@
 			buildConfigurations = (
 				C8CBDEE51FB4E858001CF409 /* Debug */,
 				C8CBDEE61FB4E858001CF409 /* Release */,
-				C86673FF202221FE0076DB8E /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1787,7 +1618,6 @@
 			buildConfigurations = (
 				C8CBEB1B1FAA9B4600298113 /* Debug */,
 				C8CBEB1C1FAA9B4600298113 /* Release */,
-				C86673FB202221FE0076DB8E /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1797,7 +1627,6 @@
 			buildConfigurations = (
 				C8CBEB1E1FAA9B4600298113 /* Debug */,
 				C8CBEB1F1FAA9B4600298113 /* Release */,
-				C86673FC202221FE0076DB8E /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1807,7 +1636,6 @@
 			buildConfigurations = (
 				C8CBEB211FAA9B4600298113 /* Debug */,
 				C8CBEB221FAA9B4600298113 /* Release */,
-				C86673FD202221FE0076DB8E /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1817,7 +1645,6 @@
 			buildConfigurations = (
 				C8CBEB241FAA9B4600298113 /* Debug */,
 				C8CBEB251FAA9B4600298113 /* Release */,
-				C86673FE202221FE0076DB8E /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
