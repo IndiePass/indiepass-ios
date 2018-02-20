@@ -7,6 +7,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Baseline standard spacing" minToolsVersion="9.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +16,7 @@
             <objects>
                 <tableViewController title="Timeline" modalPresentationStyle="currentContext" id="QEQ-fJ-kEz" customClass="TimelineViewController" customModule="Indigenous" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="timelineView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="iYq-u3-ZbZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -177,12 +178,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Timeline" id="J08-nK-ShZ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="HF3-R6-Peh">
-                            <connections>
-                                <segue destination="bDQ-l4-ykq" kind="presentation" identifier="showPostingInterface" id="m1I-80-nKO"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="compose" id="HF3-R6-Peh">
+                                <connections>
+                                    <segue destination="bDQ-l4-ykq" kind="presentation" identifier="showPostingInterface" id="m1I-80-nKO"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Read" id="I1L-c5-xhY">
+                                <connections>
+                                    <action selector="markAllAsRead:" destination="QEQ-fJ-kEz" id="8Hw-c4-3lA"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bKk-0S-Dzt">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -191,6 +200,7 @@
                         </connections>
                     </refreshControl>
                     <connections>
+                        <outlet property="markAllAsReadButton" destination="I1L-c5-xhY" id="gpb-yz-E5l"/>
                         <segue destination="iBk-9N-Qme" kind="show" identifier="showReplyView" id="EbK-Su-yi0"/>
                     </connections>
                 </tableViewController>

@@ -15,6 +15,129 @@ class Timeline {
     public var posts: [Jf2Post] = []
     var currentOptions: TimelineOptions? = nil
     
+    func markAllPostsAsRead(completion: @escaping (_ error: String?) -> Swift.Void) {
+        markAsRead(postsBeforeIndex: 0, completion: completion)
+    }
+    
+//    func markAsRead(postIndexes: [Int], completion: @escaping (_ error: String?) -> Swift.Void) {
+//
+//        // Only use indexes that exist in array, map indexes to post ids
+//        let postIds = postIndexes.filter { self.posts.count > $0 }.map { self.posts[$0]._id }
+//
+//        markAsUnread(posts: postIds, completion: completion)
+//
+//    }
+//
+//    func markAsUnread(postIndexes: [Int], completion: @escaping (_ error: String?) -> Swift.Void) {
+//
+//        // Only use indexes that exist in array, map indexes to post ids
+//        let postIds = postIndexes.filter { self.posts.count > $0 }.map { self.posts[$0]._id }
+//
+//        markAsUnread(posts: postIds, completion: completion)
+//
+//    }
+    
+    func markAsRead(postsBeforeIndex lastReadIndex: Int, completion: @escaping (_ error: String?) -> Swift.Void) {
+        
+        guard posts.count > lastReadIndex, let postId = posts[lastReadIndex]._id else {
+            completion("Requested post index does not exist")
+            return
+        }
+        
+        markAsRead(postsBefore: postId, completion: completion)
+        
+    }
+    
+    func markAsRead(posts: [String], completion: @escaping (_ error: String?) -> Swift.Void) {
+        
+        guard let channelId = channel?.uid else {
+            completion("Channel doesn't exist")
+            return
+        }
+        
+        sendReadRequest(markReadRequest: TimelineMarkAsReadRequest(channel: channelId, method: .MarkRead, entries: posts)) { error in
+            completion(error)
+        }
+        
+    }
+    
+    func markAsUnread(posts: [String], completion: @escaping (_ error: String?) -> Swift.Void) {
+        
+        guard let channelId = channel?.uid else {
+            completion("Channel doesn't exist")
+            return
+        }
+        
+        sendReadRequest(markReadRequest: TimelineMarkAsReadRequest(channel: channelId, method: .MarkUnread, entries: posts)) { error in
+            completion(error)
+        }
+        
+    }
+    
+    func markAsRead(postsBefore lastReadEntry: String, completion: @escaping (_ error: String?) -> Swift.Void) {
+        
+        guard let channelId = channel?.uid else {
+            completion("Channel doesn't exist")
+            return
+        }
+        
+        sendReadRequest(markReadRequest: TimelineMarkAsReadRequest(channel: channelId, method: .MarkRead, lastReadEntry: lastReadEntry)) { error in
+            completion(error)
+        }
+        
+    }
+    
+    func sendReadRequest(markReadRequest: TimelineMarkAsReadRequest, completion: @escaping (_ error: String?) -> Swift.Void) {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            
+            guard let microsubEndpoint = self?.accountDetails?.microsub_endpoint else {
+                completion("microsubEndpoint failure")
+                return
+            }
+            
+            guard let account = self?.accountDetails else {
+                completion("No account details")
+                return
+            }
+            
+            guard let requestData = markReadRequest.toData() else {
+                completion("Couldn't prepare read request for POST body")
+                return
+            }
+            
+            var request = URLRequest(url: microsubEndpoint)
+            request.httpMethod = "POST"
+            request.httpBody = requestData
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(account.access_token)", forHTTPHeaderField: "Authorization")
+            
+            let session = URLSession(configuration: URLSessionConfiguration.default)
+            
+            let task = session.dataTask(with: request) { (data, response, error) in
+                // check for any errors
+                guard error == nil else {
+                    completion("error calling POST on \(microsubEndpoint)")
+                    print(error ?? "No error present")
+                    return
+                }
+                
+                // Check if endpoint is in the HTTP Header fields
+                if let httpResponse = response as? HTTPURLResponse, let body = String(data: data!, encoding: .utf8) {
+                    if httpResponse.statusCode == 200 {
+                        completion(nil)
+                    } else {
+                        completion("Status Code not 200")
+                        print(httpResponse)
+                        print(body)
+                    }
+                }
+                
+            }
+            
+            task.resume()
+        }
+    }
+    
     func getNextTimeline(completion: @escaping (_ error: String?, _ timelinePosts: [Jf2Post]?) -> Swift.Void) {
         
         DispatchQueue.global(qos: .background).async {

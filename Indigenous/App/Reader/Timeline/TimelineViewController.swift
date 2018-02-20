@@ -19,8 +19,29 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     var previousDataAvailable: Bool = true
     var mediaTimeTracking: [Int: String] = [:]
     
+    @IBOutlet weak var markAllAsReadButton: UIBarButtonItem!
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
+    }
+    
+    @IBAction func markAllAsRead(_ sender: Any) {
+        timeline?.markAllPostsAsRead { [weak self] error in
+            if error != nil {
+                print("ERROR MARKING AS READ")
+                return
+            }
+            
+            if let posts = self?.timeline?.posts {
+                for post in posts {
+                    post._is_read = true
+                }
+            
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -165,9 +186,23 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             }
         })
         viewAction.image = UIImage(named: "tick")
-        viewAction.backgroundColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+        viewAction.backgroundColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
         
-        return UISwipeActionsConfiguration(actions: [viewAction])
+        let shareAction = UIContextualAction(style: .normal, title:  "Share", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            
+            if let postUrl = post.url {
+                let shareVC = UIActivityViewController(activityItems: [postUrl], applicationActivities: nil)
+                shareVC.popoverPresentationController?.sourceView = self.view
+                self.present(shareVC, animated: true, completion: nil)
+                success(true)
+            } else {
+                success(false)
+            }
+        })
+        shareAction.image = UIImage(named: "Action")
+        shareAction.backgroundColor = #colorLiteral(red: 0.8063602448, green: 0.371145457, blue: 0.3616603613, alpha: 1)
+        
+        return UISwipeActionsConfiguration(actions: [viewAction, shareAction])
         
     }
     

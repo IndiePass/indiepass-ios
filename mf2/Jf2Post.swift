@@ -25,6 +25,8 @@ public class Jf2Post: Codable {
     var content: Jf2Content? = nil
     var refs: [URL : Jf2Post]? = nil
     var summary: String? = nil
+    var _id: String? = nil
+    var _is_read: Bool? = nil
     
     public init() {}
     
@@ -48,6 +50,9 @@ public class Jf2Post: Codable {
         content = try? values.decode(Jf2Content.self, forKey: .content)
         refs = try? values.decode([URL: Jf2Post].self, forKey: .refs)
         summary = try? values.decode(String.self, forKey: .summary)
+        _id = try? values.decode(String.self, forKey: ._id)
+        _is_read = try? values.decode(Bool.self, forKey: ._is_read)
+        
         photoImage = nil
         
         // set up various date and time formattors

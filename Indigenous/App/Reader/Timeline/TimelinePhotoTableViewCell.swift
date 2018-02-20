@@ -213,6 +213,13 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         } else {
             postContent.isHidden = false
         }
+        
+        if let postRead = post?._is_read, postRead == true {
+            contentView.alpha = 0.7;
+        } else {
+            contentView.alpha = 1;
+        }
+        
     }
     
     public func getMediaFragment() -> (attribute: String, fragmentTime: String)? {

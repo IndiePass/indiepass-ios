@@ -28,7 +28,7 @@ class ChannelTableViewCell: UITableViewCell {
     func setContent(ofChannel channel: Channel) {
         self.data = channel
         self.channelName?.text = data!.name
-        if data!.unread > 0 {
+        if let unreadCount = data!.unread, unreadCount > 0 {
             self.channelName?.font = UIFont.boldSystemFont(ofSize: 17.0)
         } else {
             self.channelName?.font = UIFont.systemFont(ofSize: 17.0)
