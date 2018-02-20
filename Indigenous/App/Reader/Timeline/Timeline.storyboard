@@ -118,8 +118,15 @@
                                                 <constraint firstAttribute="trailing" secondItem="MVn-7L-y78" secondAttribute="trailing" id="jku-vs-Fl1"/>
                                             </constraints>
                                         </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reply" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lf7-09-WjW">
+                                            <rect key="frame" x="259" y="20" width="27" height="12"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Lf7-09-WjW" firstAttribute="centerY" secondItem="7ZC-X0-L49" secondAttribute="centerY" id="2c5-zN-uuv"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="XKk-zV-aZv" secondAttribute="bottom" constant="20" symbolic="YES" id="6Yw-ra-iJx"/>
                                         <constraint firstAttribute="trailing" secondItem="bhR-Lh-yak" secondAttribute="trailing" constant="20" symbolic="YES" id="CRm-08-AND"/>
                                         <constraint firstItem="bhR-Lh-yak" firstAttribute="leading" secondItem="XKk-zV-aZv" secondAttribute="trailing" constant="8" symbolic="YES" id="GBp-L3-T5m"/>
@@ -128,6 +135,7 @@
                                         <constraint firstAttribute="bottom" secondItem="WOV-nJ-IqG" secondAttribute="bottom" constant="20" symbolic="YES" id="TZv-oi-ews"/>
                                         <constraint firstItem="bhR-Lh-yak" firstAttribute="firstBaseline" secondItem="XKk-zV-aZv" secondAttribute="top" constant="24.5" symbolType="layoutAnchor" id="Vqg-QN-FlE"/>
                                         <constraint firstItem="7ZC-X0-L49" firstAttribute="top" secondItem="3mC-ku-rgJ" secondAttribute="top" constant="20" symbolic="YES" id="awC-Ui-4jc"/>
+                                        <constraint firstItem="7ZC-X0-L49" firstAttribute="leading" secondItem="Lf7-09-WjW" secondAttribute="trailing" constant="8" symbolic="YES" id="ia6-od-Y3z"/>
                                         <constraint firstItem="WOV-nJ-IqG" firstAttribute="leading" secondItem="3mC-ku-rgJ" secondAttribute="leading" constant="16" id="j13-n8-oIB"/>
                                         <constraint firstItem="95m-mZ-DT3" firstAttribute="leading" secondItem="3mC-ku-rgJ" secondAttribute="leading" constant="20" symbolic="YES" id="mb9-fM-ONg"/>
                                         <constraint firstItem="XKk-zV-aZv" firstAttribute="top" secondItem="95m-mZ-DT3" secondAttribute="baseline" constant="10" symbolType="layoutAnchor" id="nhX-0F-h3F"/>
@@ -152,6 +160,7 @@
                                     <outlet property="postDate" destination="7ZC-X0-L49" id="cCP-6L-M4D"/>
                                     <outlet property="postImage" destination="MVn-7L-y78" id="Ozh-xz-YMz"/>
                                     <outlet property="postImageHeight" destination="uDG-dM-jhW" id="5eY-Y1-Ele"/>
+                                    <outlet property="replyIcon" destination="Lf7-09-WjW" id="99W-ci-4ue"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LoadMoreTimelineCell" textLabel="RNF-2P-f6I" rowHeight="50" style="IBUITableViewCellStyleDefault" id="bSO-1I-rpe">

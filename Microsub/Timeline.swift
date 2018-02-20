@@ -22,7 +22,7 @@ class Timeline {
 //    func markAsRead(postIndexes: [Int], completion: @escaping (_ error: String?) -> Swift.Void) {
 //
 //        // Only use indexes that exist in array, map indexes to post ids
-//        let postIds = postIndexes.filter { self.posts.count > $0 }.map { self.posts[$0]._id }
+//        let postIds = postIndexes.filter { self.posts.count > $0 }.map { self.posts[$0].id }
 //
 //        markAsUnread(posts: postIds, completion: completion)
 //
@@ -31,7 +31,7 @@ class Timeline {
 //    func markAsUnread(postIndexes: [Int], completion: @escaping (_ error: String?) -> Swift.Void) {
 //
 //        // Only use indexes that exist in array, map indexes to post ids
-//        let postIds = postIndexes.filter { self.posts.count > $0 }.map { self.posts[$0]._id }
+//        let postIds = postIndexes.filter { self.posts.count > $0 }.map { self.posts[$0].id }
 //
 //        markAsUnread(posts: postIds, completion: completion)
 //
@@ -39,7 +39,7 @@ class Timeline {
     
     func markAsRead(postsBeforeIndex lastReadIndex: Int, completion: @escaping (_ error: String?) -> Swift.Void) {
         
-        guard posts.count > lastReadIndex, let postId = posts[lastReadIndex]._id else {
+        guard posts.count > lastReadIndex, let postId = posts[lastReadIndex].id else {
             completion("Requested post index does not exist")
             return
         }

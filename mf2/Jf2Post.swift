@@ -23,10 +23,37 @@ public class Jf2Post: Codable {
     var attendee: [URL]? = nil
     var syndication: [URL]? = nil
     var content: Jf2Content? = nil
+    var inReplyTo: [URL]? = nil
+    var bookmarkOf: [URL]? = nil
+    var likeOf: [URL]? = nil
     var refs: [URL : Jf2Post]? = nil
     var summary: String? = nil
-    var _id: String? = nil
-    var _is_read: Bool? = nil
+    var id: String? = nil
+    var isRead: Bool? = nil
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+        case name
+        case author
+        case published
+        case start
+        case url
+        case photo
+        case audio
+        case photoImage
+        case category
+        case location
+        case attendee
+        case syndication
+        case content
+        case inReplyTo = "in-reply-to"
+        case bookmarkOf = "bookmark-of"
+        case likeOf = "like-of"
+        case refs
+        case summary
+        case id = "_id"
+        case isRead = "_is_read"
+    }
     
     public init() {}
     
@@ -50,8 +77,11 @@ public class Jf2Post: Codable {
         content = try? values.decode(Jf2Content.self, forKey: .content)
         refs = try? values.decode([URL: Jf2Post].self, forKey: .refs)
         summary = try? values.decode(String.self, forKey: .summary)
-        _id = try? values.decode(String.self, forKey: ._id)
-        _is_read = try? values.decode(Bool.self, forKey: ._is_read)
+        inReplyTo = try? values.decode([URL].self, forKey: .inReplyTo)
+        bookmarkOf = try? values.decode([URL].self, forKey: .bookmarkOf)
+        likeOf = try? values.decode([URL].self, forKey: .likeOf)
+        id = try? values.decode(String.self, forKey: .id)
+        isRead = try? values.decode(Bool.self, forKey: .isRead)
         
         photoImage = nil
         

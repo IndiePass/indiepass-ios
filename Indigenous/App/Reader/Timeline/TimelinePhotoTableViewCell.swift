@@ -32,6 +32,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     @IBOutlet weak var audioPlayerProgressBar: UIProgressView!
     @IBOutlet weak var audioPlayerHeight: NSLayoutConstraint!
     @IBOutlet weak var audioLoading: UIActivityIndicatorView!
+    @IBOutlet weak var replyIcon: UILabel!
     
     @IBAction func activatedAudioControl(_ sender: Any) {
         if player == nil {
@@ -214,8 +215,16 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             postContent.isHidden = false
         }
         
-        if let postRead = post?._is_read, postRead == true {
-            contentView.alpha = 0.7;
+        if let replyCount = post?.inReplyTo?.count, replyCount > 0 {
+            replyIcon.isHidden = false
+            replyIcon.text = String.fontAwesomeIcon(name: .commentsO)
+            replyIcon.font = UIFont.fontAwesome(ofSize: 10)
+        } else {
+            replyIcon.isHidden = true
+        }
+        
+        if let postRead = post?.isRead, postRead == true {
+            contentView.alpha = 0.6;
         } else {
             contentView.alpha = 1;
         }

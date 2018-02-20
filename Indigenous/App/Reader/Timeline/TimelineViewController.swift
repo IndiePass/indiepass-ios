@@ -34,7 +34,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             
             if let posts = self?.timeline?.posts {
                 for post in posts {
-                    post._is_read = true
+                    post.isRead = true
                 }
             
                 DispatchQueue.main.async {
@@ -178,6 +178,14 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
         let viewAction = UIContextualAction(style: .normal, title:  "View", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             
             if let postUrl = post.url {
+                if post.isRead != nil, let postId = post.id {
+                    self.timeline?.markAsRead(posts: [postId]) { error in
+                        if error != nil {
+                            print("Error Marking post as read \(error ?? "")")
+                        }
+                    }
+                }
+                
                 let safariVC = SFSafariViewController(url: postUrl)
                 self.present(safariVC, animated: true)
                 success(true)
@@ -266,6 +274,11 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
 //            let safariVC = SFSafariViewController(url: postUrl)
 //            present(safariVC, animated: true, completion: nil)
 //        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
