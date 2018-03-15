@@ -57,6 +57,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             fetchingNewerData = true
             
             timeline?.getNextTimeline { error, newPosts in
+                
                 guard error == nil else {
                     print("Error while fetching timeline")
                     print(error)
@@ -69,8 +70,19 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 
                 DispatchQueue.main.async {
                     if let newPostsCount = newPosts?.count {
+//                        let beforeContentSize = self.tableView.contentSize
+                        
                         let indexPaths = (0..<newPostsCount).map { IndexPath(row: $0, section: 0) }
                         self.tableView.insertRows(at: indexPaths, with: .automatic)
+                        
+                        // This code is a failed attempt at keeping the TableView's position static while adding entries to the top so you can continue scrolling
+//                        let afterContentSize = self.tableView.contentSize
+//                        let afterContentOffset = self.tableView.contentOffset
+//                        let newContentOffset = CGPoint(x: afterContentOffset.x, y: afterContentOffset.y + afterContentSize.height - beforeContentSize.height)
+//                        print("Before offset: \(self.tableView.contentOffset), After offset: \(newContentOffset)")
+//                        self.tableView.setContentOffset(newContentOffset, animated: false)
+//                        print("Offset should be after: \(self.tableView.contentOffset)")
+//                        self.view.layoutIfNeeded()
                     }
                     self.fetchingNewerData = false
                     sender.endRefreshing()

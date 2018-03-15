@@ -165,11 +165,13 @@ class Timeline {
                     return
                 }
                 
-                self.currentOptions = TimelineOptions(before: timelineResponse?.paging?.before,
-                                                      after: self.currentOptions?.after)
+                if let beforePagingToken = timelineResponse?.paging?.before {
+                    self.currentOptions = TimelineOptions(before: beforePagingToken,
+                                                          after: self.currentOptions?.after)
+                }
                 
                 if let timelineItems = timelineResponse?.items {
-                    self.posts.append(contentsOf: timelineItems)
+                    self.posts.insert(contentsOf: timelineItems, at: 0)
                     completion(nil, timelineItems)
                 } else {
                     completion(nil, [])
