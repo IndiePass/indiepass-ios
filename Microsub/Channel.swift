@@ -26,7 +26,6 @@ struct Channel: Codable {
         name = try! container.decode(String.self, forKey: .name)
         
         if let boolValue = try? container.decodeIfPresent(Bool.self, forKey: .unread) {
-            print("bool: \(boolValue)")
             if boolValue != nil {
                 if boolValue! {
                     print(1);
@@ -40,7 +39,6 @@ struct Channel: Codable {
                 unread = .read
             }
         } else if let intValue = try! container.decodeIfPresent(Int.self, forKey: .unread) {
-            print("int: \(intValue)")
             if intValue > 0 {
                 print(4);
                 unread = .unreadCount(count: intValue)

@@ -45,9 +45,6 @@ class ChannelViewController: UITableViewController {
             return commands.count
         }
         
-        print(section)
-        print(channels)
-        
         return channels.count
     }
     
