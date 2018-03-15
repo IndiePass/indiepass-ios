@@ -169,6 +169,14 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 }
             }
             
+            if post.isRead != nil, let postId = post.id {
+                self.timeline?.markAsRead(posts: [postId]) { error in
+                    if error != nil {
+                        print("Error Marking post as read \(error ?? "")")
+                    }
+                }
+            }
+            
             self.performSegue(withIdentifier: "showReplyView", sender: post)
             success(true)
         })
