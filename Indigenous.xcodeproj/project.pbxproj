@@ -13,6 +13,7 @@
 		C80AEA401FEB0B4100CCBE2E /* TimelinePostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA3F1FEB0B4100CCBE2E /* TimelinePostContent.swift */; };
 		C80AEA421FEB14C700CCBE2E /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */; };
 		C80AEA441FEB1B0900CCBE2E /* ChannelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */; };
+		C81260642059D68E009DE884 /* ChannelUnreadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81260632059D68E009DE884 /* ChannelUnreadStatus.swift */; };
 		C8254C43201A4A8C000AC32A /* TimelineApiPaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8254C42201A4A8B000AC32A /* TimelineApiPaging.swift */; };
 		C8254C45201A4B41000AC32A /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8254C44201A4B41000AC32A /* Timeline.swift */; };
 		C8254C47201A55FB000AC32A /* TimelineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8254C46201A55FB000AC32A /* TimelineOptions.swift */; };
@@ -242,6 +243,7 @@
 		C80AEA3F1FEB0B4100CCBE2E /* TimelinePostContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePostContent.swift; sourceTree = "<group>"; };
 		C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTableViewCell.swift; sourceTree = "<group>"; };
+		C81260632059D68E009DE884 /* ChannelUnreadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelUnreadStatus.swift; sourceTree = "<group>"; };
 		C8254C42201A4A8B000AC32A /* TimelineApiPaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineApiPaging.swift; sourceTree = "<group>"; };
 		C8254C44201A4B41000AC32A /* Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		C8254C46201A55FB000AC32A /* TimelineOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineOptions.swift; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 				C8254C44201A4B41000AC32A /* Timeline.swift */,
 				C8254C46201A55FB000AC32A /* TimelineOptions.swift */,
 				C8439C34203B412C004EE01E /* TimelineMarkAsReadRequest.swift */,
+				C81260632059D68E009DE884 /* ChannelUnreadStatus.swift */,
 			);
 			path = Microsub;
 			sourceTree = "<group>";
@@ -1150,6 +1153,7 @@
 				C8B36B5C1FED5AC900D92E3D /* IndieAuthScope.swift in Sources */,
 				C8B36B571FED54F400D92E3D /* IndieAuthProfile.swift in Sources */,
 				C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
+				C81260642059D68E009DE884 /* ChannelUnreadStatus.swift in Sources */,
 				C8B3B0881FAADAA90041C58E /* CSS.swift in Sources */,
 				C8439C35203B412C004EE01E /* TimelineMarkAsReadRequest.swift in Sources */,
 				C8F431CA1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,

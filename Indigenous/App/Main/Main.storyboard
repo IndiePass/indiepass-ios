@@ -249,15 +249,26 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yfo-OQ-4Ld">
+                                            <rect key="frame" x="328" y="11" width="27" height="21"/>
+                                            <color key="backgroundColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="zPM-kx-Bu1" secondAttribute="trailing" constant="16" id="3Is-E8-VZi"/>
+                                        <constraint firstItem="Yfo-OQ-4Ld" firstAttribute="centerY" secondItem="RmB-wL-eVc" secondAttribute="centerY" id="Lil-ip-378"/>
                                         <constraint firstItem="zPM-kx-Bu1" firstAttribute="leading" secondItem="RmB-wL-eVc" secondAttribute="leading" constant="16" id="XJ6-xm-IoJ"/>
+                                        <constraint firstItem="Yfo-OQ-4Ld" firstAttribute="height" secondItem="zPM-kx-Bu1" secondAttribute="height" id="Y1m-p9-pQd"/>
                                         <constraint firstItem="zPM-kx-Bu1" firstAttribute="centerY" secondItem="RmB-wL-eVc" secondAttribute="centerY" id="ckI-6t-SbR"/>
+                                        <constraint firstAttribute="trailing" secondItem="Yfo-OQ-4Ld" secondAttribute="trailing" constant="20" symbolic="YES" id="rIX-Vx-jmd"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="channelName" destination="zPM-kx-Bu1" id="HXf-Vh-w0F"/>
+                                    <outlet property="unreadIndicator" destination="Yfo-OQ-4Ld" id="Ihd-W8-qSu"/>
                                     <segue destination="8hF-7f-nyg" kind="show" identifier="viewTimeline" id="8Yn-0P-4aS"/>
                                 </connections>
                             </tableViewCell>
