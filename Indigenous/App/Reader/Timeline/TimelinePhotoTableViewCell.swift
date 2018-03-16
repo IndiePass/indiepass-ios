@@ -200,13 +200,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         }
         
         if let publishedDate = post?.published {
-            //               let publishedDate = ISO8601DateFormatter().date(from: dateString) {
-            
-            if Calendar.current.isDateInToday(publishedDate) {
-                postDate.text = "Today at " + DateFormatter.localizedString(from: publishedDate, dateStyle: .none, timeStyle: .short)
-            } else {
-                postDate.text = " " + DateFormatter.localizedString(from: publishedDate, dateStyle: .medium, timeStyle: .short)
-            }
+            postDate.text = Jf2Post.displayDate(dateToDisplay: publishedDate)
         }
         
         if postContent.text == nil || postContent.text == "" {

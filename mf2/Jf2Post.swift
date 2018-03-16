@@ -89,8 +89,13 @@ public class Jf2Post: Codable {
         let iso601SpaceVariant = DateFormatter()
         iso601SpaceVariant.dateFormat = "yyyy'-'MM'-'dd HH':'mm':'ssZZZZZ"
         
+        let dateOnlyFormat = DateFormatter()
+        dateOnlyFormat.dateFormat = "yyyy'-'MM'-'dd"
+        
         if let dateString = try? values.decode(String.self, forKey: .published) {
-            published = ISO8601DateFormatter().date(from: dateString) ?? iso601SpaceVariant.date(from: dateString)
+            published = ISO8601DateFormatter().date(from: dateString) ??
+                        iso601SpaceVariant.date(from: dateString) ??
+                        dateOnlyFormat.date(from: dateString)
         } else {
             published = nil
         }
@@ -160,6 +165,23 @@ public class Jf2Post: Codable {
             completion(UIImage(data: imageData))
         }
         task.resume()
+    }
+    
+    public static func displayDate(dateToDisplay: Date) -> String {
+        let componentsToDisplay = Calendar.current.dateComponents([.hour, .minute], from: dateToDisplay)
+        if componentsToDisplay.hour == 0, componentsToDisplay.minute == 0 {
+            if Calendar.current.isDateInToday(dateToDisplay) {
+                return "Today"
+            } else {
+                return "" + DateFormatter.localizedString(from: dateToDisplay, dateStyle: .medium, timeStyle: .none)
+            }
+        } else {
+            if Calendar.current.isDateInToday(dateToDisplay) {
+                return "Today at " + DateFormatter.localizedString(from: dateToDisplay, dateStyle: .none, timeStyle: .short)
+            } else {
+                return " " + DateFormatter.localizedString(from: dateToDisplay, dateStyle: .medium, timeStyle: .short)
+            }
+        }
     }
 }
 
