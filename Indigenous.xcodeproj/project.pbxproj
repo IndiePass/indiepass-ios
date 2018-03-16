@@ -66,6 +66,10 @@
 		C86424F1202CEA6500E8AC96 /* MicropubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86424F0202CEA6400E8AC96 /* MicropubError.swift */; };
 		C86424F2202CEFBD00E8AC96 /* MicropubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86424F0202CEA6400E8AC96 /* MicropubError.swift */; };
 		C86424F3202CEFBD00E8AC96 /* MicropubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86424F0202CEA6400E8AC96 /* MicropubError.swift */; };
+		C864F3AA205C1DF2000C5F89 /* String.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864F3A9205C1DF2000C5F89 /* String.extension.swift */; };
+		C864F3AB205C1DF2000C5F89 /* String.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864F3A9205C1DF2000C5F89 /* String.extension.swift */; };
+		C864F3AC205C1DF2000C5F89 /* String.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864F3A9205C1DF2000C5F89 /* String.extension.swift */; };
+		C864F3AD205C1DF2000C5F89 /* String.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864F3A9205C1DF2000C5F89 /* String.extension.swift */; };
 		C8667405202230D50076DB8E /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8667403202230D40076DB8E /* Crashlytics.framework */; };
 		C8667406202230D50076DB8E /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8667404202230D50076DB8E /* Fabric.framework */; };
 		C8667408202254E50076DB8E /* MicropubSyndicationQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8667407202254E50076DB8E /* MicropubSyndicationQueryResponse.swift */; };
@@ -270,6 +274,7 @@
 		C85B245720067E530097E577 /* MicropubConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubConfig.swift; sourceTree = "<group>"; };
 		C85B245B20067EE60097E577 /* SyndicateTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyndicateTarget.swift; sourceTree = "<group>"; };
 		C86424F0202CEA6400E8AC96 /* MicropubError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubError.swift; sourceTree = "<group>"; };
+		C864F3A9205C1DF2000C5F89 /* String.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.extension.swift; sourceTree = "<group>"; };
 		C8667403202230D40076DB8E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		C8667404202230D50076DB8E /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		C8667407202254E50076DB8E /* MicropubSyndicationQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubSyndicationQueryResponse.swift; sourceTree = "<group>"; };
@@ -491,6 +496,14 @@
 			path = PostingInterface;
 			sourceTree = "<group>";
 		};
+		C864F3A8205C1DBD000C5F89 /* SwiftExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				C864F3A9205C1DF2000C5F89 /* String.extension.swift */,
+			);
+			path = SwiftExtensions;
+			sourceTree = "<group>";
+		};
 		C87B4DA31FBBA6AB00181B62 /* voice-notes */ = {
 			isa = PBXGroup;
 			children = (
@@ -590,6 +603,7 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
+				C864F3A8205C1DBD000C5F89 /* SwiftExtensions */,
 				C85B2443200596AA0097E577 /* PostingInterface */,
 				C85B242B20042EEF0097E577 /* vendor */,
 				C845B4641FF5E05700354391 /* xray */,
@@ -1025,6 +1039,7 @@
 				C87B1A36200A73B000F3E79C /* MicropubRsvpValue.swift in Sources */,
 				C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */,
 				C85B245A20067E530097E577 /* MicropubConfig.swift in Sources */,
+				C864F3AC205C1DF2000C5F89 /* String.extension.swift in Sources */,
 				C85B244E20059F6D0097E577 /* MicropubPost.swift in Sources */,
 				C8B36B671FED887100D92E3D /* IndieAuthDelegate.swift in Sources */,
 				C8D171BE1FF449A400134485 /* IndieAuthTokenResponse.swift in Sources */,
@@ -1045,6 +1060,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C87B4DB11FBBA6AB00181B62 /* IntentViewController.swift in Sources */,
+				C864F3AD205C1DF2000C5F89 /* String.extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1061,6 +1077,7 @@
 				C8D171C01FF46DCC00134485 /* AccountSelectorTableViewController.swift in Sources */,
 				C8DAA8B5201127D7002B7083 /* MicropubPhoto.swift in Sources */,
 				C840A2CF200BDD5500CD2091 /* SimpleSelectionItem.swift in Sources */,
+				C864F3AB205C1DF2000C5F89 /* String.extension.swift in Sources */,
 				C8B36B6A1FED891300D92E3D /* Mf2Type.swift in Sources */,
 				C840A2D5200D12EF00CD2091 /* SimpleSelectionReadOnlyDelegate.swift in Sources */,
 				C8CBDEF71FB4EAFD001CF409 /* libxmlHTMLNode.swift in Sources */,
@@ -1177,6 +1194,7 @@
 				C88F471C1FF6D15600933FE8 /* MicropubResponseType.swift in Sources */,
 				C8D171BC1FF447AF00134485 /* IndieAuthTokenResponse.swift in Sources */,
 				C85B245C20067EE60097E577 /* SyndicateTarget.swift in Sources */,
+				C864F3AA205C1DF2000C5F89 /* String.extension.swift in Sources */,
 				C866740E20225C030076DB8E /* AccountDebugViewController.swift in Sources */,
 				C840A2CE200BDD5500CD2091 /* SimpleSelectionItem.swift in Sources */,
 				C8D171D91FF58C2200134485 /* Enum.swift in Sources */,

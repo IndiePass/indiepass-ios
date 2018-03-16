@@ -20,11 +20,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PhotoTimelineCell" rowHeight="456" id="aea-xt-507" userLabel="PhotoTimelineCell" customClass="TimelinePhotoTableViewCell" customModule="Indigenous" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="456"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PhotoTimelineCell" rowHeight="500" id="aea-xt-507" userLabel="PhotoTimelineCell" customClass="TimelinePhotoTableViewCell" customModule="Indigenous" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="500"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aea-xt-507" id="3mC-ku-rgJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="455.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="499.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="305" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95m-mZ-DT3">
@@ -46,15 +46,14 @@
                                                 <constraint firstAttribute="height" constant="50" id="igz-aF-S8S"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhR-Lh-yak">
-                                            <rect key="frame" x="78" y="49.5" width="277" height="128"/>
-                                            <string key="text">diajsd saidj oisa doisajd siadj saidj asidj asid said jais djiasj doiasj disaj doisa jdoisa jdioasjd aisdjaio sdais doiasj doiasjdoisa jds</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbU-ft-aAw" userLabel="Post Title">
+                                            <rect key="frame" x="78" y="42" width="281" height="20.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOV-nJ-IqG" userLabel="Attachment View">
-                                            <rect key="frame" x="16" y="185.5" width="343" height="250"/>
+                                            <rect key="frame" x="16" y="229.5" width="343" height="250"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="300" translatesAutoresizingMaskIntoConstraints="NO" id="MVn-7L-y78">
                                                     <rect key="frame" x="0.0" y="50" width="343" height="200"/>
@@ -124,17 +123,26 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhR-Lh-yak">
+                                            <rect key="frame" x="78" y="70.5" width="277" height="151"/>
+                                            <string key="text">diajsd saidj oisa doisajd siadj saidj asidj asid said jais djiasj doiasj disaj doisa jdoisa jdioasjd aisdjaio sdais doiasj doiasjdoisa jds</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Lf7-09-WjW" firstAttribute="centerY" secondItem="7ZC-X0-L49" secondAttribute="centerY" id="2c5-zN-uuv"/>
+                                        <constraint firstItem="bhR-Lh-yak" firstAttribute="top" secondItem="fbU-ft-aAw" secondAttribute="bottom" constant="8" symbolic="YES" id="33B-pw-OmI"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="XKk-zV-aZv" secondAttribute="bottom" constant="20" symbolic="YES" id="6Yw-ra-iJx"/>
                                         <constraint firstAttribute="trailing" secondItem="bhR-Lh-yak" secondAttribute="trailing" constant="20" symbolic="YES" id="CRm-08-AND"/>
                                         <constraint firstItem="bhR-Lh-yak" firstAttribute="leading" secondItem="XKk-zV-aZv" secondAttribute="trailing" constant="8" symbolic="YES" id="GBp-L3-T5m"/>
                                         <constraint firstItem="WOV-nJ-IqG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="XKk-zV-aZv" secondAttribute="bottom" id="Jv6-bB-p1c"/>
                                         <constraint firstAttribute="trailing" secondItem="WOV-nJ-IqG" secondAttribute="trailing" constant="16" id="OSs-cZ-WsB"/>
                                         <constraint firstAttribute="bottom" secondItem="WOV-nJ-IqG" secondAttribute="bottom" constant="20" symbolic="YES" id="TZv-oi-ews"/>
-                                        <constraint firstItem="bhR-Lh-yak" firstAttribute="firstBaseline" secondItem="XKk-zV-aZv" secondAttribute="top" constant="24.5" symbolType="layoutAnchor" id="Vqg-QN-FlE"/>
+                                        <constraint firstItem="fbU-ft-aAw" firstAttribute="firstBaseline" secondItem="XKk-zV-aZv" secondAttribute="top" constant="16.5" id="Vqg-QN-FlE"/>
                                         <constraint firstItem="7ZC-X0-L49" firstAttribute="top" secondItem="3mC-ku-rgJ" secondAttribute="top" constant="20" symbolic="YES" id="awC-Ui-4jc"/>
+                                        <constraint firstAttribute="trailing" secondItem="fbU-ft-aAw" secondAttribute="trailing" constant="16" id="hee-Xb-vHv"/>
                                         <constraint firstItem="7ZC-X0-L49" firstAttribute="leading" secondItem="Lf7-09-WjW" secondAttribute="trailing" constant="8" symbolic="YES" id="ia6-od-Y3z"/>
                                         <constraint firstItem="WOV-nJ-IqG" firstAttribute="leading" secondItem="3mC-ku-rgJ" secondAttribute="leading" constant="16" id="j13-n8-oIB"/>
                                         <constraint firstItem="95m-mZ-DT3" firstAttribute="leading" secondItem="3mC-ku-rgJ" secondAttribute="leading" constant="20" symbolic="YES" id="mb9-fM-ONg"/>
@@ -142,6 +150,7 @@
                                         <constraint firstAttribute="trailing" secondItem="7ZC-X0-L49" secondAttribute="trailing" constant="20" symbolic="YES" id="rWg-J4-ybB"/>
                                         <constraint firstItem="WOV-nJ-IqG" firstAttribute="top" secondItem="bhR-Lh-yak" secondAttribute="bottom" constant="8" symbolic="YES" id="sTa-0q-Mmp"/>
                                         <constraint firstItem="XKk-zV-aZv" firstAttribute="leading" secondItem="3mC-ku-rgJ" secondAttribute="leading" constant="20" symbolic="YES" id="tl7-h1-kIi"/>
+                                        <constraint firstItem="fbU-ft-aAw" firstAttribute="leading" secondItem="XKk-zV-aZv" secondAttribute="trailing" constant="8" symbolic="YES" id="uYy-ZN-yBb"/>
                                         <constraint firstItem="95m-mZ-DT3" firstAttribute="top" secondItem="3mC-ku-rgJ" secondAttribute="top" constant="20" symbolic="YES" id="uvR-X3-0qn"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -160,11 +169,12 @@
                                     <outlet property="postDate" destination="7ZC-X0-L49" id="cCP-6L-M4D"/>
                                     <outlet property="postImage" destination="MVn-7L-y78" id="Ozh-xz-YMz"/>
                                     <outlet property="postImageHeight" destination="uDG-dM-jhW" id="5eY-Y1-Ele"/>
+                                    <outlet property="postTitle" destination="fbU-ft-aAw" id="wZg-Mv-GJw"/>
                                     <outlet property="replyIcon" destination="Lf7-09-WjW" id="99W-ci-4ue"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LoadMoreTimelineCell" textLabel="RNF-2P-f6I" rowHeight="50" style="IBUITableViewCellStyleDefault" id="bSO-1I-rpe">
-                                <rect key="frame" x="0.0" y="484" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="528" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bSO-1I-rpe" id="fPB-Zu-ePX">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>

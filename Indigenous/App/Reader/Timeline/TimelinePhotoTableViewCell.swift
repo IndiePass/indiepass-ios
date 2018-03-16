@@ -21,7 +21,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDate: UILabel!
-    
+    @IBOutlet weak var postTitle: UILabel!
     
     @IBOutlet weak var authorPhotoWidth: NSLayoutConstraint!
     @IBOutlet weak var authorPhotoHeight: NSLayoutConstraint!
@@ -139,7 +139,9 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         
         post = postData
         
-        postContent.text = post?.name ?? post?.content?.text ?? post?.summary ?? nil
+        
+        postTitle.text = post?.name
+        postContent.text = post?.content?.text ?? post?.summary ?? nil
         
         authorName.text = post?.author?.name ?? URLComponents.init(url: (post?.url)!, resolvingAgainstBaseURL: false)?.host ?? "Unknown"
         
@@ -207,6 +209,14 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             postContent.isHidden = true
         } else {
             postContent.isHidden = false
+        }
+        
+        if postTitle.text == nil || postTitle.text == "" {
+            postTitle.isHidden = true
+        } else {
+            postTitle.isHidden = false
+            // Since a post title exists, we should also truncate the post content to 280 characters
+            postContent.text = postContent.text?.trunc(length: 140)
         }
         
         if let replyCount = post?.inReplyTo?.count, replyCount > 0 {
