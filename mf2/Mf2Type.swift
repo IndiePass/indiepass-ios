@@ -13,4 +13,11 @@ public enum Mf2Type: String, Codable {
     case entry
     case event
     case cite
+    case review
+    case recipe
+    case product
+    case item
+    case app
+    case feed
+    case repo
 }
