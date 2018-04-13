@@ -25,9 +25,9 @@
 import Foundation
 
 #if SWIFT_PACKAGE
-    import SwiftClibxml2
+import SwiftClibxml2
 #else
-    import libxml2
+import libxmlKanna
 #endif
 
 /*
