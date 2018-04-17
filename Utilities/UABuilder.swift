@@ -25,12 +25,7 @@ func deviceVersion() -> String {
     let currentDevice = UIDevice.current
     return "\(currentDevice.systemName)/\(currentDevice.systemVersion)"
 }
-//eg. iPhone5,2
-func deviceName() -> String {
-    var sysinfo = utsname()
-    uname(&sysinfo)
-    return String(bytes: Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN)), encoding: .ascii)!.trimmingCharacters(in: .controlCharacters)
-}
+
 //eg. MyApp/1
 func appNameAndVersion() -> String {
     let dictionary = Bundle.main.infoDictionary!
@@ -40,5 +35,5 @@ func appNameAndVersion() -> String {
 }
 
 func UAString() -> String {
-    return "\(appNameAndVersion()) \(deviceName()) \(deviceVersion()) \(CFNetworkVersion()) \(DarwinVersion())"
+    return "\(appNameAndVersion()) \(deviceVersion()) \(CFNetworkVersion()) \(DarwinVersion())"
 }
