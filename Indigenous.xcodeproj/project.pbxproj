@@ -192,6 +192,11 @@
 		C8F724A320866BB500BB53B2 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F724A120866BB500BB53B2 /* RandomString.swift */; };
 		C8F724A420866BB500BB53B2 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F724A120866BB500BB53B2 /* RandomString.swift */; };
 		C8F724A520866BB500BB53B2 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F724A120866BB500BB53B2 /* RandomString.swift */; };
+		C8F724A62086827C00BB53B2 /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0831FAADAA90041C58E /* CSS.swift */; };
+		C8F724A72086827E00BB53B2 /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0841FAADAA90041C58E /* Kanna.swift */; };
+		C8F724A82086828300BB53B2 /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0861FAADAA90041C58E /* libxmlHTMLDocument.swift */; };
+		C8F724A92086828300BB53B2 /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0851FAADAA90041C58E /* libxmlHTMLNode.swift */; };
+		C8F724AA2086828300BB53B2 /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B3B0821FAADAA90041C58E /* libxmlParserOption.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1050,6 +1055,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8F724A82086828300BB53B2 /* libxmlHTMLDocument.swift in Sources */,
 				C8F7249E2086692D00BB53B2 /* UABuilder.swift in Sources */,
 				C8DAA8B6201128FC002B7083 /* MicropubPhoto.swift in Sources */,
 				C8B36B651FED886C00D92E3D /* IndieAuthScope.swift in Sources */,
@@ -1058,10 +1064,13 @@
 				C8F724A420866BB500BB53B2 /* RandomString.swift in Sources */,
 				C8B36B641FED886400D92E3D /* IndieAuthProfile.swift in Sources */,
 				C845B46C1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
+				C8F724AA2086828300BB53B2 /* libxmlParserOption.swift in Sources */,
 				C87B1A36200A73B000F3E79C /* MicropubRsvpValue.swift in Sources */,
 				C87B4DA51FBBA6AB00181B62 /* IntentHandler.swift in Sources */,
 				C85B245A20067E530097E577 /* MicropubConfig.swift in Sources */,
 				C864F3AC205C1DF2000C5F89 /* String.extension.swift in Sources */,
+				C8F724A62086827C00BB53B2 /* CSS.swift in Sources */,
+				C8F724A72086827E00BB53B2 /* Kanna.swift in Sources */,
 				C85B244E20059F6D0097E577 /* MicropubPost.swift in Sources */,
 				C8B36B671FED887100D92E3D /* IndieAuthDelegate.swift in Sources */,
 				C8D171BE1FF449A400134485 /* IndieAuthTokenResponse.swift in Sources */,
@@ -1069,6 +1078,7 @@
 				C845B4701FF5E6E400354391 /* Jf2Post.swift in Sources */,
 				C88F471E1FF6D15600933FE8 /* MicropubResponseType.swift in Sources */,
 				C8B36B691FED887500D92E3D /* IndieAuth.swift in Sources */,
+				C8F724A92086828300BB53B2 /* libxmlHTMLNode.swift in Sources */,
 				C8B36B621FED885D00D92E3D /* IndieAuthAccount.swift in Sources */,
 				C8B36B6B1FED891400D92E3D /* Mf2Type.swift in Sources */,
 				C86424F3202CEFBD00E8AC96 /* MicropubError.swift in Sources */,
@@ -1348,12 +1358,14 @@
 				CODE_SIGN_ENTITLEMENTS = "voice-notes/voice-notes.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "voice-notes/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.voice-notes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules/**";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1365,12 +1377,14 @@
 				CODE_SIGN_ENTITLEMENTS = "voice-notes/voice-notes.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "voice-notes/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.voice-notes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules/**";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
