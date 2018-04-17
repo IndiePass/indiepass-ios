@@ -15,6 +15,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     var player: AVPlayer? = nil
     var playerToken: Any? = nil
     var mediaControlCallback: ((_ currentTime: Int?) -> ())?
+    private var unreadIndicator: CALayer? = nil
     
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
@@ -226,11 +227,29 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         } else {
             replyIcon.isHidden = true
         }
-        
-        if let postRead = post?.isRead, postRead == true {
-            contentView.alpha = 0.6;
+
+        if let postRead = post?.isRead, postRead == false {
+            print("Unread Post \(post?.name)")
+            let borderWidth: CGFloat = 4
+            
+            if unreadIndicator == nil {
+                unreadIndicator = CALayer()
+                unreadIndicator!.borderColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
+                unreadIndicator!.borderWidth = borderWidth
+                
+                contentView.layer.addSublayer(unreadIndicator!)
+                contentView.layer.masksToBounds = true
+            }
+
+            DispatchQueue.main.async { [weak self] in
+                if let frameHeight = self?.contentView.frame.height {
+                    self?.unreadIndicator!.frame = CGRect(x: 0, y: 0, width: borderWidth, height: frameHeight)
+                }
+            }
+            unreadIndicator!.isHidden = false
         } else {
-            contentView.alpha = 1;
+            print("Read Post \(post?.name)")
+            unreadIndicator?.isHidden = true
         }
         
     }
