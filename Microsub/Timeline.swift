@@ -109,6 +109,7 @@ class Timeline {
             request.httpMethod = "POST"
             request.httpBody = requestData
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
             request.setValue("Bearer \(account.access_token)", forHTTPHeaderField: "Authorization")
             
             let session = URLSession(configuration: URLSessionConfiguration.default)
@@ -295,6 +296,7 @@ class Timeline {
         var request = URLRequest(url: microsub)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
         request.setValue("Bearer \(account.access_token)", forHTTPHeaderField: "Authorization")
         
         let config = URLSessionConfiguration.default

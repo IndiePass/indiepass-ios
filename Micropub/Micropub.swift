@@ -38,6 +38,7 @@ func sendMicropub(forAction: MicropubResponseType, aboutUrl: URL, forUser user: 
         var request = URLRequest(url: user.micropub_endpoint)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
         let bodyString = "\(entryString)&access_token=\(user.access_token)"
         let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
         request.httpBody = bodyData
@@ -60,6 +61,7 @@ func sendMicropub(note: String, forUser user: IndieAuthAccount, completion: @esc
         var request = URLRequest(url: user.micropub_endpoint)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
         let bodyString = "\(entryString)&access_token=\(user.access_token)"
         let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
         request.httpBody = bodyData

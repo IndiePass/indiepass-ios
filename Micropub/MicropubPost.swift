@@ -55,6 +55,7 @@ public struct MicropubPost: Codable {
             var request = URLRequest(url: user.micropub_endpoint)
             request.httpMethod = "POST"
             request.setValue("Bearer \(user.access_token)", forHTTPHeaderField: "Authorization")
+            request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
             
             switch type {
             case .urlencoded:
@@ -68,6 +69,7 @@ public struct MicropubPost: Codable {
 
                 request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                 let bodyString = "\(entryString)"
+                // TODO: Add Access Token??
                 let bodyData = bodyString.data(using:String.Encoding.utf8, allowLossyConversion: false)
                 request.httpBody = bodyData
 
@@ -121,6 +123,7 @@ public struct MicropubPost: Codable {
                 var request = URLRequest(url: mediaEndpoint)
                 request.httpMethod = "POST"
                 request.setValue("Bearer \(user.access_token)", forHTTPHeaderField: "Authorization")
+                request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
                 
                 // Set Content-Type in HTTP header.
                 let boundaryConstant = "Boundary-\(NSUUID().uuidString)";

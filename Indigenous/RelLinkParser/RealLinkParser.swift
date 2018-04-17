@@ -110,7 +110,8 @@ public class RealLinkParser {
     }
     
     public static func fetchSiteData(fromUrl meUrl: URL, completion: @escaping ((HTTPURLResponse, Data?)) -> ()) {
-        let request = URLRequest(url: meUrl)
+        var request = URLRequest(url: meUrl)
+        request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
         
         // set up the session
         let config = URLSessionConfiguration.default

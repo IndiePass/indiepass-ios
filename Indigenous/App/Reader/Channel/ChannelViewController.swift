@@ -139,6 +139,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
                 var request = URLRequest(url: microsub)
                 request.httpMethod = "GET"
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
                 request.setValue("Bearer \(micropubDetails.access_token)", forHTTPHeaderField: "Authorization")
             
                 let config = URLSessionConfiguration.default
@@ -220,6 +221,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
                 var request = URLRequest(url: microsub)
                 request.httpMethod = "GET"
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
                 request.setValue("Bearer \(micropubDetails.access_token)", forHTTPHeaderField: "Authorization")
             
                 let config = URLSessionConfiguration.default

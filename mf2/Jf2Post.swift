@@ -152,6 +152,7 @@ public class Jf2Post: Codable {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.cachePolicy = .returnCacheDataElseLoad
+        request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request) { (data, response, error) in

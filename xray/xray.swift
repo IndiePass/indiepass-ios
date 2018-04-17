@@ -18,6 +18,7 @@ public class XRay {
         var request = URLRequest(url: xrayUrl)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
         request.httpBody = requestBody.data(using: .utf8, allowLossyConversion: false)
         
         // set up the session
