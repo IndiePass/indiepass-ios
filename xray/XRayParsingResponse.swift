@@ -9,7 +9,7 @@
 import Foundation
 
 public class XRayParsingResponse: Codable {
-    let url: URL
-    let code: Int
-    let data: Jf2Post
+    let url: URL? = nil
+    let code: Int? = nil
+    let data: Jf2Post? = nil
 }
