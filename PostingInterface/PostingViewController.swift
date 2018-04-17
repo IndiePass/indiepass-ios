@@ -181,6 +181,10 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
                 if let account = self.activeAccount, var post = self.currentPost {
                     
                     post.properties.content = self.postContentField.text
+                    post.properties.name = self.titleField.text
+                    if (post.properties.name?.isEmpty ?? false) {
+                        post.properties.name = nil
+                    }
             
                     DispatchQueue.global(qos: .background).async {
                         MicropubPost.send(post: post, as: .urlencoded, forUser: account) { error in
