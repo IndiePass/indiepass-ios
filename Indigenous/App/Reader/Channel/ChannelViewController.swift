@@ -11,12 +11,16 @@ import Social
 import MobileCoreServices
 import Crashlytics
 
-class ChannelViewController: UITableViewController {
+class ChannelViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
         
     var channels: [Channel] = []
+    var cachedChannels: [Channel] = []
+    var filteredChannels: [Channel] = []
+    var searchChannels: [Channel] = []
     var selectedChannel: Channel? = nil
     var timelines: [[Jf2Post]] = []
     var commands: [Command] = []
+    var searchController: UISearchController? = nil
     
     var currentAccount: IndieAuthAccount? = nil
     
@@ -45,7 +49,11 @@ class ChannelViewController: UITableViewController {
             return commands.count
         }
         
-        return channels.count
+        if isSearching() {
+            return searchChannels.count
+        } else {
+            return filteredChannels.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,7 +72,12 @@ class ChannelViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath)
      
         if let channelCell = cell as? ChannelTableViewCell {
-            let channelData = channels[indexPath.row]
+            let channelData: Channel
+            if isSearching() {
+                channelData = searchChannels[indexPath.row]
+            } else {
+                channelData = filteredChannels[indexPath.row]
+            }
             channelCell.setContent(ofChannel: channelData)
         }
         
@@ -79,7 +92,12 @@ class ChannelViewController: UITableViewController {
         }
         
 //        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let selectedChannel = channels[indexPath.row]
+        let selectedChannel: Channel
+        if isSearching() {
+            selectedChannel = searchChannels[indexPath.row]
+        } else {
+            selectedChannel = filteredChannels[indexPath.row]
+        }
         
         self.selectedChannel = selectedChannel
     }
@@ -229,10 +247,6 @@ class ChannelViewController: UITableViewController {
                                     }
                                     
                                     //        movies.sort() { $0.title < $1.title }
-                                
-                                    DispatchQueue.main.async {
-                                        self.tableView.reloadData()
-                                    }
 
                                     callback?()
                                 }
@@ -251,9 +265,74 @@ class ChannelViewController: UITableViewController {
     }
     
     @objc func handleRefresh(refreshControl: UIRefreshControl) {
-        getChannelData {
+        getChannelDataAndFilter {
             DispatchQueue.main.async {
                 refreshControl.endRefreshing()
+            }
+        }
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        getChannelData {
+            DispatchQueue.main.async { [weak self] in
+                // Time to filter results
+                self?.filterChannels(forSearchText: searchController.searchBar.text!)
+            }
+        }
+    }
+    
+    private func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController?.searchBar.text?.isEmpty ?? true
+    }
+    
+    private func isSearching() -> Bool {
+        return searchController?.isActive ?? false
+    }
+    
+    private func filterChannels(forSearchText searchText: String) {
+        searchChannels = channels.filter { channel in
+            if searchText.isEmpty {
+                return true
+            }
+            return channel.name.lowercased().contains(searchText.lowercased())
+        }
+        
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
+    
+    func getChannelDataAndFilter(callback: (() -> ())? = nil) {
+        getChannelData { [weak self] in
+            self?.filterChannelData {
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                }
+                callback?()
+            }
+        }
+    }
+    
+    func filterChannelData(callback: (() -> ())? = nil) {
+        filteredChannels = channels.filter { channel in
+            switch channel.unread {
+            case .none:
+                return false
+            case .read:
+                return false
+            case .unread:
+                return true
+            case .unreadCount:
+                return true
+            }
+        }
+        
+        callback?()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        filterChannelData() {
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             }
         }
     }
@@ -269,6 +348,18 @@ class ChannelViewController: UITableViewController {
                selector: #selector(handleCreateNewPost),
                name: NSNotification.Name(rawValue: "createNewPost"),
                object: nil)
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.searchResultsUpdater = self
+        searchController?.searchBar.placeholder = "Search Channels"
+        searchController?.searchBar.delegate = self
+        searchController?.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        
+        // TODO: This should only force display if you are filtering out read channels
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        self.definesPresentationContext = true
 
         
 //        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
@@ -342,7 +433,7 @@ class ChannelViewController: UITableViewController {
             tableView.delegate = self
             tableView.dataSource = self
             self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
-            getChannelData()
+            getChannelDataAndFilter()
             
             if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
                 commands = [
