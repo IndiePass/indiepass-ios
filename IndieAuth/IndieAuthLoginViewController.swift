@@ -103,7 +103,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                     authScope.append("read")
                 }
                 
-                let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: "Testing", scope: authScope.joined(separator: " "))
+                let authorizationUrl = IndieAuth.buildAuthorizationURL(forEndpoint: authorizationEndpoints[0], meUrl: url!, redirectURI: callbackUrl!, clientId: appClientId, state: RandomString(length: 12), scope: authScope.joined(separator: " "))
                 
                 if let openUrl = authorizationUrl {
                     DispatchQueue.main.async {

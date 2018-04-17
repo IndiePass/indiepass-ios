@@ -188,6 +188,10 @@
 		C8F7249D2086692D00BB53B2 /* UABuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F7249B2086692D00BB53B2 /* UABuilder.swift */; };
 		C8F7249E2086692D00BB53B2 /* UABuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F7249B2086692D00BB53B2 /* UABuilder.swift */; };
 		C8F7249F2086692D00BB53B2 /* UABuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F7249B2086692D00BB53B2 /* UABuilder.swift */; };
+		C8F724A220866BB500BB53B2 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F724A120866BB500BB53B2 /* RandomString.swift */; };
+		C8F724A320866BB500BB53B2 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F724A120866BB500BB53B2 /* RandomString.swift */; };
+		C8F724A420866BB500BB53B2 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F724A120866BB500BB53B2 /* RandomString.swift */; };
+		C8F724A520866BB500BB53B2 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F724A120866BB500BB53B2 /* RandomString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -362,6 +366,7 @@
 		C8F431C51FB530010026B8D6 /* HalfModalTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalTransitioningDelegate.swift; sourceTree = "<group>"; };
 		C8F431CE1FB532890026B8D6 /* ModalNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNavController.swift; sourceTree = "<group>"; };
 		C8F7249B2086692D00BB53B2 /* UABuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UABuilder.swift; sourceTree = "<group>"; };
+		C8F724A120866BB500BB53B2 /* RandomString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomString.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -608,7 +613,7 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
-				C8F7249B2086692D00BB53B2 /* UABuilder.swift */,
+				C8F724A020866B5600BB53B2 /* Utilities */,
 				C864F3A8205C1DBD000C5F89 /* SwiftExtensions */,
 				C85B2443200596AA0097E577 /* PostingInterface */,
 				C85B242B20042EEF0097E577 /* vendor */,
@@ -758,6 +763,15 @@
 				C8F431C51FB530010026B8D6 /* HalfModalTransitioningDelegate.swift */,
 			);
 			path = Transitioning;
+			sourceTree = "<group>";
+		};
+		C8F724A020866B5600BB53B2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C8F7249B2086692D00BB53B2 /* UABuilder.swift */,
+				C8F724A120866BB500BB53B2 /* RandomString.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1041,6 +1055,7 @@
 				C8B36B651FED886C00D92E3D /* IndieAuthScope.swift in Sources */,
 				C845B4681FF5E07300354391 /* xray.swift in Sources */,
 				C87B4DC61FBBAB3900181B62 /* Micropub.swift in Sources */,
+				C8F724A420866BB500BB53B2 /* RandomString.swift in Sources */,
 				C8B36B641FED886400D92E3D /* IndieAuthProfile.swift in Sources */,
 				C845B46C1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
 				C87B1A36200A73B000F3E79C /* MicropubRsvpValue.swift in Sources */,
@@ -1067,6 +1082,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C87B4DB11FBBA6AB00181B62 /* IntentViewController.swift in Sources */,
+				C8F724A520866BB500BB53B2 /* RandomString.swift in Sources */,
 				C8F7249F2086692D00BB53B2 /* UABuilder.swift in Sources */,
 				C864F3AD205C1DF2000C5F89 /* String.extension.swift in Sources */,
 			);
@@ -1105,6 +1121,7 @@
 				C8D171D71FF58BFB00134485 /* FontAwesomeTextRepresentable.swift in Sources */,
 				C8D171D01FF58BFB00134485 /* FontAwesome.swift in Sources */,
 				C840A2D2200D114A00CD2091 /* SimpleSelectionDelegate.swift in Sources */,
+				C8F724A320866BB500BB53B2 /* RandomString.swift in Sources */,
 				C8F431CB1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,
 				C8D171D11FF58BFB00134485 /* FontAwesomeStateRequirement.swift in Sources */,
 				C845B46F1FF5E6E400354391 /* Jf2Post.swift in Sources */,
@@ -1208,6 +1225,7 @@
 				C866740E20225C030076DB8E /* AccountDebugViewController.swift in Sources */,
 				C840A2CE200BDD5500CD2091 /* SimpleSelectionItem.swift in Sources */,
 				C8D171D91FF58C2200134485 /* Enum.swift in Sources */,
+				C8F724A220866BB500BB53B2 /* RandomString.swift in Sources */,
 				C8B3B08A1FAADAA90041C58E /* libxmlHTMLNode.swift in Sources */,
 				C8336412203394CB004022B5 /* CommandTableViewCell.swift in Sources */,
 				C86424F1202CEA6500E8AC96 /* MicropubError.swift in Sources */,
