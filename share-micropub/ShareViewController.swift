@@ -37,6 +37,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     var currentAccount: IndieAuthAccount? = nil
     var activeAccount: Int = 0
     var shouldAnimateIn: Bool = true
+    var replyContext: Jf2Post? = nil
     
 //    var micropubActions = ["Like", "Repost", "Bookmark", "Reply"]
     
@@ -140,6 +141,9 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
                 postingVC.currentPost = MicropubPost(type: .entry,
                                                      properties: MicropubPostProperties())
                 postingVC.currentPost?.properties.inReplyTo = sharingContent?.string
+                if replyContext != nil {
+                    postingVC.replyContext = replyContext
+                }
                 postingVC.displayAsModal = false
                 postingVC.delegate = self
                 postingVC.title = "New Reply"
@@ -241,6 +245,8 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     }
     
     private func updateOptions(forPost post: Jf2Post) {
+        
+        replyContext = post
         
         micropubActions = []
         

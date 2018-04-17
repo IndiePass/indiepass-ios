@@ -14,6 +14,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     public var currentPost: MicropubPost? = nil
     public var displayAsModal: Bool = true
     public var delegate: PostingViewDelegate? = nil
+    public var replyContext: Jf2Post? = nil
     
     var activeAccount: IndieAuthAccount? = nil
     var originalPost: MicropubPost? = nil
@@ -448,6 +449,20 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
                 newTitle = "New Reply"
                 self.replyToLabel.text = "Replying to: \(replyUrl)"
                 shouldDisplayReplyView = true
+            }
+            
+            if self.replyContext != nil, self.replyContext?.type == .repo {
+                shouldDisplayTitleView = true
+                self.titleField.placeholder = "Issue Title"
+                newTitle = "New Issue"
+                if let repoUrl = self.replyContext?.url?.absoluteString {
+                    print(repoUrl.components(separatedBy: "/"))
+                    var repoParts = repoUrl.components(separatedBy: "/")
+                    if let repoName = repoParts.popLast(), let repoOwner = repoParts.popLast() {
+                        self.replyToLabel.text = "Issue for \(repoName) by \(repoOwner)"
+                    }
+                }
+                
             }
             
             if let characterCount = self.currentPost?.properties.content?.count, characterCount >= 280 {
