@@ -93,7 +93,8 @@ public struct MicropubPost: Codable {
             let task = session.dataTask(with: request) { (data, response, error) in
                 if let httpResponse = response as? HTTPURLResponse {
                     switch httpResponse.statusCode {
-                    case 201:
+                    case 201: fallthrough
+                    case 202:
                         completion(nil)
                     case 400:
                         completion("Authorization failure. Log out and back in")
