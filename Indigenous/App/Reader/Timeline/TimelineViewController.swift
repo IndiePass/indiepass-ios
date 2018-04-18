@@ -20,9 +20,14 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     var mediaTimeTracking: [Int: String] = [:]
     
     @IBOutlet weak var markAllAsReadButton: UIBarButtonItem!
+    @IBOutlet weak var autoReadSwitch: UISwitch!
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
+    }
+    
+    @IBAction func autoReadSwitchChanged(_ sender: Any) {
+    
     }
     
     @IBAction func markAllAsRead(_ sender: Any) {
@@ -39,6 +44,24 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if autoReadSwitch.isOn {
+            if let post = self.timeline?.posts[indexPath.row], let postId = post.id {
+                // Mark cell as read
+                post.isRead = true
+                
+                // Send read to server
+                timeline?.markAsRead(posts: [postId]) { error in
+                    if error != nil {
+                        post.isRead = false
+                        
+                        // TODO: Present error?
+                    }
                 }
             }
         }
