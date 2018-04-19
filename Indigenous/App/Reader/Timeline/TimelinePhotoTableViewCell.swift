@@ -229,7 +229,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         }
 
         if let postRead = post?.isRead, postRead == false {
-            print("Unread Post \(post?.name)")
+            print("Unread Post \(String(describing: post?.name))")
             let borderWidth: CGFloat = 4
             
             if unreadIndicator == nil {
@@ -248,7 +248,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             }
             unreadIndicator!.isHidden = false
         } else {
-            print("Read Post \(post?.name)")
+            print("Read Post \(String(describing: post?.name))")
             unreadIndicator?.isHidden = true
         }
         
