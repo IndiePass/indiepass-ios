@@ -44,7 +44,9 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 }
             
                 DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+                    if let visibleRows = self?.tableView.indexPathsForVisibleRows {
+                        self?.tableView.reloadRows(at: visibleRows, with: .none)
+                    }
                 }
             }
         }
@@ -198,9 +200,14 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             
             if post.isRead != nil, let postId = post.id {
                 post.isRead = true
-                self?.timeline?.markAsRead(posts: [postId]) { error in
-                    if error != nil {
-                        print("Error Marking post as read \(error ?? "")")
+                DispatchQueue.main.async {
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+                DispatchQueue.global(qos: .background).async { [weak self] in
+                    self?.timeline?.markAsRead(posts: [postId]) { error in
+                        if error != nil {
+                            print("Error Marking post as read \(error ?? "")")
+                        }
                     }
                 }
             }
@@ -227,18 +234,24 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             let viewAction = UIContextualAction(style: .normal, title:  "View", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 
                 if let postUrl = post.url {
+                    self.isTransitioning = true
+                    let safariVC = SFSafariViewController(url: postUrl)
+                    self.present(safariVC, animated: true)
+                    
                     if post.isRead != nil, let postId = post.id {
-                        self.timeline?.markAsRead(posts: [postId]) { error in
-                            if error != nil {
-                                print("Error Marking post as read \(error ?? "")")
+                        post.isRead = true
+                        DispatchQueue.global(qos: .background).async { [weak self] in
+                            self?.timeline?.markAsRead(posts: [postId]) { error in
+                                if error != nil {
+                                    print("Error Marking post as read \(error ?? "")")
+                                }
                             }
                         }
                     }
                     
-                    print("OPENNEING SAFARI")
-                    self.isTransitioning = true
-                    let safariVC = SFSafariViewController(url: postUrl)
-                    self.present(safariVC, animated: true)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.tableView.reloadRows(at: [indexPath], with: .none)
+                    }
                     success(true)
                 } else {
                     success(false)
@@ -334,8 +347,6 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isTransitioning = true
-        // TODO: I think this reload data was causing the timeline to jump when returning
-//        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
