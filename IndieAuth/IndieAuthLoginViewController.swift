@@ -112,8 +112,8 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                             print("completion called")
                             guard error == nil, let successURL = callback else {
                                 print("In guard statement")
-                                print(callback)
-                                print(error)
+                                print(String(describing: callback))
+                                print(String(describing: error))
                                 self.progressView?.isHidden = true
                                 self.loginView?.isHidden = false
                                 return

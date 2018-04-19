@@ -226,7 +226,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
 //                        self.present(alert, animated: true, completion: nil)
 //                    }
                     print("Error while reokving auth token")
-                    print(errorMessage)
+                    print(String(describing: errorMessage))
                 }
                 
                 micropubAccounts.remove(at: activeAccount)
@@ -340,7 +340,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                     let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
                     let activeAccountId = defaults?.integer(forKey: "activeAccount") ?? 0
                     var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
-                    if var activeAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccountId]) {
+                    if let activeAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccountId]) {
                         
                             debugVC.debugAccount = activeAccount
                         

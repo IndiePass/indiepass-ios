@@ -210,7 +210,7 @@ class Timeline {
                 }
                 
                 print("Analyze returned options")
-                print(timelineResponse?.paging)
+                print(timelineResponse?.paging ?? "")
                 
                 self.currentOptions = TimelineOptions(before: self.currentOptions?.before,
                                                       after: timelineResponse?.paging?.after)
