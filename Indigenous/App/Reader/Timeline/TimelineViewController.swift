@@ -18,6 +18,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     var fetchingNewerData: Bool = false
     var previousDataAvailable: Bool = true
     var mediaTimeTracking: [Int: String] = [:]
+    private var isTransitioning: Bool = true
     
     @IBOutlet weak var markAllAsReadButton: UIBarButtonItem!
     @IBOutlet weak var autoReadSwitch: UISwitch!
@@ -50,8 +51,11 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     }
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if autoReadSwitch.isOn {
+        // Only mark as read if auto read is set AND we are not transitioning to a new view controller
+        print("Check if transitioning? \(isTransitioning)")
+        if autoReadSwitch.isOn, !isTransitioning {
             if let post = self.timeline?.posts[indexPath.row], let postId = post.id {
+                print("MARKING POST AS READ")
                 // Mark cell as read
                 post.isRead = true
                 
@@ -83,7 +87,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 
                 guard error == nil else {
                     print("Error while fetching timeline")
-                    print(error)
+                    print(error ?? "")
                     self.fetchingNewerData = false
                     DispatchQueue.main.async {
                         sender.endRefreshing()
@@ -180,27 +184,29 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             return UISwipeActionsConfiguration(actions: [])
         }
         
-        let replyAction = UIContextualAction(style: .normal, title:  "Reply", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let replyAction = UIContextualAction(style: .normal, title:  "Reply", handler: { [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 
-            if let fragmentTime = self.mediaTimeTracking[indexPath.row] {
+            if let fragmentTime = self?.mediaTimeTracking[indexPath.row] {
                 if post.url != nil {
                     print("#t=\(fragmentTime)")
                     var urlComponent = URLComponents(url: post.url!, resolvingAgainstBaseURL: false)
                     urlComponent?.fragment = "t=\(fragmentTime)"
-                    print("Full URL: \(urlComponent?.string)")
+                    print("Full URL: \(String(describing: urlComponent?.string))")
                     post.url = urlComponent?.url
                 }
             }
             
             if post.isRead != nil, let postId = post.id {
-                self.timeline?.markAsRead(posts: [postId]) { error in
+                post.isRead = true
+                self?.timeline?.markAsRead(posts: [postId]) { error in
                     if error != nil {
                         print("Error Marking post as read \(error ?? "")")
                     }
                 }
             }
             
-            self.performSegue(withIdentifier: "showReplyView", sender: post)
+            self?.isTransitioning = true
+            self?.performSegue(withIdentifier: "showReplyView", sender: post)
             success(true)
         })
         
@@ -214,47 +220,48 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
         
         let post = self.timeline!.posts[indexPath.row]
         
-        guard post.url != nil else {
-            return UISwipeActionsConfiguration(actions: [])
-        }
-        
-        let viewAction = UIContextualAction(style: .normal, title:  "View", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            guard post.url != nil else {
+                return UISwipeActionsConfiguration(actions: [])
+            }
             
-            if let postUrl = post.url {
-                if post.isRead != nil, let postId = post.id {
-                    self.timeline?.markAsRead(posts: [postId]) { error in
-                        if error != nil {
-                            print("Error Marking post as read \(error ?? "")")
+            let viewAction = UIContextualAction(style: .normal, title:  "View", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+                
+                if let postUrl = post.url {
+                    if post.isRead != nil, let postId = post.id {
+                        self.timeline?.markAsRead(posts: [postId]) { error in
+                            if error != nil {
+                                print("Error Marking post as read \(error ?? "")")
+                            }
                         }
                     }
+                    
+                    print("OPENNEING SAFARI")
+                    self.isTransitioning = true
+                    let safariVC = SFSafariViewController(url: postUrl)
+                    self.present(safariVC, animated: true)
+                    success(true)
+                } else {
+                    success(false)
                 }
-                
-                let safariVC = SFSafariViewController(url: postUrl)
-                self.present(safariVC, animated: true)
-                success(true)
-            } else {
-                success(false)
-            }
-        })
-        viewAction.image = UIImage(named: "tick")
-        viewAction.backgroundColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
-        
-        let shareAction = UIContextualAction(style: .normal, title:  "Share", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            })
+            viewAction.image = UIImage(named: "tick")
+            viewAction.backgroundColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
             
-            if let postUrl = post.url {
-                let shareVC = UIActivityViewController(activityItems: [postUrl], applicationActivities: nil)
-                shareVC.popoverPresentationController?.sourceView = self.view
-                self.present(shareVC, animated: true, completion: nil)
-                success(true)
-            } else {
-                success(false)
-            }
-        })
-        shareAction.image = UIImage(named: "Action")
-        shareAction.backgroundColor = #colorLiteral(red: 0.8063602448, green: 0.371145457, blue: 0.3616603613, alpha: 1)
-        
-        return UISwipeActionsConfiguration(actions: [viewAction, shareAction])
-        
+            let shareAction = UIContextualAction(style: .normal, title:  "Share", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+                
+                if let postUrl = post.url {
+                    let shareVC = UIActivityViewController(activityItems: [postUrl], applicationActivities: nil)
+                    shareVC.popoverPresentationController?.sourceView = self.view
+                    self.present(shareVC, animated: true, completion: nil)
+                    success(true)
+                } else {
+                    success(false)
+                }
+            })
+            shareAction.image = UIImage(named: "Action")
+            shareAction.backgroundColor = #colorLiteral(red: 0.8063602448, green: 0.371145457, blue: 0.3616603613, alpha: 1)
+            
+            return UISwipeActionsConfiguration(actions: [viewAction, shareAction])
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -293,7 +300,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 DispatchQueue.main.async {
                     guard error == nil else {
                         print("Error while fetching timeline")
-                        print(error)
+                        print(error ?? "")
                         self.previousDataAvailable = false
                         tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
                         return
@@ -319,9 +326,21 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
 //        }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        isTransitioning = true
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        isTransitioning = true
+        // TODO: I think this reload data was causing the timeline to jump when returning
+//        tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isTransitioning = false
     }
     
     override func viewDidLoad() {
@@ -344,7 +363,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 timeline?.getTimeline { error, _ in
                     guard error == nil else {
                         print("Error while fetching main timeline")
-                        print(error)
+                        print(error ?? "")
                         return
                     }
                     
