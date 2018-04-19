@@ -197,6 +197,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Timeline" id="J08-nK-ShZ">
+                        <barButtonItem key="backBarButtonItem" title="Channels" id="PPQ-5D-ohe"/>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="compose" id="HF3-R6-Peh">
                                 <connections>
