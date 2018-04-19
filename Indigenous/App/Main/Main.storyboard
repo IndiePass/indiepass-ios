@@ -36,11 +36,11 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GsB-Gx-kvG" userLabel="Loading View">
-                                <rect key="frame" x="16" y="24" width="359" height="754"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GsB-Gx-kvG" userLabel="Loading View">
+                                <rect key="frame" x="8" y="44" width="359" height="734"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ttp-KB-we2">
-                                        <rect key="frame" x="87" y="299" width="208" height="20"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ttp-KB-we2">
+                                        <rect key="frame" x="75.666666666666686" y="357" width="208" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorizing with Server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2h-8Y-jhw">
                                                 <rect key="frame" x="0.0" y="0.0" width="178" height="20"/>
@@ -147,7 +147,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-679.20000000000005" y="-682.75862068965523"/>
+            <point key="canvasLocation" x="-93" y="152"/>
         </scene>
         <!--Channels-->
         <scene sceneID="FnC-ag-hz7">
@@ -171,8 +171,8 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yfo-OQ-4Ld">
-                                            <rect key="frame" x="328" y="11" width="27" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yfo-OQ-4Ld">
+                                            <rect key="frame" x="337" y="11" width="18" height="21"/>
                                             <color key="backgroundColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -248,7 +248,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lt1-LR-giJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="252" y="1083.9901477832514"/>
+            <point key="canvasLocation" x="-680" y="1203"/>
         </scene>
         <!--PostingView-->
         <scene sceneID="ZtE-e4-beB">
@@ -256,7 +256,7 @@
                 <viewControllerPlaceholder storyboardName="PostingView" id="bDQ-l4-ykq" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i8f-ej-kLu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="654" y="1990"/>
+            <point key="canvasLocation" x="161" y="1785"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="gRs-aR-8lc">
@@ -314,7 +314,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0Q-Mm-uKa">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0Q-Mm-uKa">
                                 <rect key="frame" x="16" y="76" width="343" height="81.333333333333314"/>
                                 <string key="text">You are logged in. Right now the entire functionality exists inside the Micropub Share sheet. You can activate that in Safari or your favorite app.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -340,7 +340,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uth-lq-8PR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="414" y="152"/>
+            <point key="canvasLocation" x="519" y="152"/>
         </scene>
         <!--Timeline-->
         <scene sceneID="xFJ-Bg-A4k">
@@ -348,7 +348,7 @@
                 <viewControllerPlaceholder storyboardName="Timeline" id="8hF-7f-nyg" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zQu-Ad-4jt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1101.5999999999999" y="1394.3349753694581"/>
+            <point key="canvasLocation" x="160" y="1402"/>
         </scene>
         <!--Settings-->
         <scene sceneID="gaB-Yx-YJN">
@@ -356,7 +356,7 @@
                 <viewControllerPlaceholder storyboardName="Settings" id="Fe6-cE-RgU" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zi4-mK-Nq0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1102" y="713"/>
+            <point key="canvasLocation" x="149" y="971"/>
         </scene>
     </scenes>
     <resources>

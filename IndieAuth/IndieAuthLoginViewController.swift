@@ -155,7 +155,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
             }
         }
         
-        print(responseType)
+        print(responseType ?? "")
         print(responseItems)
         
         if let type = responseType {
@@ -224,7 +224,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                         
                         if error != nil && syndicateTargets == nil {
                             print("Error on Syndication Targets")
-                            print(error)
+                            print(error ?? "")
                         } else {
                             micropubConfig?.syndicateTo = syndicateTargets
                         }
