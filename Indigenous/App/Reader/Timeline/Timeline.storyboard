@@ -209,7 +209,7 @@
                                     <action selector="markAllAsRead:" destination="QEQ-fJ-kEz" id="8Hw-c4-3lA"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem style="plain" id="NGX-tl-Hbj">
+                            <barButtonItem id="NGX-tl-Hbj">
                                 <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="lu5-8I-Cg9">
                                     <rect key="frame" x="216" y="6.5" width="51" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
