@@ -25,7 +25,9 @@ public class IndieAuth {
             }
             
             // Split the path into segments so we can seperate the host and the path
-            let pathSegments = meUrl?.path.characters.split(separator: "/").map(String.init)
+            print("Running normalize url")
+            let pathSegments = meUrl?.path.components(separatedBy: "/")
+//            let pathSegments = meUrl?.path.characters.split(separator: "/").map(String.init)
             
             meUrl?.host = pathSegments?.first;
             meUrl?.path = "/" + (pathSegments?.dropFirst().joined() ?? "")
