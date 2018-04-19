@@ -156,6 +156,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         } else {
             if post?.photo != nil, post!.photo!.count > 0 {
                 postImage.image = nil
+                postImage.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                 // if we are here, then there is an unloaded photo
                 post?.downloadPhoto(photoIndex: 0) { returnedImage in
                     DispatchQueue.main.async {
@@ -179,6 +180,8 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             authorPhoto.image = authorImage.image
         } else {
             if post?.author?.photo != nil, post!.author!.photo!.count > 0 {
+                authorPhoto.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                authorPhoto.image = nil
                 post?.author?.downloadPhoto(photoIndex: 0) { returnedAuthorPhoto in
                     DispatchQueue.main.async {
                         self.authorPhoto.image = returnedAuthorPhoto
