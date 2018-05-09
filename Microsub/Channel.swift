@@ -19,6 +19,12 @@ struct Channel: Codable {
         case unread
     }
     
+    public init(uniqueId uid: String, withName name: String) {
+        self.uid = uid
+        self.name = name
+        self.unread = .none
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
