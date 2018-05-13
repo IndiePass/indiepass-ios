@@ -25,6 +25,12 @@ struct Channel: Codable {
         self.unread = .none
     }
     
+    public init(fromData data: ChannelData) {
+        uid = data.uid!
+        name = data.name!
+        unread = ChannelUnreadStatus(status: data.unreadStatus!, count: Int(exactly: data.unreadCount)!)
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         

@@ -21,6 +21,47 @@ public enum ChannelUnreadStatus: Codable {
         case none
     }
     
+    var readIdentifier: String {
+        switch self {
+        case .none:
+            return "none"
+        case .read:
+            return "read"
+        case .unread:
+            return "unread"
+        case .unreadCount:
+            return "unreadCount"
+        }
+    }
+    
+    var unreadCount: Int {
+        switch self {
+        case .none:
+            return -1
+        case .read:
+            return 0
+        case .unread:
+            return 1
+        case .unreadCount(let count):
+            return count
+        }
+    }
+    
+    public init(status: String, count: Int) {
+        switch status {
+        case "none":
+            self = .none
+        case "read":
+            self = .read
+        case "unread":
+            self = .unread
+        case "unreadCount":
+            self = .unreadCount(count: count)
+        default:
+            self = .none
+        }
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)

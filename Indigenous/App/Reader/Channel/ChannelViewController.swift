@@ -10,8 +10,21 @@ import UIKit
 import Social
 import MobileCoreServices
 import Crashlytics
+import CoreData
 
-class ChannelViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
+public enum ChannelListFilter {
+    case None
+    case UnreadOnly
+    case Search(searchText: String)
+}
+
+public enum ChannelListSort: String {
+    case Alphabetical
+    case UnreadCount
+    case Manual
+}
+
+class ChannelViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
         
     var channels: [Channel] = []
     var cachedChannels: [Channel] = []
@@ -22,10 +35,54 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     var commands: [Command] = []
     var searchController: UISearchController? = nil
     
+    var currentFiltering: ChannelListFilter = .None
+    var standardFiltering: ChannelListFilter = .None
+    var currentSorting: ChannelListSort = .Manual
+    
+    var dataController: ChannelDataController!
+    
     var currentAccount: IndieAuthAccount? = nil
     
 //    @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var accountButton: UIBarButtonItem!
+    
+    func updateFilteringAndSorting() {
+        dataController?.updateChannels(withFilter: currentFiltering, sortBy: currentSorting) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+            }
+        }
+    }
+    
+    public func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert: tableView.insertSections([sectionIndex], with: .fade)
+        case .delete: tableView.deleteSections([sectionIndex], with: .fade)
+        default: break
+        }
+    }
+    
+    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .fade)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        }
+    }
+    
+    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
@@ -49,11 +106,17 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             return commands.count
         }
         
-        if isSearching() {
-            return searchChannels.count
+        if let sections = dataController?.fetchedResultsController?.sections, sections.count > 0 {
+            return sections[0].numberOfObjects
         } else {
-            return filteredChannels.count
+            return 0
         }
+        
+//        if isSearching() {
+//            return searchChannels.count
+//        } else {
+//            return filteredChannels.count
+//        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,13 +135,15 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath)
      
         if let channelCell = cell as? ChannelTableViewCell {
-            let channelData: Channel
-            if isSearching() {
-                channelData = searchChannels[indexPath.row]
-            } else {
-                channelData = filteredChannels[indexPath.row]
+//            let channelData: Channel
+//            if isSearching() {
+//                channelData = searchChannels[indexPath.row]
+//            } else {
+//                channelData = filteredChannels[indexPath.row]
+//            }
+            if let channelData = dataController?.fetchedResultsController?.object(at: indexPath) {
+                channelCell.setContent(ofChannel: Channel(fromData: channelData))
             }
-            channelCell.setContent(ofChannel: channelData)
         }
         
         return cell
@@ -91,15 +156,18 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             command.sendCommand()
         }
         
-//        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let selectedChannel: Channel
-        if isSearching() {
-            selectedChannel = searchChannels[indexPath.row]
-        } else {
-            selectedChannel = filteredChannels[indexPath.row]
+        if let channelData = dataController?.fetchedResultsController?.object(at: indexPath) {
+            let selectedChannel = Channel(fromData: channelData)
+            self.selectedChannel = selectedChannel
         }
         
-        self.selectedChannel = selectedChannel
+//        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        
+//        if isSearching() {
+//            selectedChannel = searchChannels[indexPath.row]
+//        } else {
+//            selectedChannel = filteredChannels[indexPath.row]
+//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -194,80 +262,8 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         }
     }
     
-    func getChannelData(callback: (() -> ())? = nil) {
-        
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
-        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
-            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
-            
-                guard let microsubUrl = micropubDetails.microsub_endpoint,
-                    var microsubComponents = URLComponents(url: microsubUrl, resolvingAgainstBaseURL: true) else {
-                        print("Microsub URL doesn't exist")
-                        return
-                }
-            
-                if microsubComponents.queryItems == nil {
-                    microsubComponents.queryItems = []
-                }
-            
-                microsubComponents.queryItems?.append(URLQueryItem(name: "action", value: "channels"))
-            
-                guard let microsub = microsubComponents.url else {
-                    print("Error making final url")
-                    return
-                }
-            
-                var request = URLRequest(url: microsub)
-                request.httpMethod = "GET"
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
-                request.setValue("Bearer \(micropubDetails.access_token)", forHTTPHeaderField: "Authorization")
-            
-                let config = URLSessionConfiguration.default
-                let session = URLSession(configuration: config)
-            
-                let task = session.dataTask(with: request) { (data, response, error) in
-                    // check for any errors
-                    guard error == nil else {
-                        print("error calling POST on \(microsubUrl)")
-                        print(error ?? "No error present")
-                        return
-                    }
-                    
-                    // Check if endpoint is in the HTTP Header fields
-                    if let httpResponse = response as? HTTPURLResponse, let body = String(data: data!, encoding: .utf8) {
-                        if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
-                            if httpResponse.statusCode == 200 {
-                                if contentType == "application/json" {
-                                    let channelResponse = try! JSONDecoder().decode(ChannelApiResponse.self, from: body.data(using: .utf8)!)
-                                    
-                                    self.channels = [];
-                                    
-                                    channelResponse.channels.forEach { nextChannel in
-                                        self.channels.append(nextChannel)
-                                    }
-                                    
-                                    //        movies.sort() { $0.title < $1.title }
-
-                                    callback?()
-                                }
-                            } else {
-                                print("Status Code not 200")
-                                print(httpResponse)
-                                print(body)
-                            }
-                        }
-                    }
-                    
-                }
-            
-                task.resume()
-        }
-    }
-    
     @objc func handleRefresh(refreshControl: UIRefreshControl) {
-        getChannelDataAndFilter {
+        dataController?.fetchChannelData {
             DispatchQueue.main.async {
                 refreshControl.endRefreshing()
             }
@@ -275,12 +271,17 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        getChannelData {
-            DispatchQueue.main.async { [weak self] in
-                // Time to filter results
-                self?.filterChannels(forSearchText: searchController.searchBar.text!)
-            }
+        if searchController.isActive {
+            searchController.searchBar.showsBookmarkButton = false
+        } else {
+            searchController.searchBar.showsBookmarkButton = true
         }
+        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+            currentFiltering = .Search(searchText: searchText)
+        } else {
+            currentFiltering = standardFiltering
+        }
+        updateFilteringAndSorting()
     }
     
     private func searchBarIsEmpty() -> Bool {
@@ -292,51 +293,9 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         return searchController?.isActive ?? false
     }
     
-    private func filterChannels(forSearchText searchText: String) {
-        searchChannels = channels.filter { channel in
-            if searchText.isEmpty {
-                return true
-            }
-            return channel.name.lowercased().contains(searchText.lowercased())
-        }
-        
-        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-    }
-    
-    func getChannelDataAndFilter(callback: (() -> ())? = nil) {
-        getChannelData { [weak self] in
-            self?.filterChannelData {
-                DispatchQueue.main.async { [weak self] in
-                    self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-                }
-                callback?()
-            }
-        }
-    }
-    
-    func filterChannelData(callback: (() -> ())? = nil) {
-        filteredChannels = channels.filter { channel in
-            switch channel.unread {
-            case .none:
-                return false
-            case .read:
-                return false
-            case .unread:
-                return true
-            case .unreadCount:
-                return true
-            }
-        }
-        
-        callback?()
-    }
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        filterChannelData() {
-            DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-            }
-        }
+        currentFiltering = standardFiltering
+        updateFilteringAndSorting()
     }
     
     @objc func handleCreateNewPost() {
@@ -355,39 +314,27 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         searchController?.searchResultsUpdater = self
         searchController?.searchBar.placeholder = "Search Channels"
         searchController?.searchBar.delegate = self
+        searchController?.searchBar.showsBookmarkButton = true
+        searchController?.searchBar.setImage(UIImage.fontAwesomeIcon(name: .filter, textColor: UIColor.darkGray, size: CGSize(width: 30, height: 30)), for: .bookmark, state: .normal)
         searchController?.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
-        
-        // TODO: This should only force display if you are filtering out read channels
-        navigationItem.hidesSearchBarWhenScrolling = false
-        
         self.definesPresentationContext = true
-
-        
-//        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-//        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
-//        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
-//        if  micropubAccounts.count >= activeAccount + 1,
-//            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
-//            
-//            self.title = micropubDetails.me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
-//            
-////        if let url = URL(string: "https://eddiehinkle.com/images/profile.jpg") {
-////            getDataFromUrl(url: url) { data, response, error in
-////                guard let data = data, error == nil else { return }
-////                print(response?.suggestedFilename ?? url.lastPathComponent)
-////                print("Download Finished")
-////                DispatchQueue.main.async() {
-////                    self.profileIcon?.image = UIImage(data: data)
-////                }
-////            }
-////        }
-//        
-//            tableView.delegate = self
-//            tableView.dataSource = self
-//            self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
-//            getChannelData()
-//        }
+        updateFilteringAndSorting()
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        let alert = UIAlertController(title: "Filter", message: "", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Unread Only", style: .default, handler: { [weak self] action in
+            self?.currentFiltering = .UnreadOnly
+            self?.standardFiltering = .UnreadOnly
+            self?.updateFilteringAndSorting()
+        }))
+        alert.addAction(UIAlertAction(title: "All Channels", style: .cancel, handler: { [weak self] action in
+            self?.currentFiltering = .None
+            self?.standardFiltering = .None
+            self?.updateFilteringAndSorting()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
@@ -417,25 +364,15 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             // log current domain for crash analytics
             Crashlytics.sharedInstance().setUserName(micropubDetails.me.absoluteString)
             CLSLogv("Viewed Channel VC", getVaList([]))
-
-            
-//            micropubDetails.profile.downloadPhoto(photoIndex: 0) { photo in
-//                if let authorPhoto = photo {
-//                    DispatchQueue.main.async {
-//                        let button: UIButton = UIButton(type: .custom)
-//                        button.setImage(authorPhoto.withRenderingMode(.alwaysOriginal), for: .normal)
-//                        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-//                        button.contentMode = .scaleAspectFit
-//                        self.accountButton.customView = button
-//                        
-//                    }
-//                }
-//            }
             
             tableView.delegate = self
             tableView.dataSource = self
             self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
-            getChannelDataAndFilter()
+            
+            // We'll want to fetch new data from the server for unread counts, etc
+            dataController?.fetchChannelData { [weak self] in
+                self?.updateFilteringAndSorting()
+            }
             
             if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
                 commands = [

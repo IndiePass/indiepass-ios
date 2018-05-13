@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class MainViewController: UINavigationController, IndieAuthDelegate {
     
     var loginViewController: UIViewController? = nil
     var backupViewControllers: [UIViewController]? = nil
+    var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
 
     func showLoginScreen() {
         let loginViewController = storyboard?.instantiateViewController(withIdentifier: "indieAuthLoginView") as! IndieAuthLoginViewController
@@ -25,10 +27,14 @@ class MainViewController: UINavigationController, IndieAuthDelegate {
     }
 
     func hideLoginScreen() {
-        DispatchQueue.main.async {
-            if let restoreViewControllers = self.backupViewControllers {
-                self.viewControllers = restoreViewControllers
-                self.popViewController(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            if let restoreViewControllers = self?.backupViewControllers {
+                self?.viewControllers = restoreViewControllers
+                if let channelVC = self?.viewControllers.first as? ChannelViewController {
+                    channelVC.dataController = ChannelDataController()
+                    channelVC.dataController.container = self?.container
+                }
+                self?.popViewController(animated: true)
             }
         }
     }
@@ -59,6 +65,11 @@ class MainViewController: UINavigationController, IndieAuthDelegate {
             UIApplication.shared.shortcutItems = [shortcutItem]
 //            let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
 //            let micropubAuth = micropubAccounts[activeAccount]
+            
+            if let channelVC = viewControllers.first as? ChannelViewController {
+                channelVC.dataController = ChannelDataController()
+                channelVC.dataController.container = container
+            }
         }
     }
 

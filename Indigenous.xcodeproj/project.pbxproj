@@ -97,6 +97,8 @@
 		C894F5EF1FEADCB2003D0A48 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5EE1FEADCB2003D0A48 /* Channel.swift */; };
 		C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */; };
 		C894F5F31FEAFC98003D0A48 /* IndieAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5F21FEAFC98003D0A48 /* IndieAuthDelegate.swift */; };
+		C8A37C7D20A4EA6F003F3F91 /* ChannelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A37C7C20A4EA6F003F3F91 /* ChannelData.swift */; };
+		C8A37C7F20A4F30E003F3F91 /* ChannelDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A37C7E20A4F30E003F3F91 /* ChannelDataController.swift */; };
 		C8B36B541FED514800D92E3D /* IndieAuthAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B36B531FED514800D92E3D /* IndieAuthAccount.swift */; };
 		C8B36B571FED54F400D92E3D /* IndieAuthProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B36B561FED54F400D92E3D /* IndieAuthProfile.swift */; };
 		C8B36B5A1FED55B000D92E3D /* Mf2Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B36B591FED55B000D92E3D /* Mf2Type.swift */; };
@@ -312,6 +314,8 @@
 		C894F5EE1FEADCB2003D0A48 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAPIResponse.swift; sourceTree = "<group>"; };
 		C894F5F21FEAFC98003D0A48 /* IndieAuthDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndieAuthDelegate.swift; sourceTree = "<group>"; };
+		C8A37C7C20A4EA6F003F3F91 /* ChannelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelData.swift; sourceTree = "<group>"; };
+		C8A37C7E20A4F30E003F3F91 /* ChannelDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDataController.swift; sourceTree = "<group>"; };
 		C8B36B531FED514800D92E3D /* IndieAuthAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndieAuthAccount.swift; sourceTree = "<group>"; };
 		C8B36B561FED54F400D92E3D /* IndieAuthProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndieAuthProfile.swift; sourceTree = "<group>"; };
 		C8B36B591FED55B000D92E3D /* Mf2Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mf2Type.swift; sourceTree = "<group>"; };
@@ -667,6 +671,8 @@
 				C8CBEB011FAA9B4600298113 /* LaunchScreen.storyboard */,
 				C8CBEB041FAA9B4600298113 /* Info.plist */,
 				C8CBEAFC1FAA9B4600298113 /* Indigenous.xcdatamodeld */,
+				C8A37C7C20A4EA6F003F3F91 /* ChannelData.swift */,
+				C8A37C7E20A4F30E003F3F91 /* ChannelDataController.swift */,
 			);
 			path = Indigenous;
 			sourceTree = "<group>";
@@ -1195,6 +1201,7 @@
 				C8B3B08B1FAADAA90041C58E /* libxmlHTMLDocument.swift in Sources */,
 				C8254C45201A4B41000AC32A /* Timeline.swift in Sources */,
 				C8CBEB451FAA9CAA00298113 /* AccountViewController.swift in Sources */,
+				C8A37C7F20A4F30E003F3F91 /* ChannelDataController.swift in Sources */,
 				C80AEA421FEB14C700CCBE2E /* TimelineViewController.swift in Sources */,
 				C8254C43201A4A8C000AC32A /* TimelineApiPaging.swift in Sources */,
 				C80AEA3C1FEB0A4C00CCBE2E /* TimelinePost.swift in Sources */,
@@ -1205,6 +1212,7 @@
 				C840A2CB200BCBB400CD2091 /* SimpleSelectionTableViewController.swift in Sources */,
 				C840A2DA200EEEEE00CD2091 /* PhotoUploadCollectionViewCell.swift in Sources */,
 				C8B36B5C1FED5AC900D92E3D /* IndieAuthScope.swift in Sources */,
+				C8A37C7D20A4EA6F003F3F91 /* ChannelData.swift in Sources */,
 				C8B36B571FED54F400D92E3D /* IndieAuthProfile.swift in Sources */,
 				C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
 				C81260642059D68E009DE884 /* ChannelUnreadStatus.swift in Sources */,

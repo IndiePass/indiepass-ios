@@ -27,22 +27,22 @@ class ChannelTableViewCell: UITableViewCell {
     }
     
     func setContent(ofChannel channel: Channel) {
-        self.data = channel
-        self.channelName?.text = data!.name
+        data = channel
+        channelName?.text = data!.name
         switch (data!.unread) {
         case .unreadCount(let count):
-            self.channelName?.font = UIFont.boldSystemFont(ofSize: 17.0)
+            channelName?.font = UIFont.boldSystemFont(ofSize: 17.0)
             unreadIndicator.isHidden = false
             unreadIndicator.text = "\(count)"
         case .unread:
-            self.channelName?.font = UIFont.boldSystemFont(ofSize: 17.0)
+            channelName?.font = UIFont.boldSystemFont(ofSize: 17.0)
             unreadIndicator.isHidden = false
             unreadIndicator.text = "◉"
         case .read:
-            self.channelName?.font = UIFont.systemFont(ofSize: 17.0)
+            channelName?.font = UIFont.systemFont(ofSize: 17.0)
             unreadIndicator.isHidden = true
         case .none:
-            self.channelName?.font = UIFont.systemFont(ofSize: 17.0)
+            channelName?.font = UIFont.systemFont(ofSize: 17.0)
             unreadIndicator.isHidden = true
         }
     }
