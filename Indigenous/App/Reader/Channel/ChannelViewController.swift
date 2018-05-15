@@ -329,11 +329,12 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             self?.standardFiltering = .UnreadOnly
             self?.updateFilteringAndSorting()
         }))
-        alert.addAction(UIAlertAction(title: "All Channels", style: .cancel, handler: { [weak self] action in
+        alert.addAction(UIAlertAction(title: "All Channels", style: .default, handler: { [weak self] action in
             self?.currentFiltering = .None
             self?.standardFiltering = .None
             self?.updateFilteringAndSorting()
         }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
         self.present(alert, animated: true, completion: nil)
     }
     
