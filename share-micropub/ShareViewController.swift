@@ -248,52 +248,54 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
         
         replyContext = post
         
-        micropubActions = []
-        
-        switch post.type! {
-        case .event:
-            micropubActions.append(.rsvp)
-            micropubActions.append(.like)
-            micropubActions.append(.repost)
-            micropubActions.append(.bookmark)
-            micropubActions.append(.reply)
-        case .card:
-            micropubActions.append(.bookmark)
-        case .cite:
-            print("Cite not supported")
-            micropubActions.append(.like)
-            micropubActions.append(.bookmark)
-        case .feed:
-            print("Feed not supported yet")
-            micropubActions.append(.like)
-            micropubActions.append(.bookmark)
-        case .entry:
-            micropubActions.append(.reply)
-            micropubActions.append(.like)
-            micropubActions.append(.repost)
-            micropubActions.append(.bookmark)
-            if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
-                micropubActions.append(.listen)
-                micropubActions.append(.watch)
-                micropubActions.append(.read)
+        if let postType = post.type {
+            micropubActions = []
+            
+            switch postType {
+            case .event:
+                micropubActions.append(.rsvp)
+                micropubActions.append(.like)
+                micropubActions.append(.repost)
+                micropubActions.append(.bookmark)
+                micropubActions.append(.reply)
+            case .card:
+                micropubActions.append(.bookmark)
+            case .cite:
+                print("Cite not supported")
+                micropubActions.append(.like)
+                micropubActions.append(.bookmark)
+            case .feed:
+                print("Feed not supported yet")
+                micropubActions.append(.like)
+                micropubActions.append(.bookmark)
+            case .entry:
+                micropubActions.append(.reply)
+                micropubActions.append(.like)
+                micropubActions.append(.repost)
+                micropubActions.append(.bookmark)
+                if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
+                    micropubActions.append(.listen)
+                    micropubActions.append(.watch)
+                    micropubActions.append(.read)
+                }
+            case .review, .app, .item, .product:
+                micropubActions.append(.reply)
+                micropubActions.append(.like)
+                micropubActions.append(.repost)
+                micropubActions.append(.bookmark)
+            case .recipe:
+                micropubActions.append(.reply)
+                micropubActions.append(.like)
+                micropubActions.append(.repost)
+                micropubActions.append(.bookmark)
+            case .repo:
+                micropubActions.append(.reply)
+                micropubActions.append(.like)
             }
-        case .review, .app, .item, .product:
-            micropubActions.append(.reply)
-            micropubActions.append(.like)
-            micropubActions.append(.repost)
-            micropubActions.append(.bookmark)
-        case .recipe:
-            micropubActions.append(.reply)
-            micropubActions.append(.like)
-            micropubActions.append(.repost)
-            micropubActions.append(.bookmark)
-        case .repo:
-            micropubActions.append(.reply)
-            micropubActions.append(.like)
-        }
 
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
