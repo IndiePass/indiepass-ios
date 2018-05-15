@@ -8,9 +8,10 @@
 
 import UIKit
 
-class CommandTableViewCell: UITableViewCell {
+class CommandTableViewCell: UITableViewCell, CommandDelegate {
     
     @IBOutlet weak var commandName: UILabel!
+    @IBOutlet weak var commandActivity: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,7 +25,20 @@ class CommandTableViewCell: UITableViewCell {
     }
     
     func setContent(ofCommand command: Command) {
+        commandActivity.isHidden = true
         self.commandName?.text = command.name
+        command.delegate = self
+    }
+    
+    func statusUpdate(runningStatus isRunning: Bool) {
+        self.isSelected = false
+        if isRunning {
+            self.commandActivity.startAnimating()
+            self.commandActivity.isHidden = false
+        } else {
+            self.commandActivity.isHidden = true
+            self.commandActivity.stopAnimating()
+        }
     }
     
 }

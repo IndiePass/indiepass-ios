@@ -207,14 +207,20 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="kgl-kS-OA3">
+                                            <rect key="frame" x="339" y="12" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="S8s-Ac-6Ed" firstAttribute="leading" secondItem="9Uz-fD-QhL" secondAttribute="leading" constant="16" id="1Ae-5j-mOQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="kgl-kS-OA3" secondAttribute="trailing" constant="16" id="RqT-mZ-OcK"/>
+                                        <constraint firstItem="kgl-kS-OA3" firstAttribute="centerY" secondItem="9Uz-fD-QhL" secondAttribute="centerY" id="mff-Ba-O2T"/>
                                         <constraint firstItem="S8s-Ac-6Ed" firstAttribute="centerY" secondItem="9Uz-fD-QhL" secondAttribute="centerY" id="qxs-og-FPu"/>
                                         <constraint firstAttribute="trailing" secondItem="S8s-Ac-6Ed" secondAttribute="trailing" constant="16" id="tKa-2F-VTZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="commandActivity" destination="kgl-kS-OA3" id="hnv-GX-k6f"/>
                                     <outlet property="commandName" destination="S8s-Ac-6Ed" id="C28-EL-jhS"/>
                                 </connections>
                             </tableViewCell>

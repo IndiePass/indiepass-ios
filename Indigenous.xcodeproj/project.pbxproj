@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C80AD70E20AB7515000EE9C1 /* CommandDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AD70D20AB7515000EE9C1 /* CommandDelegate.swift */; };
 		C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA391FEB0A1A00CCBE2E /* TimelineApiResponse.swift */; };
 		C80AEA3C1FEB0A4C00CCBE2E /* TimelinePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA3B1FEB0A4B00CCBE2E /* TimelinePost.swift */; };
 		C80AEA3E1FEB0AC500CCBE2E /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA3D1FEB0AC500CCBE2E /* Author.swift */; };
@@ -256,6 +257,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C80AD70D20AB7515000EE9C1 /* CommandDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandDelegate.swift; sourceTree = "<group>"; };
 		C80AEA391FEB0A1A00CCBE2E /* TimelineApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineApiResponse.swift; sourceTree = "<group>"; };
 		C80AEA3B1FEB0A4B00CCBE2E /* TimelinePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePost.swift; sourceTree = "<group>"; };
 		C80AEA3D1FEB0AC500CCBE2E /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 				C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */,
 				C8336411203394CB004022B5 /* CommandTableViewCell.swift */,
 				C83364132033957E004022B5 /* Command.swift */,
+				C80AD70D20AB7515000EE9C1 /* CommandDelegate.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -1246,6 +1249,7 @@
 				C8F724A220866BB500BB53B2 /* RandomString.swift in Sources */,
 				C8B3B08A1FAADAA90041C58E /* libxmlHTMLNode.swift in Sources */,
 				C8336412203394CB004022B5 /* CommandTableViewCell.swift in Sources */,
+				C80AD70E20AB7515000EE9C1 /* CommandDelegate.swift in Sources */,
 				C86424F1202CEA6500E8AC96 /* MicropubError.swift in Sources */,
 				C840A2D4200D12EF00CD2091 /* SimpleSelectionReadOnlyDelegate.swift in Sources */,
 				C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */,
