@@ -154,20 +154,13 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", indexPath.section == 1 {
             let command = commands[indexPath.row]
             command.sendCommand()
+            return
+        } else {
+            if let channelData = dataController?.fetchedResultsController?.object(at: indexPath) {
+                let selectedChannel = Channel(fromData: channelData)
+                self.selectedChannel = selectedChannel
+            }
         }
-        
-        if let channelData = dataController?.fetchedResultsController?.object(at: indexPath) {
-            let selectedChannel = Channel(fromData: channelData)
-            self.selectedChannel = selectedChannel
-        }
-        
-//        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        
-//        if isSearching() {
-//            selectedChannel = searchChannels[indexPath.row]
-//        } else {
-//            selectedChannel = filteredChannels[indexPath.row]
-//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
