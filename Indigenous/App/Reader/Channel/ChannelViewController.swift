@@ -25,7 +25,7 @@ public enum ChannelListSort: String {
 }
 
 class ChannelViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
-        
+    
     var channels: [Channel] = []
     var cachedChannels: [Channel] = []
     var filteredChannels: [Channel] = []
@@ -35,11 +35,20 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     var commands: [Command] = []
     var searchController: UISearchController? = nil
     
-    var currentFiltering: ChannelListFilter = .None
     var standardFiltering: ChannelListFilter = .None
-    var currentSorting: ChannelListSort = .Manual
+    var currentFiltering: ChannelListFilter = .None {
+        didSet {
+            NSFetchedResultsController<ChannelData>.deleteCache(withName: "channels")
+        }
+    }
+    var currentSorting: ChannelListSort = .Manual {
+        didSet {
+            NSFetchedResultsController<ChannelData>.deleteCache(withName: "channels")
+        }
+    }
     
-    var dataController: ChannelDataController!
+    var dataController: DataController!
+    var fetchedResultsController: NSFetchedResultsController<ChannelData>!
     
     var currentAccount: IndieAuthAccount? = nil
     
@@ -47,128 +56,10 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     @IBOutlet weak var accountButton: UIBarButtonItem!
     
     func updateFilteringAndSorting() {
-        dataController?.updateChannels(withFilter: currentFiltering, sortBy: currentSorting) { [weak self] in
+        updateChannels { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
             }
-        }
-    }
-    
-    public func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        switch type {
-        case .insert: tableView.insertSections([sectionIndex], with: .fade)
-        case .delete: tableView.deleteSections([sectionIndex], with: .fade)
-        default: break
-        }
-    }
-    
-    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
-        case .update:
-            tableView.reloadRows(at: [indexPath!], with: .fade)
-        case .move:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
-        }
-    }
-    
-    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
-            return 2
-        }
-        
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
-        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", section == 1 {
-            return "Remote Commands"
-        }
-        
-        return ""
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", section == 1 {
-            return commands.count
-        }
-        
-        if let sections = dataController?.fetchedResultsController?.sections, sections.count > 0 {
-            return sections[0].numberOfObjects
-        } else {
-            return 0
-        }
-        
-//        if isSearching() {
-//            return searchChannels.count
-//        } else {
-//            return filteredChannels.count
-//        }
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CommandCell", for: indexPath)
-            
-            if let commandCell = cell as? CommandTableViewCell {
-                let command = commands[indexPath.row]
-                commandCell.setContent(ofCommand: command)
-            }
-            
-            return cell
-        }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath)
-     
-        if let channelCell = cell as? ChannelTableViewCell {
-//            let channelData: Channel
-//            if isSearching() {
-//                channelData = searchChannels[indexPath.row]
-//            } else {
-//                channelData = filteredChannels[indexPath.row]
-//            }
-            if let channelData = dataController?.fetchedResultsController?.object(at: indexPath) {
-                channelCell.setContent(ofChannel: Channel(fromData: channelData))
-            }
-        }
-        
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", indexPath.section == 1 {
-            let command = commands[indexPath.row]
-            command.sendCommand()
-            return
-        } else {
-            if let channelData = dataController?.fetchedResultsController?.object(at: indexPath) {
-                let selectedChannel = Channel(fromData: channelData)
-                self.selectedChannel = selectedChannel
-            }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "viewTimeline",
-            let channelCell = sender as? ChannelTableViewCell,
-            let nextVC = segue.destination as? TimelineViewController {
-                nextVC.channel = channelCell.data
-                nextVC.title = channelCell.data?.name
         }
     }
     
@@ -256,7 +147,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     }
     
     @objc func handleRefresh(refreshControl: UIRefreshControl) {
-        dataController?.fetchChannelData {
+        fetchChannelData {
             DispatchQueue.main.async {
                 refreshControl.endRefreshing()
             }
@@ -295,24 +186,36 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         performSegue(withIdentifier: "showPostingInterface", sender: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self,
-               selector: #selector(handleCreateNewPost),
-               name: NSNotification.Name(rawValue: "createNewPost"),
-               object: nil)
-        
-        searchController = UISearchController(searchResultsController: nil)
-        searchController?.searchResultsUpdater = self
-        searchController?.searchBar.placeholder = "Search Channels"
-        searchController?.searchBar.delegate = self
-        searchController?.searchBar.showsBookmarkButton = true
-        searchController?.searchBar.setImage(UIImage.fontAwesomeIcon(name: .filter, textColor: UIColor.darkGray, size: CGSize(width: 30, height: 30)), for: .bookmark, state: .normal)
-        searchController?.obscuresBackgroundDuringPresentation = false
-        navigationItem.searchController = searchController
-        self.definesPresentationContext = true
-        updateFilteringAndSorting()
+    public func updateChannels(callback: (() -> ())) {
+        let request: NSFetchRequest<ChannelData> = ChannelData.fetchRequest()
+
+        switch currentSorting {
+        case .Alphabetical:
+            request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        case .UnreadCount:
+            request.sortDescriptors = [NSSortDescriptor(key: "unreadCount", ascending: false)]
+        case .Manual:
+            request.sortDescriptors = [NSSortDescriptor(key: "sort", ascending: true)]
+        }
+    
+        switch currentFiltering {
+        case .UnreadOnly:
+            request.predicate = NSPredicate(format: "any unreadCount > 0")
+        case .Search(let searchText):
+            request.predicate = NSPredicate(format: "any name contains[c] %@", searchText)
+        case .None:
+            request.predicate = NSPredicate(format: "TRUEPREDICATE")
+        }
+
+        fetchedResultsController = NSFetchedResultsController<ChannelData>(
+            fetchRequest: request,
+            managedObjectContext: dataController.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: "channels"
+        )
+        fetchedResultsController.delegate = self
+        try? fetchedResultsController?.performFetch()
+        callback()
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
@@ -335,6 +238,119 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         URLSession.shared.dataTask(with: url) { data, response, error in
             completion(data, response, error)
             }.resume()
+    }
+    
+    func fetchChannelData(callback: (() -> ())? = nil) {
+        
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
+            let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
+            
+            guard let microsubUrl = micropubDetails.microsub_endpoint,
+                var microsubComponents = URLComponents(url: microsubUrl, resolvingAgainstBaseURL: true) else {
+                    print("Microsub URL doesn't exist")
+                    return
+            }
+            
+            if microsubComponents.queryItems == nil {
+                microsubComponents.queryItems = []
+            }
+            
+            microsubComponents.queryItems?.append(URLQueryItem(name: "action", value: "channels"))
+            
+            guard let microsub = microsubComponents.url else {
+                print("Error making final url")
+                return
+            }
+            
+            var request = URLRequest(url: microsub)
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
+            request.setValue("Bearer \(micropubDetails.access_token)", forHTTPHeaderField: "Authorization")
+            
+            let config = URLSessionConfiguration.default
+            let session = URLSession(configuration: config)
+            
+            let task = session.dataTask(with: request) { [weak self] (data, response, error) in
+                // check for any errors
+                guard error == nil else {
+                    print("error calling POST on \(microsubUrl)")
+                    print(error ?? "No error present")
+                    return
+                }
+                
+                // Check if endpoint is in the HTTP Header fields
+                if let httpResponse = response as? HTTPURLResponse, let body = String(data: data!, encoding: .utf8) {
+                    if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
+                        if httpResponse.statusCode == 200 {
+                            if contentType == "application/json" {
+                                let channelResponse = try! JSONDecoder().decode(ChannelApiResponse.self, from: body.data(using: .utf8)!)
+                                
+                                // TODO: Need to replace this with a background context
+                                if let context = self?.dataController.viewContext {
+                                    var channelIndex = 0
+                                    channelResponse.channels.forEach { channelInfo in
+                                        _ = try? ChannelData.updateOrCreateChannel(
+                                            matching: channelInfo,
+                                            withPosition: channelIndex,
+                                            in: context
+                                        )
+                                        channelIndex += 1
+                                    }
+                                    
+                                    // TODO: Should probably check for errors here and do something
+                                    try? context.save()
+                                }
+                                
+                                callback?()
+                            }
+                        } else {
+                            print("Status Code not 200")
+                            print(httpResponse)
+                            print(body)
+                        }
+                    }
+                }
+                
+            }
+            
+            task.resume()
+        }
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "viewTimeline",
+            let channelCell = sender as? ChannelTableViewCell,
+            let nextVC = segue.destination as? TimelineViewController {
+            nextVC.channel = channelCell.data
+            // TODO: THIS NOW PASSES DATACONTROLLER NOT CHANNELDATACONTROLLER
+//            nextVC.dataController = dataController
+            nextVC.title = channelCell.data?.name
+        }
+    }
+    
+    // MARK: - View Controller Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleCreateNewPost),
+                                               name: NSNotification.Name(rawValue: "createNewPost"),
+                                               object: nil)
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.searchResultsUpdater = self
+        searchController?.searchBar.placeholder = "Search Channels"
+        searchController?.searchBar.delegate = self
+        searchController?.searchBar.showsBookmarkButton = true
+        searchController?.searchBar.setImage(UIImage.fontAwesomeIcon(name: .filter, textColor: UIColor.darkGray, size: CGSize(width: 30, height: 30)), for: .bookmark, state: .normal)
+        searchController?.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        self.definesPresentationContext = true
+        updateFilteringAndSorting()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -364,7 +380,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
             
             // We'll want to fetch new data from the server for unread counts, etc
-            dataController?.fetchChannelData { [weak self] in
+            fetchChannelData { [weak self] in
                 self?.updateFilteringAndSorting()
             }
             
@@ -376,6 +392,122 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
                 ]
             }
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        fetchedResultsController = nil
+    }
+    
+    // MARK: - Table View Delegate
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
+            return 2
+        }
+        
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", section == 1 {
+            return "Remote Commands"
+        }
+        
+        return ""
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", section == 1 {
+            return commands.count
+        }
+        
+        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+            return sections[0].numberOfObjects
+        } else {
+            return 0
+        }
+        
+        //        if isSearching() {
+        //            return searchChannels.count
+        //        } else {
+        //            return filteredChannels.count
+        //        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommandCell", for: indexPath)
+            
+            if let commandCell = cell as? CommandTableViewCell {
+                let command = commands[indexPath.row]
+                commandCell.setContent(ofCommand: command)
+            }
+            
+            return cell
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath)
+        
+        if let channelCell = cell as? ChannelTableViewCell {
+            //            let channelData: Channel
+            //            if isSearching() {
+            //                channelData = searchChannels[indexPath.row]
+            //            } else {
+            //                channelData = filteredChannels[indexPath.row]
+            //            }
+            if let channelData = fetchedResultsController?.object(at: indexPath) {
+                channelCell.setContent(ofChannel: Channel(fromData: channelData))
+            }
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", indexPath.section == 1 {
+            let command = commands[indexPath.row]
+            command.sendCommand()
+            return
+        } else {
+            if let channelData = fetchedResultsController?.object(at: indexPath) {
+                let selectedChannel = Channel(fromData: channelData)
+                self.selectedChannel = selectedChannel
+            }
+        }
+    }
+    
+    // MARK: - Fetched Results Controller Delegate
+    public func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert: tableView.insertSections([sectionIndex], with: .fade)
+        case .delete: tableView.deleteSections([sectionIndex], with: .fade)
+        default: break
+        }
+    }
+    
+    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .fade)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        }
+    }
+    
+    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
     }
     
     //    override func isContentValid() -> Bool {

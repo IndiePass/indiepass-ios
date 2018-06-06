@@ -13,7 +13,9 @@ class MainViewController: UINavigationController, IndieAuthDelegate {
     
     var loginViewController: UIViewController? = nil
     var backupViewControllers: [UIViewController]? = nil
-    var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+//    var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+    
+    var dataController: DataController!
 
     func showLoginScreen() {
         let loginViewController = storyboard?.instantiateViewController(withIdentifier: "indieAuthLoginView") as! IndieAuthLoginViewController
@@ -31,8 +33,7 @@ class MainViewController: UINavigationController, IndieAuthDelegate {
             if let restoreViewControllers = self?.backupViewControllers {
                 self?.viewControllers = restoreViewControllers
                 if let channelVC = self?.viewControllers.first as? ChannelViewController {
-                    channelVC.dataController = ChannelDataController()
-                    channelVC.dataController.container = self?.container
+                    channelVC.dataController = self?.dataController
                 }
                 self?.popViewController(animated: true)
             }
@@ -67,8 +68,7 @@ class MainViewController: UINavigationController, IndieAuthDelegate {
 //            let micropubAuth = micropubAccounts[activeAccount]
             
             if let channelVC = viewControllers.first as? ChannelViewController {
-                channelVC.dataController = ChannelDataController()
-                channelVC.dataController.container = container
+                channelVC.dataController = dataController
             }
         }
     }

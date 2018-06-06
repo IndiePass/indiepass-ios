@@ -178,6 +178,7 @@
 		C8DAA8B6201128FC002B7083 /* MicropubPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DAA8B3201127D7002B7083 /* MicropubPhoto.swift */; };
 		C8DAA8B820113694002B7083 /* TimelinePhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DAA8B720113694002B7083 /* TimelinePhotoTableViewCell.swift */; };
 		C8DAA8B920113694002B7083 /* TimelinePhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DAA8B720113694002B7083 /* TimelinePhotoTableViewCell.swift */; };
+		C8E7008020C76B1C00B134BC /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7007F20C76B1B00B134BC /* DataController.swift */; };
 		C8F431C61FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F431C11FB530010026B8D6 /* HalfModalPresentationController.swift */; };
 		C8F431C71FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F431C11FB530010026B8D6 /* HalfModalPresentationController.swift */; };
 		C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F431C31FB530010026B8D6 /* HalfModalInteractiveTransition.swift */; };
@@ -371,6 +372,7 @@
 		C8D171CD1FF58BFB00134485 /* FontAwesomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeView.swift; sourceTree = "<group>"; };
 		C8DAA8B3201127D7002B7083 /* MicropubPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubPhoto.swift; sourceTree = "<group>"; };
 		C8DAA8B720113694002B7083 /* TimelinePhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePhotoTableViewCell.swift; sourceTree = "<group>"; };
+		C8E7007F20C76B1B00B134BC /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		C8F431C11FB530010026B8D6 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
 		C8F431C31FB530010026B8D6 /* HalfModalInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalInteractiveTransition.swift; sourceTree = "<group>"; };
 		C8F431C41FB530010026B8D6 /* HalfModalTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalTransitionAnimator.swift; sourceTree = "<group>"; };
@@ -674,6 +676,7 @@
 				C8CBEB011FAA9B4600298113 /* LaunchScreen.storyboard */,
 				C8CBEB041FAA9B4600298113 /* Info.plist */,
 				C8CBEAFC1FAA9B4600298113 /* Indigenous.xcdatamodeld */,
+				C8E7007F20C76B1B00B134BC /* DataController.swift */,
 				C8A37C7C20A4EA6F003F3F91 /* ChannelData.swift */,
 				C8A37C7E20A4F30E003F3F91 /* ChannelDataController.swift */,
 			);
@@ -1220,6 +1223,7 @@
 				C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
 				C81260642059D68E009DE884 /* ChannelUnreadStatus.swift in Sources */,
 				C8B3B0881FAADAA90041C58E /* CSS.swift in Sources */,
+				C8E7008020C76B1C00B134BC /* DataController.swift in Sources */,
 				C8439C35203B412C004EE01E /* TimelineMarkAsReadRequest.swift in Sources */,
 				C8F431CA1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,
 				C894F5EC1FEAC7F0003D0A48 /* ChannelViewController.swift in Sources */,
