@@ -288,22 +288,21 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
                             if contentType == "application/json" {
                                 let channelResponse = try! JSONDecoder().decode(ChannelApiResponse.self, from: body.data(using: .utf8)!)
                                 
-                                // TODO: Need to replace this with a background context
-                                if let context = self?.dataController.viewContext {
-                                    var channelIndex = 0
-                                    channelResponse.channels.forEach { channelInfo in
-                                        _ = try? ChannelData.updateOrCreateChannel(
-                                            matching: channelInfo,
-                                            withPosition: channelIndex,
-                                            in: context
-                                        )
-                                        channelIndex += 1
-                                    }
-                                    
-                                    // TODO: Should probably check for errors here and do something
-                                    try? context.save()
+                                self?.dataController.persistentContainer.performBackgroundTask { backgroundContext in
+                                        var channelIndex = 0
+                                        channelResponse.channels.forEach { channelInfo in
+                                            _ = try! ChannelData.updateOrCreateChannel(
+                                                matching: channelInfo,
+                                                withPosition: channelIndex,
+                                                in: backgroundContext
+                                            )
+                                            channelIndex += 1
+                                        }
+                                        
+                                        // TODO: Should probably check for errors here and do something
+                                        // TODO: WHY DOES THIS KEEP DYING WITH EXC_BAD_INSTRUCTION?!?!?!
+                                        try? backgroundContext.save()
                                 }
-                                
                                 callback?()
                             }
                         } else {
@@ -350,7 +349,6 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         searchController?.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         self.definesPresentationContext = true
-        updateFilteringAndSorting()
     }
     
     override func viewWillAppear(_ animated: Bool) {
