@@ -40,26 +40,20 @@ struct Channel: Codable {
         if let boolValue = try? container.decodeIfPresent(Bool.self, forKey: .unread) {
             if boolValue != nil {
                 if boolValue! {
-                    print(1);
                     unread = .unread
                 } else {
-                    print(2);
                     unread = .read
                 }
             } else {
-                print(3);
                 unread = .read
             }
         } else if let intValue = try! container.decodeIfPresent(Int.self, forKey: .unread) {
             if intValue > 0 {
-                print(4);
                 unread = .unreadCount(count: intValue)
             } else {
-                print(5);
                 unread = .read
             }
         } else {
-            print(6);
             unread = .none
         }
     }
