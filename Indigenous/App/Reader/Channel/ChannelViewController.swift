@@ -36,16 +36,8 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     var searchController: UISearchController? = nil
     
     var standardFiltering: ChannelListFilter = .None
-    var currentFiltering: ChannelListFilter = .None {
-        didSet {
-            NSFetchedResultsController<ChannelData>.deleteCache(withName: "channels")
-        }
-    }
-    var currentSorting: ChannelListSort = .Manual {
-        didSet {
-            NSFetchedResultsController<ChannelData>.deleteCache(withName: "channels")
-        }
-    }
+    var currentFiltering: ChannelListFilter = .None
+    var currentSorting: ChannelListSort = .Manual
     
     var dataController: DataController!
     var fetchedResultsController: NSFetchedResultsController<ChannelData>!
@@ -211,7 +203,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             fetchRequest: request,
             managedObjectContext: dataController.viewContext,
             sectionNameKeyPath: nil,
-            cacheName: "channels"
+            cacheName: nil
         )
         fetchedResultsController.delegate = self
         try? fetchedResultsController?.performFetch()
