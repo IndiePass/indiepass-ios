@@ -200,9 +200,9 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     
         switch currentFiltering {
         case .UnreadOnly:
-            request.predicate = NSPredicate(format: "any unreadCount > 0")
+            request.predicate = NSPredicate(format: "unreadCount > 0")
         case .Search(let searchText):
-            request.predicate = NSPredicate(format: "any name contains[c] %@", searchText)
+            request.predicate = NSPredicate(format: "name contains[c] %@", searchText)
         case .None:
             request.predicate = NSPredicate(format: "TRUEPREDICATE")
         }
