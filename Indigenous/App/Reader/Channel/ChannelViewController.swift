@@ -292,7 +292,6 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
                                         }
                                         
                                         // TODO: Should probably check for errors here and do something
-                                        // TODO: WHY DOES THIS KEEP DYING WITH EXC_BAD_INSTRUCTION?!?!?!
                                         try? backgroundContext.save()
                                 }
                                 callback?()
@@ -316,9 +315,8 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         if segue.identifier == "viewTimeline",
             let channelCell = sender as? ChannelTableViewCell,
             let nextVC = segue.destination as? TimelineViewController {
-            nextVC.channel = channelCell.data
-            // TODO: THIS NOW PASSES DATACONTROLLER NOT CHANNELDATACONTROLLER
-//            nextVC.dataController = dataController
+            nextVC.uid = channelCell.data?.uid
+            nextVC.dataController = dataController
             nextVC.title = channelCell.data?.name
         }
     }

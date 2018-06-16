@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QEQ-fJ-kEz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QEQ-fJ-kEz">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -8,6 +8,7 @@
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Baseline standard spacing" minToolsVersion="9.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -204,20 +205,10 @@
                                     <segue destination="bDQ-l4-ykq" kind="presentation" identifier="showPostingInterface" id="m1I-80-nKO"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Read" id="I1L-c5-xhY">
+                            <barButtonItem title="S" id="6zw-GO-bEK">
                                 <connections>
-                                    <action selector="markAllAsRead:" destination="QEQ-fJ-kEz" id="8Hw-c4-3lA"/>
+                                    <segue destination="cMb-dG-Khd" kind="presentation" identifier="showChannelSettings" id="ova-GZ-yfM"/>
                                 </connections>
-                            </barButtonItem>
-                            <barButtonItem id="NGX-tl-Hbj">
-                                <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="lu5-8I-Cg9">
-                                    <rect key="frame" x="216" y="6.5" width="51" height="31"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="onTintColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <connections>
-                                        <action selector="autoReadSwitchChanged:" destination="QEQ-fJ-kEz" eventType="valueChanged" id="m9T-fI-zQ2"/>
-                                    </connections>
-                                </switch>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -230,14 +221,93 @@
                         </connections>
                     </refreshControl>
                     <connections>
-                        <outlet property="autoReadSwitch" destination="lu5-8I-Cg9" id="qwe-3p-2o6"/>
-                        <outlet property="markAllAsReadButton" destination="I1L-c5-xhY" id="gpb-yz-E5l"/>
+                        <outlet property="channelSettingsButton" destination="6zw-GO-bEK" id="Wa3-BX-t5H"/>
                         <segue destination="iBk-9N-Qme" kind="show" identifier="showReplyView" id="EbK-Su-yi0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ous-eF-r2b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1101.5999999999999" y="1393.8530734632684"/>
+        </scene>
+        <!--Channel Settings Navigation Controller-->
+        <scene sceneID="xjj-PM-fex">
+            <objects>
+                <navigationController id="cMb-dG-Khd" customClass="ChannelSettingsNavigationController" customModule="Indigenous" customModuleProvider="target" sceneMemberID="viewController">
+                    <value key="contentSizeForViewInPopover" type="size" width="240" height="391"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bIU-n3-S3l">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="kXC-aw-f3J" kind="relationship" relationship="rootViewController" id="RWG-1X-K6P"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FKZ-8C-4Cf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1921" y="1394"/>
+        </scene>
+        <!--Channel Settings View Controller-->
+        <scene sceneID="mlo-J4-17p">
+            <objects>
+                <viewController id="kXC-aw-f3J" customClass="ChannelSettingsViewController" customModule="Indigenous" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Gc7-SF-5MQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="XqQ-Z9-xD7">
+                                <rect key="frame" x="16" y="327" width="343" height="77"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I2D-Pq-C6e">
+                                        <rect key="frame" x="96.5" y="0.0" width="150" height="30"/>
+                                        <state key="normal" title="Mark all posts as read"/>
+                                        <connections>
+                                            <action selector="markAllPosts:" destination="kXC-aw-f3J" eventType="touchUpInside" id="9hQ-nT-6xY"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="G4j-1l-6hT">
+                                        <rect key="frame" x="12.5" y="46" width="318.5" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatically mark posts as read" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQn-ZO-5PK">
+                                                <rect key="frame" x="0.0" y="0.0" width="253.5" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r3g-hT-kVm">
+                                                <rect key="frame" x="269.5" y="0.0" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="switchAutoRead:" destination="kXC-aw-f3J" eventType="valueChanged" id="gw9-3b-kUC"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XqQ-Z9-xD7" firstAttribute="leading" secondItem="ipU-7Y-Gm6" secondAttribute="leading" constant="16" id="8et-aQ-mXm"/>
+                            <constraint firstItem="XqQ-Z9-xD7" firstAttribute="centerY" secondItem="ipU-7Y-Gm6" secondAttribute="centerY" id="DMw-Yy-jMW"/>
+                            <constraint firstItem="ipU-7Y-Gm6" firstAttribute="trailing" secondItem="XqQ-Z9-xD7" secondAttribute="trailing" constant="16" id="a6o-VG-IEm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ipU-7Y-Gm6"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="9lh-zZ-Gj0">
+                        <barButtonItem key="rightBarButtonItem" title="Close" id="K91-rA-7UZ">
+                            <connections>
+                                <action selector="close:" destination="kXC-aw-f3J" id="uM5-6y-0My"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="autoReadSwitch" destination="r3g-hT-kVm" id="0eh-4Y-fv0"/>
+                        <outlet property="closeButton" destination="K91-rA-7UZ" id="uMY-I2-Fg7"/>
+                        <outlet property="markAllPostsButton" destination="I2D-Pq-C6e" id="Rn1-fy-dX6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bJK-j0-K8b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2758" y="1394"/>
         </scene>
         <!--PostingView-->
         <scene sceneID="ZtE-e4-beB">

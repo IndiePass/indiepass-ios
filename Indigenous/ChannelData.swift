@@ -11,6 +11,23 @@ import CoreData
 
 class ChannelData: NSManagedObject {
 
+    class func findChannel(byId uid: String, in context: NSManagedObjectContext) throws -> ChannelData? {
+        let request: NSFetchRequest<ChannelData> = ChannelData.fetchRequest()
+        request.predicate = NSPredicate(format: "uid = %@", uid)
+        
+        do {
+            let matches = try context.fetch(request)
+            if matches.count > 0 {
+                assert(matches.count == 1, "ChannelData.findChannelById -- database inconsistancy")
+                return matches[0]
+            }
+        } catch {
+            throw error
+        }
+        
+        return nil
+    }
+    
     class func findOrCreateChannel(matching channelInfo: Channel, in context: NSManagedObjectContext) throws -> ChannelData {
         let request: NSFetchRequest<ChannelData> = ChannelData.fetchRequest()
         request.predicate = NSPredicate(format: "uid = %@", channelInfo.uid)

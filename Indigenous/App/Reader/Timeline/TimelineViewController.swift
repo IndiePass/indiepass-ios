@@ -9,63 +9,46 @@ import UIKit
 import Social
 import MobileCoreServices
 import SafariServices
+import CoreData
 
-class TimelineViewController: UITableViewController, UITableViewDataSourcePrefetching, PostingViewDelegate {
+class TimelineViewController: UITableViewController, UITableViewDataSourcePrefetching,
+                                                     PostingViewDelegate,
+                                                     UINavigationControllerDelegate,
+                                                     ChannelSettingsDelegate {
     
-    var channel: Channel? = nil
+    var channelSettingsTransitioningDelegate: HalfModalTransitioningDelegate?
+    
+//    var channel: Channel? = nil
+    var uid: String!
+    var channelData: ChannelData? = nil
     var timeline: Timeline? = nil
     var fetchingOlderData: Bool = false
     var fetchingNewerData: Bool = false
     var previousDataAvailable: Bool = true
     var mediaTimeTracking: [Int: String] = [:]
+    var context: NSManagedObjectContext? = nil
     private var isTransitioning: Bool = true
     
-    @IBOutlet weak var markAllAsReadButton: UIBarButtonItem!
-    @IBOutlet weak var autoReadSwitch: UISwitch!
+    @IBOutlet weak var channelSettingsButton: UIBarButtonItem!
+    
+    var dataController: DataController!
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    @IBAction func autoReadSwitchChanged(_ sender: Any) {
-    
-    }
-    
-    @IBAction func markAllAsRead(_ sender: Any) {
-        timeline?.markAllPostsAsRead { [weak self] error in
-            if error != nil {
-                print("ERROR MARKING AS READ")
-                return
-            }
-            
-            if let posts = self?.timeline?.posts {
-                for post in posts {
-                    post.isRead = true
-                }
-            
-                DispatchQueue.main.async {
-                    if let visibleRows = self?.tableView.indexPathsForVisibleRows {
-                        self?.tableView.reloadRows(at: visibleRows, with: .none)
-                    }
-                }
-            }
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Only mark as read if auto read is set AND we are not transitioning to a new view controller
-        print("Check if transitioning? \(isTransitioning)")
-        if autoReadSwitch.isOn, !isTransitioning {
-            if let post = self.timeline?.posts[indexPath.row], let postId = post.id {
-                print("MARKING POST AS READ")
+        if let autoReadOn = self.channelData?.autoRead, autoReadOn, !isTransitioning {
+            if let post = self.timeline?.posts[indexPath.row], let postId = post.id, let postIsRead = post.isRead, !postIsRead {
                 // Mark cell as read
                 post.isRead = true
-                
+
                 // Send read to server
                 timeline?.markAsRead(posts: [postId]) { error in
                     if error != nil {
                         post.isRead = false
-                        
+
                         // TODO: Present error?
                     }
                 }
@@ -357,49 +340,60 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        channelSettingsButton.image = UIImage.fontAwesomeIcon(name: .gear, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.prefetchDataSource = self
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
-        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
-        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
-            let account = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
-         
-                print("about to load timeline")
+        context = dataController.persistentContainer.viewContext
+        context?.automaticallyMergesChangesFromParent = true
+        context?.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+        context?.perform { [weak self] in
+            if let context = self?.context, let uid = self?.uid, let channelData = try? ChannelData.findChannel(byId: uid, in: context) {
+                self?.channelData = channelData
             
-                timeline = Timeline()
-                timeline?.accountDetails = account
-                timeline?.channel = self.channel!
-                timeline?.getTimeline { error, _ in
-                    guard error == nil else {
-                        print("Error while fetching main timeline")
-                        print(error ?? "")
-                        return
-                    }
+                let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+                let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+                if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
+                    let account = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]),
+                    let channelData = self?.channelData {
+                 
+                        print("about to load timeline")
                     
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                        self?.timeline = Timeline()
+                        self?.timeline?.accountDetails = account
+                        self?.timeline?.channel = Channel(fromData: channelData)
+                        self?.timeline?.getTimeline { error, _ in
+                            guard error == nil else {
+                                print("Error while fetching main timeline")
+                                print(error ?? "")
+                                return
+                            }
+                            
+                            DispatchQueue.main.async {
+                                self?.tableView.reloadData()
+                            }
 
-                    if let postsCount = self.timeline?.posts.count {
-                        let totalRowsToPrefetch = postsCount < 9 ? postsCount : 8
-                        for row in 0..<totalRowsToPrefetch {
-                            print("Prefetching for row \(row)")
-                            if let post = self.timeline?.posts[row] {
-                                if post.photo != nil, post.photo!.count > 0 {
-                                    post.downloadPhoto(photoIndex: 0)
-                                }
-                                if post.author?.photo != nil, post.author!.photo!.count > 0 {
-                                    post.author?.downloadPhoto(photoIndex: 0)
+                            if let postsCount = self?.timeline?.posts.count {
+                                let totalRowsToPrefetch = postsCount < 9 ? postsCount : 8
+                                for row in 0..<totalRowsToPrefetch {
+                                    print("Prefetching for row \(row)")
+                                    if let post = self?.timeline?.posts[row] {
+                                        if post.photo != nil, post.photo!.count > 0 {
+                                            post.downloadPhoto(photoIndex: 0)
+                                        }
+                                        if post.author?.photo != nil, post.author!.photo!.count > 0 {
+                                            post.author?.downloadPhoto(photoIndex: 0)
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
 
+                        }
                 }
+            }
         }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -422,10 +416,49 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 postingVC.title = "New Reply"
             }
         }
+        
+        if segue.identifier == "showChannelSettings" {
+            self.channelSettingsTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+            
+            segue.destination.modalPresentationStyle = .custom
+            segue.destination.transitioningDelegate = self.channelSettingsTransitioningDelegate
+            
+            if let channelSettingsNavVC = segue.destination as? ChannelSettingsNavigationController {
+                channelSettingsNavVC.delegate = self
+                if let channelSettingsVC = channelSettingsNavVC.viewControllers[0] as? ChannelSettingsViewController {
+                    channelSettingsVC.dataController = dataController
+                    channelSettingsVC.delegate = self
+                    channelSettingsVC.title = "\(channelData?.name ?? "Channel") Settings"
+                    channelSettingsVC.uid = channelData?.uid
+                }
+            }
+        }
     }
     
     func removePostingView() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - ChannelSettingsDelegate Methods
+    func markAllPostsAsRead() {
+        timeline?.markAllPostsAsRead { [weak self] error in
+            if error != nil {
+                print("ERROR MARKING AS READ")
+                return
+            }
+
+            if let posts = self?.timeline?.posts {
+                for post in posts {
+                    post.isRead = true
+                }
+
+                DispatchQueue.main.async {
+                    if let visibleRows = self?.tableView.indexPathsForVisibleRows {
+                        self?.tableView.reloadRows(at: visibleRows, with: .none)
+                    }
+                }
+            }
+        }
     }
     
 }
