@@ -52,8 +52,6 @@
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Upload photos from your library to your media endpoint</string>
-	<key>NSSiriUsageDescription</key>
-	<string>Post notes to your micropub endpoint using your voice</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
