@@ -144,6 +144,22 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         postTitle.text = post?.name
         postContent.text = post?.content?.text ?? post?.summary ?? nil
         
+        if let likeOfCount = post?.likeOf?.count,
+            likeOfCount > 0,
+            let likeOfUrl = post?.likeOf?[0],
+            let likeOfComponents = URLComponents(url: likeOfUrl, resolvingAgainstBaseURL: false) {
+            // TODO: Make sure this isn't wrapped in an optional
+            postContent.text = "liked a post\(likeOfComponents.host != nil ? " on \(likeOfComponents.host!)" : "")."
+        }
+        
+        if let bookmarkOfCount = post?.bookmarkOf?.count,
+            bookmarkOfCount > 0,
+            let bookmarkOfUrl = post?.bookmarkOf?[0],
+            let bookmarkOfComponents = URLComponents(url: bookmarkOfUrl, resolvingAgainstBaseURL: false) {
+            // TODO: Make sure this isn't wrapped in an optional
+            postContent.text = "bookmarked a post\(bookmarkOfComponents.host != nil ? " on \(bookmarkOfComponents.host!)" : "")."
+        }
+        
         if let name = post?.author?.name {
             authorName.text = name
         } else if let postUrl = post?.url {
