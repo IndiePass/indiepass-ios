@@ -144,7 +144,13 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         postTitle.text = post?.name
         postContent.text = post?.content?.text ?? post?.summary ?? nil
         
-        authorName.text = post?.author?.name ?? URLComponents.init(url: (post?.url)!, resolvingAgainstBaseURL: false)?.host ?? "Unknown"
+        if let name = post?.author?.name {
+            authorName.text = name
+        } else if let postUrl = post?.url {
+            authorName.text = URLComponents.init(url: postUrl, resolvingAgainstBaseURL: false)?.host
+        } else {
+            authorName.text = "Unknown"
+        }
         
         postImage.isHidden = false
         postImageHeight.constant = 200
