@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QEQ-fJ-kEz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QEQ-fJ-kEz">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
-        <capability name="Baseline standard spacing" minToolsVersion="9.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -66,7 +64,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHV-rC-wvX" userLabel="Play Button">
-                                                            <rect key="frame" x="20" y="10.5" width="30" height="30"/>
+                                                            <rect key="frame" x="20" y="10" width="30" height="30"/>
                                                             <state key="normal" title="Play">
                                                                 <color key="titleColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </state>
@@ -75,7 +73,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkW-bt-qAn">
-                                                            <rect key="frame" x="58" y="15" width="50" height="21"/>
+                                                            <rect key="frame" x="58" y="14.5" width="50" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="50" id="43R-WQ-okN"/>
                                                             </constraints>
@@ -84,7 +82,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iIW-9i-gOf">
-                                                            <rect key="frame" x="116" y="24.5" width="207" height="2"/>
+                                                            <rect key="frame" x="116" y="24" width="207" height="2"/>
                                                             <color key="progressTintColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         </progressView>
                                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KAz-YB-LPF" userLabel="Audio Loading">
@@ -223,11 +221,12 @@
                     <connections>
                         <outlet property="channelSettingsButton" destination="6zw-GO-bEK" id="Wa3-BX-t5H"/>
                         <segue destination="iBk-9N-Qme" kind="show" identifier="showReplyView" id="EbK-Su-yi0"/>
+                        <segue destination="ZT9-KV-3b2" kind="show" identifier="showFullArticle" id="dnE-Px-pYW"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ous-eF-r2b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1101.5999999999999" y="1393.8530734632684"/>
+            <point key="canvasLocation" x="1140" y="1394"/>
         </scene>
         <!--Channel Settings Navigation Controller-->
         <scene sceneID="xjj-PM-fex">
@@ -324,6 +323,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0HP-Ac-zls" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1232" y="1979"/>
+        </scene>
+        <!--FullView-->
+        <scene sceneID="C64-AQ-sVE">
+            <objects>
+                <viewControllerPlaceholder storyboardName="FullView" id="ZT9-KV-3b2" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wRy-58-1rX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1688" y="1895"/>
         </scene>
     </scenes>
 </document>

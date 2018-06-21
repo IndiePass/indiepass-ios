@@ -80,6 +80,8 @@
 		C894F5EF1FEADCB2003D0A48 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5EE1FEADCB2003D0A48 /* Channel.swift */; };
 		C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */; };
 		C894F5F31FEAFC98003D0A48 /* IndieAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894F5F21FEAFC98003D0A48 /* IndieAuthDelegate.swift */; };
+		C89AE10320D9EB32001D951C /* FullView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C89AE10220D9EB32001D951C /* FullView.storyboard */; };
+		C89AE10520D9EB74001D951C /* FullArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AE10420D9EB74001D951C /* FullArticleViewController.swift */; };
 		C8A37C7D20A4EA6F003F3F91 /* ChannelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A37C7C20A4EA6F003F3F91 /* ChannelData.swift */; };
 		C8A37C7F20A4F30E003F3F91 /* ChannelDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A37C7E20A4F30E003F3F91 /* ChannelDataController.swift */; };
 		C8B36B541FED514800D92E3D /* IndieAuthAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B36B531FED514800D92E3D /* IndieAuthAccount.swift */; };
@@ -261,6 +263,8 @@
 		C894F5EE1FEADCB2003D0A48 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		C894F5F01FEADCF6003D0A48 /* ChannelAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAPIResponse.swift; sourceTree = "<group>"; };
 		C894F5F21FEAFC98003D0A48 /* IndieAuthDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndieAuthDelegate.swift; sourceTree = "<group>"; };
+		C89AE10220D9EB32001D951C /* FullView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FullView.storyboard; sourceTree = "<group>"; };
+		C89AE10420D9EB74001D951C /* FullArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullArticleViewController.swift; sourceTree = "<group>"; };
 		C8A37C7C20A4EA6F003F3F91 /* ChannelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelData.swift; sourceTree = "<group>"; };
 		C8A37C7E20A4F30E003F3F91 /* ChannelDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDataController.swift; sourceTree = "<group>"; };
 		C8B36B531FED514800D92E3D /* IndieAuthAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndieAuthAccount.swift; sourceTree = "<group>"; };
@@ -364,6 +368,7 @@
 		C8254C4A201A7EAF000AC32A /* Reader */ = {
 			isa = PBXGroup;
 			children = (
+				C89AE10120D9EB0D001D951C /* FullView */,
 				C8254C4C201A7EC7000AC32A /* Channel */,
 				C8254C4B201A7EB8000AC32A /* Timeline */,
 			);
@@ -416,6 +421,13 @@
 				C8753BF5200FDDE5005C1E28 /* ShortcutItemType.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		C8402E4620DAAB5F00B6CADC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		C845B4641FF5E05700354391 /* xray */ = {
@@ -504,6 +516,15 @@
 			path = Microsub;
 			sourceTree = "<group>";
 		};
+		C89AE10120D9EB0D001D951C /* FullView */ = {
+			isa = PBXGroup;
+			children = (
+				C89AE10220D9EB32001D951C /* FullView.storyboard */,
+				C89AE10420D9EB74001D951C /* FullArticleViewController.swift */,
+			);
+			path = FullView;
+			sourceTree = "<group>";
+		};
 		C8B36B521FED510F00D92E3D /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,6 +561,7 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
+				C8402E4620DAAB5F00B6CADC /* Resources */,
 				C8F724A020866B5600BB53B2 /* Utilities */,
 				C864F3A8205C1DBD000C5F89 /* SwiftExtensions */,
 				C85B2443200596AA0097E577 /* PostingInterface */,
@@ -860,6 +882,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C89AE10320D9EB32001D951C /* FullView.storyboard in Resources */,
 				C8CBEB521FAA9DEF00298113 /* Modules in Resources */,
 				C8D171DA1FF58C3900134485 /* FontAwesome.otf in Resources */,
 				C8CBEB431FAA9CAA00298113 /* Main.storyboard in Resources */,
@@ -980,6 +1003,7 @@
 				C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */,
 				C8D171E01FF58C3900134485 /* FontAwesomeStateRequirement.swift in Sources */,
 				C8D171E31FF58C3900134485 /* FontAwesomeView.swift in Sources */,
+				C89AE10520D9EB74001D951C /* FullArticleViewController.swift in Sources */,
 				C840A2D1200D114A00CD2091 /* SimpleSelectionDelegate.swift in Sources */,
 				C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */,
 				C8667408202254E50076DB8E /* MicropubSyndicationQueryResponse.swift in Sources */,

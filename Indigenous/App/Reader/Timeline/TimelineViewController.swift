@@ -200,7 +200,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             success(true)
         })
         
-        replyAction.image = UIImage(named: "tick")
+        replyAction.image = UIImage.fontAwesomeIcon(name: .reply, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         replyAction.backgroundColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
 
         return UISwipeActionsConfiguration(actions: [replyAction])
@@ -216,48 +216,44 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             
             let viewAction = UIContextualAction(style: .normal, title:  "View", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 
-                if let postUrl = post.url {
-                    self.isTransitioning = true
-                    let safariVC = SFSafariViewController(url: postUrl)
-                    self.present(safariVC, animated: true)
-                    
-                    if post.isRead != nil, let postId = post.id {
-                        post.isRead = true
-                        DispatchQueue.global(qos: .background).async { [weak self] in
-                            self?.timeline?.markAsRead(posts: [postId]) { error in
-                                if error != nil {
-                                    print("Error Marking post as read \(error ?? "")")
-                                }
+                self.isTransitioning = true
+                self.performSegue(withIdentifier: "showFullArticle", sender: post)
+                if post.isRead != nil, let postId = post.id {
+                    post.isRead = true
+                    DispatchQueue.global(qos: .background).async { [weak self] in
+                        self?.timeline?.markAsRead(posts: [postId]) { error in
+                            if error != nil {
+                                print("Error Marking post as read \(error ?? "")")
                             }
                         }
                     }
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        self?.tableView.reloadRows(at: [indexPath], with: .none)
-                    }
-                    success(true)
-                } else {
-                    success(false)
                 }
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+
+                success(true)
             })
-            viewAction.image = UIImage(named: "tick")
+            viewAction.image = UIImage.fontAwesomeIcon(name: .alignLeft, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
             viewAction.backgroundColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
             
-            let shareAction = UIContextualAction(style: .normal, title:  "Share", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-                
-                if let postUrl = post.url {
-                    let shareVC = UIActivityViewController(activityItems: [postUrl], applicationActivities: nil)
-                    shareVC.popoverPresentationController?.sourceView = self.view
-                    self.present(shareVC, animated: true, completion: nil)
-                    success(true)
-                } else {
-                    success(false)
-                }
-            })
-            shareAction.image = UIImage(named: "Action")
-            shareAction.backgroundColor = #colorLiteral(red: 0.8063602448, green: 0.371145457, blue: 0.3616603613, alpha: 1)
-            
-            return UISwipeActionsConfiguration(actions: [viewAction, shareAction])
+//            let shareAction = UIContextualAction(style: .normal, title:  "Share", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+//
+//                if let postUrl = post.url {
+//                    let shareVC = UIActivityViewController(activityItems: [postUrl], applicationActivities: nil)
+//                    shareVC.popoverPresentationController?.sourceView = self.view
+//                    self.present(shareVC, animated: true, completion: nil)
+//                    success(true)
+//                } else {
+//                    success(false)
+//                }
+//            })
+//
+//            shareAction.image = UIImage(named: "tick")
+//            shareAction.backgroundColor = #colorLiteral(red: 0.8063602448, green: 0.371145457, blue: 0.3616603613, alpha: 1)
+        
+            return UISwipeActionsConfiguration(actions: [viewAction])
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -431,6 +427,18 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                     channelSettingsVC.title = "\(channelData?.name ?? "Channel") Settings"
                     channelSettingsVC.uid = channelData?.uid
                 }
+            }
+        }
+        
+        if segue.identifier == "showFullArticle" {
+            if let fullViewVC = destinationViewController as? FullArticleViewController {
+                
+                if let fullPost = sender as? Jf2Post {
+                    fullViewVC.currentPost = fullPost
+                }
+                
+//                postingVC.displayAsModal = false
+//                postingVC.delegate = self
             }
         }
     }
