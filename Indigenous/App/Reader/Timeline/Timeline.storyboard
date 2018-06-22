@@ -65,9 +65,7 @@
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHV-rC-wvX" userLabel="Play Button">
                                                             <rect key="frame" x="20" y="10" width="30" height="30"/>
-                                                            <state key="normal" title="Play">
-                                                                <color key="titleColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                            </state>
+                                                            <state key="normal" title="Play"/>
                                                             <connections>
                                                                 <action selector="activatedAudioControl:" destination="aea-xt-507" eventType="touchUpInside" id="cU2-KS-c5B"/>
                                                             </connections>
@@ -83,14 +81,11 @@
                                                         </label>
                                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iIW-9i-gOf">
                                                             <rect key="frame" x="116" y="24" width="207" height="2"/>
-                                                            <color key="progressTintColor" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         </progressView>
                                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KAz-YB-LPF" userLabel="Audio Loading">
                                                             <rect key="frame" x="25" y="15" width="20" height="20"/>
-                                                            <color key="color" red="0.73477512599999995" green="0.21309566499999999" blue="0.1803562641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         </activityIndicatorView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="KAz-YB-LPF" firstAttribute="centerY" secondItem="oHV-rC-wvX" secondAttribute="centerY" id="6pO-cI-hNZ"/>
                                                         <constraint firstItem="iIW-9i-gOf" firstAttribute="leading" secondItem="jkW-bt-qAn" secondAttribute="trailing" constant="8" id="Bmu-0q-tEm"/>
@@ -105,7 +100,6 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="Mxp-7Z-j33" secondAttribute="trailing" id="2Dy-76-NLy"/>
                                                 <constraint firstItem="MVn-7L-y78" firstAttribute="top" secondItem="Mxp-7Z-j33" secondAttribute="bottom" id="BIg-FY-7rr"/>

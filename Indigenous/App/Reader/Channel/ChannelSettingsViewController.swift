@@ -51,6 +51,8 @@ class ChannelSettingsViewController: UIViewController, HalfModalPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = ThemeManager.currentTheme().backgroundColor
+        
         closeButton.image = UIImage.fontAwesomeIcon(name: .times, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
 
         context = dataController.persistentContainer.viewContext

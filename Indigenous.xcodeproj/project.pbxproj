@@ -22,6 +22,10 @@
 		C8254C50201A7F4E000AC32A /* Timeline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8254C4F201A7F4E000AC32A /* Timeline.storyboard */; };
 		C8336412203394CB004022B5 /* CommandTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8336411203394CB004022B5 /* CommandTableViewCell.swift */; };
 		C83364142033957E004022B5 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83364132033957E004022B5 /* Command.swift */; };
+		C8402E4B20DBFEF600B6CADC /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8402E4A20DBFEF600B6CADC /* ThemeManager.swift */; };
+		C8402E4C20DBFEF600B6CADC /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8402E4A20DBFEF600B6CADC /* ThemeManager.swift */; };
+		C8402E4E20DC977C00B6CADC /* PXColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8402E4D20DC977C00B6CADC /* PXColor.swift */; };
+		C8402E4F20DC977C00B6CADC /* PXColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8402E4D20DC977C00B6CADC /* PXColor.swift */; };
 		C840A2C8200BC77200CD2091 /* SimpleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C840A2C7200BC77200CD2091 /* SimpleSelectionViewController.swift */; };
 		C840A2C9200BC77200CD2091 /* SimpleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C840A2C7200BC77200CD2091 /* SimpleSelectionViewController.swift */; };
 		C840A2CB200BCBB400CD2091 /* SimpleSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C840A2CA200BCBB400CD2091 /* SimpleSelectionTableViewController.swift */; };
@@ -225,6 +229,8 @@
 		C8254C4F201A7F4E000AC32A /* Timeline.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Timeline.storyboard; sourceTree = "<group>"; };
 		C8336411203394CB004022B5 /* CommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTableViewCell.swift; sourceTree = "<group>"; };
 		C83364132033957E004022B5 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		C8402E4A20DBFEF600B6CADC /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		C8402E4D20DC977C00B6CADC /* PXColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXColor.swift; sourceTree = "<group>"; };
 		C840A2C7200BC77200CD2091 /* SimpleSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSelectionViewController.swift; sourceTree = "<group>"; };
 		C840A2CA200BCBB400CD2091 /* SimpleSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSelectionTableViewController.swift; sourceTree = "<group>"; };
 		C840A2CD200BDD5500CD2091 /* SimpleSelectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSelectionItem.swift; sourceTree = "<group>"; };
@@ -430,6 +436,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		C8402E4920DBFECA00B6CADC /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				C8402E4A20DBFEF600B6CADC /* ThemeManager.swift */,
+				C8402E4D20DC977C00B6CADC /* PXColor.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 		C845B4641FF5E05700354391 /* xray */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,6 +576,7 @@
 		C8CBEAE91FAA9B4600298113 = {
 			isa = PBXGroup;
 			children = (
+				C8402E4920DBFECA00B6CADC /* Theme */,
 				C8402E4620DAAB5F00B6CADC /* Resources */,
 				C8F724A020866B5600BB53B2 /* Utilities */,
 				C864F3A8205C1DBD000C5F89 /* SwiftExtensions */,
@@ -941,6 +957,7 @@
 				C8CBDEF41FB4EAD4001CF409 /* RealLinkParser.swift in Sources */,
 				C8D171C01FF46DCC00134485 /* AccountSelectorTableViewController.swift in Sources */,
 				C8DAA8B5201127D7002B7083 /* MicropubPhoto.swift in Sources */,
+				C8402E4F20DC977C00B6CADC /* PXColor.swift in Sources */,
 				C840A2CF200BDD5500CD2091 /* SimpleSelectionItem.swift in Sources */,
 				C864F3AB205C1DF2000C5F89 /* String.extension.swift in Sources */,
 				C8B36B6A1FED891300D92E3D /* Mf2Type.swift in Sources */,
@@ -990,6 +1007,7 @@
 				C85B245D20067EE60097E577 /* SyndicateTarget.swift in Sources */,
 				C8D171D61FF58BFB00134485 /* FontAwesomeBarButtonItem.swift in Sources */,
 				C8CBDEF61FB4EAFD001CF409 /* libxmlHTMLDocument.swift in Sources */,
+				C8402E4C20DBFEF600B6CADC /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,6 +1060,7 @@
 				C840A2DA200EEEEE00CD2091 /* PhotoUploadCollectionViewCell.swift in Sources */,
 				C8B36B5C1FED5AC900D92E3D /* IndieAuthScope.swift in Sources */,
 				C8A37C7D20A4EA6F003F3F91 /* ChannelData.swift in Sources */,
+				C8402E4B20DBFEF600B6CADC /* ThemeManager.swift in Sources */,
 				C8B36B571FED54F400D92E3D /* IndieAuthProfile.swift in Sources */,
 				C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
 				C81260642059D68E009DE884 /* ChannelUnreadStatus.swift in Sources */,
@@ -1054,6 +1073,7 @@
 				C8D171DD1FF58C3900134485 /* FontAwesomeImageRepresentable.swift in Sources */,
 				C845B46A1FF5E50700354391 /* XRayParsingResponse.swift in Sources */,
 				C8CBEB441FAA9CAA00298113 /* MainViewController.swift in Sources */,
+				C8402E4E20DC977C00B6CADC /* PXColor.swift in Sources */,
 				C85B24542005A4440097E577 /* MicropubSendType.swift in Sources */,
 				C85B244C20059F6D0097E577 /* MicropubPost.swift in Sources */,
 				C8D171BA1FF40AE700134485 /* UserSettingsTableViewController.swift in Sources */,

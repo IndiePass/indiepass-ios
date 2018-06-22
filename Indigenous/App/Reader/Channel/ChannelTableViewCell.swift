@@ -28,6 +28,7 @@ class ChannelTableViewCell: UITableViewCell {
     
     func setContent(ofChannel channel: Channel) {
         data = channel
+        unreadIndicator.textColor = ThemeManager.currentTheme().mainColor
         channelName?.text = data!.name
         switch (data!.unread) {
         case .unreadCount(let count):

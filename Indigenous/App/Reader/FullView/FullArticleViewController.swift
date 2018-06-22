@@ -24,9 +24,9 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
     private func styleString() -> String {
         
         if cachedStyleString.isEmpty {
-            let path = Bundle.main.path(forResource: "LightStylesheet", ofType: "css")!
-            let s = try! String(contentsOfFile: path, encoding: .utf8)
-            cachedStyleString = "\n\(s)\n"
+//            let path = Bundle.main.path(forResource: "LightStylesheet", ofType: "css")!
+//            let s = try! String(contentsOfFile: path, encoding: .utf8)
+//            cachedStyleString = "\n\(s)\n"
         }
         
         return cachedStyleString
@@ -71,14 +71,12 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
             UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
                 self.navigationController?.setNavigationBarHidden(true, animated: true)
                 self.navigationController?.setToolbarHidden(true, animated: true)
-                print("Hide")
             }, completion: nil)
             
         } else {
             UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
                 self.navigationController?.setNavigationBarHidden(false, animated: true)
                 self.navigationController?.setToolbarHidden(false, animated: true)
-                print("Unhide")
             }, completion: nil)
         }
     }
@@ -106,6 +104,7 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = ThemeManager.currentTheme().backgroundColor
         navigationController?.setToolbarHidden(false, animated: true)
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.title = ""
@@ -116,6 +115,8 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
         moreButton.image = UIImage.fontAwesomeIcon(name: .ellipsisH, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         safariButton.image = UIImage.fontAwesomeIcon(name: .safari, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         
+        contentView.isOpaque = true;
+        contentView.backgroundColor = UIColor.clear
         contentView.scrollView.delegate = self
         contentView.navigationDelegate = self
         
@@ -123,10 +124,12 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
         let headerSize = UIFont.preferredFont(forTextStyle: .largeTitle).pointSize
         
         var htmlBeforeString = "<html><head><meta name=\"viewport\" content=\"width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0\" /><style>"
-        htmlBeforeString += "body { font-size: calc(\(bodySize)px + 1.0vw); }"
-        htmlBeforeString += "h1.post-title { font: -apple-system-headline; font-size: calc(\(headerSize)px + 1.0vw); color: red; margin-top: 0px; margin-bottom: 25px; }"
+        htmlBeforeString += "body { background-color: \(ThemeManager.currentTheme().backgroundColor.toHexString()); color: \(ThemeManager.currentTheme().textColor.toHexString()); font-size: calc(\(bodySize)px + 1.0vw); }"
+        htmlBeforeString += "h1.post-title { font: -apple-system-headline; font-size: calc(\(headerSize)px + 1.0vw); color: \(ThemeManager.currentTheme().mainColor.toHexString()); margin-top: 0px; margin-bottom: 25px; }"
         htmlBeforeString += "h2, h3, h4, h5, h6, h7 { margin-top: 0; margin-bottom: 25px; }"
         htmlBeforeString += "img { max-width: 100%; margin-bottom: 10px; }"
+        htmlBeforeString += "a { color: \(ThemeManager.currentTheme().mainColor.toHexString()); }"
+        htmlBeforeString += "a:active { color: \(ThemeManager.currentTheme().deepColor.toHexString()); }"
         htmlBeforeString += "</style></head><body>"
         let htmlAfterString = "</body></html>"
         

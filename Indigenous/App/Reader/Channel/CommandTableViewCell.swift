@@ -26,6 +26,7 @@ class CommandTableViewCell: UITableViewCell, CommandDelegate {
     
     func setContent(ofCommand command: Command) {
         commandActivity.isHidden = true
+        commandActivity.color = ThemeManager.currentTheme().mainColor
         self.commandName?.text = command.name
         command.delegate = self
     }

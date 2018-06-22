@@ -388,13 +388,13 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         updatePostingView(withAnimation: false)
         
         if let categoryCount = currentPost?.properties.category?.count, categoryCount > 0 {
-            tagsButton.tintColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+            tagsButton.tintColor = ThemeManager.currentTheme().deepColor
         } else {
             tagsButton.tintColor = self.view.tintColor
         }
         
         if let syndicateCount = currentPost?.properties.mpSyndicateTo?.count, syndicateCount > 0 {
-            syndicateButton.tintColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+            syndicateButton.tintColor = ThemeManager.currentTheme().deepColor
         } else {
             syndicateButton.tintColor = self.view.tintColor
         }

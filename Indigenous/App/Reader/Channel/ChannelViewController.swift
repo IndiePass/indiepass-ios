@@ -335,7 +335,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         searchController?.searchBar.placeholder = "Search Channels"
         searchController?.searchBar.delegate = self
         searchController?.searchBar.showsBookmarkButton = true
-        searchController?.searchBar.setImage(UIImage.fontAwesomeIcon(name: .filter, textColor: UIColor.darkGray, size: CGSize(width: 30, height: 30)), for: .bookmark, state: .normal)
+        searchController?.searchBar.setImage(UIImage.fontAwesomeIcon(name: .filter, textColor: ThemeManager.currentTheme().mainColor, size: CGSize(width: 30, height: 30)), for: .bookmark, state: .normal)
         searchController?.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         self.definesPresentationContext = true

@@ -49,7 +49,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,6 +58,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 return userSettings.count + 4
             case 1:
                 return userAccounts.count + 1
+            case 2:
+                return 2
             default:
                 return 0
         }
@@ -78,13 +80,36 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 }
                 
                 if (defaultUserAccount == indexPath.row) {
-                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .userCircleO, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .userCircleO, textColor: ThemeManager.currentTheme().textColor, size: CGSize(width: 30, height: 30))
                 } else {
-                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .user, textColor: ThemeManager.currentTheme().textColor, size: CGSize(width: 30, height: 30))
                 }
             } else {
                 cell.textLabel?.text = "Add New Micropub Account"
                 cell.imageView?.image = nil
+            }
+            
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserSettingCell", for: indexPath)
+            
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "Cardinal (Light)"
+                cell.imageView?.image = nil
+            case 1:
+                cell.textLabel?.text = "Zombie (Dark)"
+                cell.imageView?.image = nil
+            default:
+                cell.textLabel?.text = nil
+                cell.imageView?.image = nil
+            }
+            cell.detailTextLabel?.text = nil
+            
+            if (ThemeManager.currentTheme().rawValue == indexPath.row) {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
             }
             
             return cell
@@ -127,6 +152,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         switch section {
             case 0:
                 return userAccounts[activeUserAccount].me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
+            case 2:
+                return "Theme"
             default:
                 return nil
         }
@@ -148,6 +175,22 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
             } else {
                 showLoginScreen()
             }
+            
+        } else if indexPath.section == 2 {
+        
+            if let theme = Theme(rawValue: indexPath.row) {
+                ThemeManager.applyTheme(theme: theme, window: UIApplication.shared.keyWindow)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    UIApplication.shared.keyWindow?.subviews.forEach({ (view: UIView) in
+                        view.removeFromSuperview()
+                        UIApplication.shared.keyWindow?.addSubview(view)
+                    })
+                }
+            } else {
+                // TODO: Present error that apply theme failed
+            }
+            
             
         } else {
             

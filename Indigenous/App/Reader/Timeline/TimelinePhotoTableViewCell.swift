@@ -178,7 +178,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         } else {
             if post?.photo != nil, post!.photo!.count > 0 {
                 postImage.image = nil
-                postImage.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                postImage.backgroundColor = ThemeManager.currentTheme().backgroundColor
                 // if we are here, then there is an unloaded photo
                 post?.downloadPhoto(photoIndex: 0) { returnedImage in
                     DispatchQueue.main.async {
@@ -202,7 +202,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             authorPhoto.image = authorImage.image
         } else {
             if post?.author?.photo != nil, post!.author!.photo!.count > 0 {
-                authorPhoto.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                authorPhoto.backgroundColor = ThemeManager.currentTheme().backgroundColor
                 authorPhoto.image = nil
                 post?.author?.downloadPhoto(photoIndex: 0) { returnedAuthorPhoto in
                     DispatchQueue.main.async {
@@ -259,7 +259,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             
             if unreadIndicator == nil {
                 unreadIndicator = CALayer()
-                unreadIndicator!.borderColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
+                unreadIndicator!.borderColor = ThemeManager.currentTheme().mainColor.cgColor
                 unreadIndicator!.borderWidth = borderWidth
                 
                 contentView.layer.addSublayer(unreadIndicator!)

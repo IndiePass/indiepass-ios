@@ -34,6 +34,9 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var domainInput: UITextField!
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var loginView: UIView!
+    @IBOutlet weak var domainView: UIView!
+    @IBOutlet weak var authorizingText: UILabel!
+    @IBOutlet weak var authorizingProgressIndicator: UIActivityIndicatorView!
     
     @IBAction func cancelLogin(_ sender: UIButton = UIButton()) {
         authSession?.cancel()
@@ -285,6 +288,9 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        domainView.backgroundColor = ThemeManager.currentTheme().deepColor
+        authorizingText.textColor = ThemeManager.currentTheme().mainColor
+        authorizingProgressIndicator.color = ThemeManager.currentTheme().mainColor
         indieAuthDomain?.delegate = self
         domainInput?.becomeFirstResponder()
     }

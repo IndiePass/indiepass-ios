@@ -200,8 +200,8 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             success(true)
         })
         
-        replyAction.image = UIImage.fontAwesomeIcon(name: .reply, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
-        replyAction.backgroundColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+        replyAction.image = UIImage.fontAwesomeIcon(name: .reply, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        replyAction.backgroundColor = ThemeManager.currentTheme().deepColor
 
         return UISwipeActionsConfiguration(actions: [replyAction])
     }
@@ -236,7 +236,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 success(true)
             })
             viewAction.image = UIImage.fontAwesomeIcon(name: .alignLeft, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
-            viewAction.backgroundColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
+            viewAction.backgroundColor = ThemeManager.currentTheme().deepColor
             
 //            let shareAction = UIContextualAction(style: .normal, title:  "Share", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 //
