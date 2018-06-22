@@ -79,11 +79,20 @@
                         <outlet property="replyButton" destination="bCE-GW-19a" id="OTx-lH-mew"/>
                         <outlet property="repostButton" destination="jl3-Vb-4J9" id="DAn-4Y-tIa"/>
                         <outlet property="safariButton" destination="TsJ-fl-3pf" id="uaV-IB-JSB"/>
+                        <segue destination="JCR-Fl-wAv" kind="show" identifier="showReplyView" id="TTA-HQ-PYJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LHi-7V-Saa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="101.59999999999999" y="139.880059970015"/>
+        </scene>
+        <!--postingView-->
+        <scene sceneID="1TL-9U-way">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PostingView" referencedIdentifier="postingView" id="JCR-Fl-wAv" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M1J-mg-7kD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="102" y="557"/>
         </scene>
     </scenes>
 </document>

@@ -14,6 +14,8 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
     var currentPost: Jf2Post? = nil
     var cachedStyleString: String = ""
     
+    private var account: IndieAuthAccount? = nil
+    
     @IBOutlet weak var contentView: WKWebView!
     @IBOutlet weak var safariButton: UIBarButtonItem!
     @IBOutlet weak var likeButton: UIBarButtonItem!
@@ -47,15 +49,23 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
     }
     
     @IBAction func likePost(_ sender: Any) {
-        
+        if let url = currentPost?.url, account != nil {
+            sendMicropub(forAction: .like, aboutUrl: url, forUser: account!) {
+                
+            }
+        }
     }
     
     @IBAction func repostPost(_ sender: Any) {
-        
+        if let url = currentPost?.url, account != nil {
+            sendMicropub(forAction: .repost, aboutUrl: url, forUser: account!) {
+                
+            }
+        }
     }
     
     @IBAction func replyToPost(_ sender: Any) {
-        
+        performSegue(withIdentifier: "showReplyView", sender: self)
     }
     
     @IBAction func moreActionsOnPost(_ sender: Any) {
@@ -151,6 +161,12 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
             htmlString += "\(htmlBeforeString)<p>\(textContent.replacingOccurrences(of: "\n", with: "<br>"))</p>\(htmlAfterString)"
             contentView.loadHTMLString(htmlString, baseURL: nil)
             
+        }
+        
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
+        if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] {
+            account = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount])
         }
     }
     
