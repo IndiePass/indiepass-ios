@@ -18,7 +18,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     
     var activeAccount: IndieAuthAccount? = nil
     var originalPost: MicropubPost? = nil
-    var tagOptions: [String] = ["Test", "Testing 1", "Testing 4"]
+    var tagOptions: [String] = []
     var currentSelectionView: String? = nil
     var imagePicker = UIImagePickerController()
     var currentUploading: [Int] = []
