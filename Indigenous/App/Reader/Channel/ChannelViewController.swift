@@ -16,6 +16,28 @@ public enum ChannelListFilter {
     case None
     case UnreadOnly
     case Search(searchText: String)
+    
+    var value: String {
+        switch self {
+        case .None:
+            return "none"
+        case .UnreadOnly:
+            return "unread"
+        case .Search(let searchText):
+            return searchText
+        }
+    }
+    
+    static func fromValue(value: String) -> ChannelListFilter {
+        switch value {
+        case "none":
+            return .None
+        case "unread":
+            return .UnreadOnly
+        default:
+            return .Search(searchText: value)
+        }
+    }
 }
 
 public enum ChannelListSort: String {
@@ -153,8 +175,10 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             searchController.searchBar.showsBookmarkButton = true
         }
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+            UserDefaults(suiteName: "group.software.studioh.indigenous")?.set(ChannelListFilter.Search(searchText: searchText).value, forKey: "ChannelFilter")
             currentFiltering = .Search(searchText: searchText)
         } else {
+            UserDefaults(suiteName: "group.software.studioh.indigenous")?.set(standardFiltering.value, forKey: "ChannelFilter")
             currentFiltering = standardFiltering
         }
         updateFilteringAndSorting()
@@ -170,6 +194,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        UserDefaults(suiteName: "group.software.studioh.indigenous")?.set(standardFiltering.value, forKey: "ChannelFilter")
         currentFiltering = standardFiltering
         updateFilteringAndSorting()
     }
@@ -213,11 +238,14 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         let alert = UIAlertController(title: "Filter", message: "", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Unread Only", style: .default, handler: { [weak self] action in
+//            if let storedTheme = (UserDefaults(suiteName: "group.software.studioh.indigenous")?.value(forKey: SelectedThemeKey) as AnyObject).integerValue
+            UserDefaults(suiteName: "group.software.studioh.indigenous")?.set(ChannelListFilter.UnreadOnly.value, forKey: "ChannelFilter")
             self?.currentFiltering = .UnreadOnly
             self?.standardFiltering = .UnreadOnly
             self?.updateFilteringAndSorting()
         }))
         alert.addAction(UIAlertAction(title: "All Channels", style: .default, handler: { [weak self] action in
+            UserDefaults(suiteName: "group.software.studioh.indigenous")?.set(ChannelListFilter.None.value, forKey: "ChannelFilter")
             self?.currentFiltering = .None
             self?.standardFiltering = .None
             self?.updateFilteringAndSorting()
@@ -366,6 +394,10 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             tableView.delegate = self
             tableView.dataSource = self
             self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
+            
+            if let savedFilter = UserDefaults(suiteName: "group.software.studioh.indigenous")?.string(forKey: "ChannelFilter") {
+                currentFiltering = ChannelListFilter.fromValue(value: savedFilter)
+            }
             
             // We'll want to fetch new data from the server for unread counts, etc
             fetchChannelData { [weak self] in
