@@ -28,6 +28,8 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     var mediaTimeTracking: [Int: String] = [:]
     var context: NSManagedObjectContext? = nil
     private var isTransitioning: Bool = true
+    private var selectedRowIndex: Int? = nil
+    private var thereIsCellTapped: Bool = false
     
     @IBOutlet weak var channelSettingsButton: UIBarButtonItem!
     
@@ -306,6 +308,31 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 }
             }
         }
+        
+        self.tableView.beginUpdates()
+        
+        // If there is a previous selected row index, we should hide the response bar
+        if selectedRowIndex != nil, selectedRowIndex != -1 {
+            if let previousTimelineCell = tableView.cellForRow(at: IndexPath(row: selectedRowIndex!, section: 0)) as? TimelinePhotoTableViewCell {
+                previousTimelineCell.hideResponseBar()
+            }
+        }
+
+        if selectedRowIndex != indexPath.row {
+            // If a new cell is tapped, we need to track that and display the new response bar
+            thereIsCellTapped = true
+            selectedRowIndex = indexPath.row
+            if let currentTimelineCell = tableView.cellForRow(at: indexPath) as? TimelinePhotoTableViewCell {
+                currentTimelineCell.displayResponseBar()
+            }
+        }
+        else {
+            // there is no cell selected anymore, hide everything
+            thereIsCellTapped = false
+            selectedRowIndex = -1
+        }
+        
+        self.tableView.endUpdates()
         
         
         //let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")

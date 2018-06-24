@@ -35,6 +35,22 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     @IBOutlet weak var audioLoading: UIActivityIndicatorView!
     @IBOutlet weak var replyIcon: UILabel!
     
+    @IBOutlet weak var likeButton: UIBarButtonItem!
+    @IBOutlet weak var repostButton: UIBarButtonItem!
+    @IBOutlet weak var replyButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var moreButton: UIBarButtonItem!
+    @IBOutlet weak var responseToolbar: UIToolbar!
+    @IBOutlet weak var responseToolbarHeight: NSLayoutConstraint!
+    
+    @IBAction func responseButtonPressed(_ sender: UIBarButtonItem) {
+        
+    }
+    
+    @IBAction func moreButtonPressed(_ sender: Any) {
+        
+    }
+    
     @IBAction func activatedAudioControl(_ sender: Any) {
         if player == nil {
             if let audioUrl = post?.audio?[0] {
@@ -134,6 +150,24 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         playerToken = nil
         let session: AVAudioSession = AVAudioSession.sharedInstance();
         try? session.setActive(false)
+    }
+    
+    func displayResponseBar() {
+        responseToolbar.setBackgroundImage(nil, forToolbarPosition: .bottom, barMetrics: .default)
+        likeButton.image = UIImage.fontAwesomeIcon(name: .thumbsOUp, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        repostButton.image = UIImage.fontAwesomeIcon(name: .retweet, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        replyButton.image = UIImage.fontAwesomeIcon(name: .reply, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        moreButton.image = UIImage.fontAwesomeIcon(name: .ellipsisH, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        UIView.animate(withDuration: 0.4, animations: { [weak self] in
+            self?.responseToolbarHeight.constant = 44
+        })
+    }
+    
+    func hideResponseBar() {
+        UIView.animate(withDuration: 0.4, animations: { [weak self] in
+            self?.responseToolbarHeight.constant = 0
+            self?.responseToolbarHeight
+        })
     }
     
     func setContent(ofPost postData: Jf2Post) {
