@@ -14,7 +14,8 @@ import CoreData
 class TimelineViewController: UITableViewController, UITableViewDataSourcePrefetching,
                                                      PostingViewDelegate,
                                                      UINavigationControllerDelegate,
-                                                     ChannelSettingsDelegate {
+                                                     ChannelSettingsDelegate,
+                                                     TimelineCellDelegate {
     
     var channelSettingsTransitioningDelegate: HalfModalTransitioningDelegate?
     
@@ -22,6 +23,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     var uid: String!
     var channelData: ChannelData? = nil
     var timeline: Timeline? = nil
+    var account: IndieAuthAccount? = nil
     var fetchingOlderData: Bool = false
     var fetchingNewerData: Bool = false
     var previousDataAvailable: Bool = true
@@ -270,6 +272,8 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
         
 //        if let photoCount = post.photo?.count, photoCount > 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoTimelineCell", for: indexPath) as! TimelinePhotoTableViewCell
+        cell.account = self.account
+        cell.delegate = self
         cell.setContent(ofPost: post)
         cell.mediaControlCallback = { [weak self] currentTime in
             if let time = currentTime {
@@ -324,6 +328,11 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             selectedRowIndex = indexPath.row
             if let currentTimelineCell = tableView.cellForRow(at: indexPath) as? TimelinePhotoTableViewCell {
                 currentTimelineCell.displayResponseBar()
+                if let isRead = currentTimelineCell.post?.isRead, !isRead, let postId = currentTimelineCell.post?.id {
+                    timeline?.markAsRead(posts: [postId]) { _ in
+                        // TODO: Handle errors
+                    }
+                }
             }
         }
         else {
@@ -384,6 +393,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                  
                         print("about to load timeline")
                     
+                        self?.account = account
                         self?.timeline = Timeline()
                         self?.timeline?.accountDetails = account
                         self?.timeline?.channel = Channel(fromData: channelData)
@@ -472,6 +482,51 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     
     func removePostingView() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - TimelineCellDelegate Methods
+    func shareUrl(url: URL) {
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(activityViewController, animated: true, completion: {})
+    }
+    
+    func replyToUrl(url: URL) {
+        performSegue(withIdentifier: "showReplyView", sender: self)
+    }
+    
+    func moreOptions(post: Jf2Post) {
+        if let postId = post.id, let url = post.url, account != nil {
+            let alert = UIAlertController(title: "More Options", message: "\(url)", preferredStyle: .actionSheet)
+            
+            if post.isRead != nil {
+                if post.isRead! {
+                    alert.addAction(UIAlertAction(title: "Mark as Unread", style: .default, handler: { [weak self] action in
+                        self?.timeline?.markAsUnread(posts: [postId]) { response in
+                            // TODO: Handle errors
+                        }
+                    }))
+                } else {
+                    alert.addAction(UIAlertAction(title: "Mark as Read", style: .default, handler: { [weak self] action in
+                        self?.timeline?.markAsRead(posts: [postId]) { response in
+                            // TODO: Handle errors
+                        }
+                    }))
+                }
+            }
+            alert.addAction(UIAlertAction(title: "Mark posts below as read", style: .default, handler: { [weak self] action in
+                self?.timeline?.markAsRead(postsBefore: postId) { response in
+                    // TODO: Handle errors
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Delete post", style: .default, handler: { [weak self] action in
+                self?.timeline?.removePost(postId: postId) { response in
+                    // TODO: Handle errors
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     // MARK: - ChannelSettingsDelegate Methods

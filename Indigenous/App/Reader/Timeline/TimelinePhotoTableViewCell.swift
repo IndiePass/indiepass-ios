@@ -12,9 +12,11 @@ import AVFoundation
 class TimelinePhotoTableViewCell: UITableViewCell {
 
     var post: Jf2Post? = nil
+    var account: IndieAuthAccount? = nil
     var player: AVPlayer? = nil
     var playerToken: Any? = nil
     var mediaControlCallback: ((_ currentTime: Int?) -> ())?
+    var delegate: TimelineCellDelegate? = nil
     private var unreadIndicator: CALayer? = nil
     
     @IBOutlet weak var authorName: UILabel!
@@ -44,11 +46,34 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     @IBOutlet weak var responseToolbarHeight: NSLayoutConstraint!
     
     @IBAction func responseButtonPressed(_ sender: UIBarButtonItem) {
-        
+        switch sender.title {
+        case "Like":
+            if let url = post?.url, account != nil {
+                sendMicropub(forAction: .like, aboutUrl: url, forUser: account!) {
+                    // TODO: Need to display an alert based on if it was successful or not
+                }
+            }
+        case "Repost":
+            if let url = post?.url, account != nil {
+                sendMicropub(forAction: .repost, aboutUrl: url, forUser: account!) {
+                    // TODO: Need to display an alert based on if it was successful or not
+                }
+            }
+        case "Reply":
+            if let url = post?.url, account != nil {
+                delegate?.replyToUrl(url: url)
+            }
+        default:
+            if let url = post?.url, account != nil {
+                delegate?.shareUrl(url: url)
+            }
+        }
     }
     
     @IBAction func moreButtonPressed(_ sender: Any) {
-        
+        if post != nil {
+            delegate?.moreOptions(post: post!)
+        }
     }
     
     @IBAction func activatedAudioControl(_ sender: Any) {
