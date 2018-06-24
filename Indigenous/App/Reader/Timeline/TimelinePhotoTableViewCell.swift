@@ -166,7 +166,6 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     func hideResponseBar() {
         UIView.animate(withDuration: 0.4, animations: { [weak self] in
             self?.responseToolbarHeight.constant = 0
-            self?.responseToolbarHeight
         })
     }
     
