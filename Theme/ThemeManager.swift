@@ -159,7 +159,7 @@ class ThemeManager {
         if let storedTheme = (UserDefaults(suiteName: "group.software.studioh.indigenous")?.value(forKey: SelectedThemeKey) as AnyObject).integerValue {
             return Theme(rawValue: storedTheme)!
         } else {
-            return .blue
+            return .red
         }
     }
     
