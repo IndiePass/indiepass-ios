@@ -472,6 +472,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 
                 if let fullPost = sender as? Jf2Post {
                     fullViewVC.currentPost = fullPost
+                    fullViewVC.timeline = timeline
                 }
                 
 //                postingVC.displayAsModal = false

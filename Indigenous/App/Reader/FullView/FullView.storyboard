@@ -37,37 +37,37 @@
                     <toolbarItems>
                         <barButtonItem title="Like" id="Kmc-c9-Js6">
                             <connections>
-                                <action selector="likePost:" destination="Mzj-bH-AsP" id="wrJ-gE-Zhg"/>
+                                <action selector="responseButtonPressed:" destination="Mzj-bH-AsP" id="jKZ-Uy-oCe"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="3tV-yj-C0G"/>
                         <barButtonItem title="Repost" id="jl3-Vb-4J9">
                             <connections>
-                                <action selector="repostPost:" destination="Mzj-bH-AsP" id="kOL-9l-5Zj"/>
+                                <action selector="responseButtonPressed:" destination="Mzj-bH-AsP" id="dxD-u6-n3o"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="FEU-K3-AZu"/>
                         <barButtonItem title="Reply" id="bCE-GW-19a">
                             <connections>
-                                <action selector="replyToPost:" destination="Mzj-bH-AsP" id="nvI-rk-hi8"/>
+                                <action selector="responseButtonPressed:" destination="Mzj-bH-AsP" id="zZb-2F-KbB"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="AHt-1Y-Odh"/>
                         <barButtonItem title="More" id="fAe-uZ-Gxf">
                             <connections>
-                                <action selector="moreActionsOnPost:" destination="Mzj-bH-AsP" id="8CQ-LY-H1q"/>
+                                <action selector="moreButtonPressed:" destination="Mzj-bH-AsP" id="0B4-jA-4ob"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="RQ7-Y8-CHA"/>
                         <barButtonItem systemItem="action" id="ZFO-8L-IrN">
                             <connections>
-                                <action selector="shareUrl:" destination="Mzj-bH-AsP" id="LGn-I4-rst"/>
+                                <action selector="responseButtonPressed:" destination="Mzj-bH-AsP" id="L6l-4E-oja"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="ZQr-Oo-syI"/>
                         <barButtonItem title="Safari" id="TsJ-fl-3pf">
                             <connections>
-                                <action selector="openInSafari:" destination="Mzj-bH-AsP" id="dTF-6d-TeR"/>
+                                <action selector="responseButtonPressed:" destination="Mzj-bH-AsP" id="z5B-xv-A1I"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>

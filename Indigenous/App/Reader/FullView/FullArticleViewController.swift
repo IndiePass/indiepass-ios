@@ -13,6 +13,7 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
 
     var currentPost: Jf2Post? = nil
     var cachedStyleString: String = ""
+    var timeline: Timeline!
     
     private var account: IndieAuthAccount? = nil
     
@@ -35,43 +36,70 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
     }
     
     // MARK: - IBAction Methods
-    @IBAction func shareUrl(_ sender: Any) {
-        if let url = currentPost?.url {
-            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            present(activityViewController, animated: true, completion: {})
-        }
-    }
-    
-    @IBAction func openInSafari(_ sender: Any) {
-        if let url = currentPost?.url, UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    @IBAction func likePost(_ sender: Any) {
-        if let url = currentPost?.url, account != nil {
-            sendMicropub(forAction: .like, aboutUrl: url, forUser: account!) {
-                
+    @IBAction func responseButtonPressed(_ sender: UIBarButtonItem) {
+        switch sender.title {
+        case "Like":
+            if let url = currentPost?.url, account != nil {
+                sendMicropub(forAction: .like, aboutUrl: url, forUser: account!) {
+                    // TODO: Need to display an alert based on if it was successful or not
+                }
+            }
+        case "Repost":
+            if let url = currentPost?.url, account != nil {
+                sendMicropub(forAction: .repost, aboutUrl: url, forUser: account!) {
+                    // TODO: Need to display an alert based on if it was successful or not
+                }
+            }
+        case "Reply":
+            if let url = currentPost?.url, account != nil {
+                performSegue(withIdentifier: "showReplyView", sender: currentPost)
+            }
+        case "Safari":
+            if let url = currentPost?.url, UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        default:
+            if let url = currentPost?.url {
+                let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                present(activityViewController, animated: true, completion: {})
             }
         }
     }
     
-    @IBAction func repostPost(_ sender: Any) {
-        if let url = currentPost?.url, account != nil {
-            sendMicropub(forAction: .repost, aboutUrl: url, forUser: account!) {
-                
+    @IBAction func moreButtonPressed(_ sender: Any) {
+        if let postId = currentPost?.id, let url = currentPost?.url, account != nil {
+            let alert = UIAlertController(title: "More Options", message: "\(url)", preferredStyle: .actionSheet)
+            
+            if let isRead = currentPost?.isRead {
+                if isRead {
+                    alert.addAction(UIAlertAction(title: "Mark as Unread", style: .default, handler: { [weak self] action in
+                        self?.timeline?.markAsUnread(posts: [postId]) { response in
+                            // TODO: Handle errors
+                        }
+                    }))
+                } else {
+                    alert.addAction(UIAlertAction(title: "Mark as Read", style: .default, handler: { [weak self] action in
+                        self?.timeline?.markAsRead(posts: [postId]) { response in
+                            // TODO: Handle errors
+                        }
+                    }))
+                }
             }
+            alert.addAction(UIAlertAction(title: "Mark posts below as read", style: .default, handler: { [weak self] action in
+                self?.timeline?.markAsRead(postsBefore: postId) { response in
+                    // TODO: Handle errors
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Delete post", style: .default, handler: { [weak self] action in
+                self?.timeline?.removePost(postId: postId) { response in
+                    // TODO: Handle errors
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
-    
-    @IBAction func replyToPost(_ sender: Any) {
-        performSegue(withIdentifier: "showReplyView", sender: self)
-    }
-    
-    @IBAction func moreActionsOnPost(_ sender: Any) {
-        
-    }
-    
     
     // MARK: - UIScrollViewDelegate
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -180,14 +208,11 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
         navigationController?.setToolbarHidden(true, animated: true)
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
     }
-    */
 
 }
