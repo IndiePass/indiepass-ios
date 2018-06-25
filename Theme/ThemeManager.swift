@@ -180,7 +180,6 @@ class ThemeManager {
         
         // MARK: - UI Switch Theme
         UISwitch.appearance().onTintColor = theme.shallowColor
-        UISwitch.appearance().thumbTintColor = theme.style == .light ? theme.backgroundColor : theme.deepColor
         
         // MARK: - UINavigationBar Theme
         UINavigationBar.appearance().backgroundColor = theme.backgroundColor
