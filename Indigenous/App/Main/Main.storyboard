@@ -19,22 +19,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="IW0-j4-QCX" userLabel="IndieAuth Info">
-                                <rect key="frame" x="16" y="44.000000000000007" width="343" height="88.666666666666686"/>
+                                <rect key="frame" x="16" y="44" width="343" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This login uses IndieAuth and requires you to have a website on your domain that supports IndieAuth." lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iTW-RP-loS">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="28.666666666666668"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="32.333333333333336"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFG-Vs-yGB">
-                                        <rect key="frame" x="0.0" y="28.666666666666671" width="168" height="60"/>
+                                        <rect key="frame" x="0.0" y="32.333333333333321" width="168" height="67.666666666666686"/>
                                         <state key="normal" title="Find out about IndieAuth"/>
                                         <connections>
                                             <action selector="readAboutIndieAuth:" destination="BYZ-38-t0r" eventType="touchUpInside" id="21L-Ew-P74"/>
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="5Dt-zV-0pm"/>
+                                </constraints>
                             </stackView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GsB-Gx-kvG" userLabel="Loading View">
                                 <rect key="frame" x="8" y="44" width="359" height="734"/>
@@ -71,7 +74,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8H-H3-Kbd" userLabel="Login View">
-                                <rect key="frame" x="0.0" y="268" width="375" height="210"/>
+                                <rect key="frame" x="0.0" y="144" width="375" height="210"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with your Domain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7G-Ss-oGh">
                                         <rect key="frame" x="98.000000000000014" y="30" width="179.33333333333337" height="20.333333333333329"/>
@@ -80,10 +83,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QxH-za-Zcg" userLabel="Domain View">
-                                        <rect key="frame" x="0.0" y="80.333333333333314" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="80.333333333333343" width="375" height="50"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YourDomain.com" textAlignment="center" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="xL7-6b-rnR">
-                                                <rect key="frame" x="62.666666666666657" y="12.666666666666686" width="249.99999999999997" height="25"/>
+                                                <rect key="frame" x="62.666666666666657" y="12.666666666666657" width="249.99999999999997" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="0Qs-tF-mV6"/>
                                                     <constraint firstAttribute="width" constant="250" id="ryO-QT-27J"/>
@@ -127,7 +130,7 @@
                             <constraint firstItem="eBU-bs-4cq" firstAttribute="top" secondItem="IW0-j4-QCX" secondAttribute="top" id="8Rg-op-lEa"/>
                             <constraint firstItem="GsB-Gx-kvG" firstAttribute="leading" secondItem="eBU-bs-4cq" secondAttribute="leading" constant="8" id="GHD-2N-v7E"/>
                             <constraint firstItem="eBU-bs-4cq" firstAttribute="trailing" secondItem="A8H-H3-Kbd" secondAttribute="trailing" id="KH3-35-r86"/>
-                            <constraint firstItem="A8H-H3-Kbd" firstAttribute="bottom" secondItem="eBU-bs-4cq" secondAttribute="bottom" constant="-300" id="KX1-gp-9Gf"/>
+                            <constraint firstItem="A8H-H3-Kbd" firstAttribute="top" secondItem="IW0-j4-QCX" secondAttribute="bottom" id="Nm6-qC-9bz"/>
                             <constraint firstItem="eBU-bs-4cq" firstAttribute="top" secondItem="GsB-Gx-kvG" secondAttribute="top" id="emB-LS-qwi"/>
                             <constraint firstItem="eBU-bs-4cq" firstAttribute="bottom" secondItem="GsB-Gx-kvG" secondAttribute="bottom" id="pOF-iQ-Ugc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="IW0-j4-QCX" secondAttribute="trailing" id="vf4-tH-JYl"/>
