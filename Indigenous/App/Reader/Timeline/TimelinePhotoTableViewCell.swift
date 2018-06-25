@@ -72,7 +72,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     
     @IBAction func moreButtonPressed(_ sender: Any) {
         if post != nil {
-            delegate?.moreOptions(post: post!)
+            delegate?.moreOptions(post: post!, sourceButton: moreButton)
         }
     }
     

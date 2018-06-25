@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol TimelineCellDelegate : NSObjectProtocol {
     func shareUrl(url: URL) -> Void
     func replyToUrl(url: URL) -> Void
-    func moreOptions(post: Jf2Post) -> Void
+    func moreOptions(post: Jf2Post, sourceButton: UIBarButtonItem) -> Void
 }

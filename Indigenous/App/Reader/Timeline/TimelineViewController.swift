@@ -497,9 +497,12 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
         performSegue(withIdentifier: "showReplyView", sender: replyToPost)
     }
     
-    func moreOptions(post: Jf2Post) {
+    func moreOptions(post: Jf2Post, sourceButton: UIBarButtonItem) {
         if let postId = post.id, let url = post.url, account != nil {
             let alert = UIAlertController(title: "More Options", message: "\(url)", preferredStyle: .actionSheet)
+            if let popoverController = alert.popoverPresentationController {
+                popoverController.barButtonItem = sourceButton
+            }
             
             if post.isRead != nil {
                 if post.isRead! {

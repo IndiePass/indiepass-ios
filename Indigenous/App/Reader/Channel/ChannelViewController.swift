@@ -237,6 +237,10 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         let alert = UIAlertController(title: "Filter", message: "", preferredStyle: .actionSheet)
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = searchBar
+            popoverController.sourceRect = searchBar.bounds
+        }
         alert.addAction(UIAlertAction(title: "Unread Only", style: .default, handler: { [weak self] action in
 //            if let storedTheme = (UserDefaults(suiteName: "group.software.studioh.indigenous")?.value(forKey: SelectedThemeKey) as AnyObject).integerValue
             UserDefaults(suiteName: "group.software.studioh.indigenous")?.set(ChannelListFilter.UnreadOnly.value, forKey: "ChannelFilter")

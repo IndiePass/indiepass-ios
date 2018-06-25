@@ -69,6 +69,9 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
     @IBAction func moreButtonPressed(_ sender: Any) {
         if let postId = currentPost?.id, let url = currentPost?.url, account != nil {
             let alert = UIAlertController(title: "More Options", message: "\(url)", preferredStyle: .actionSheet)
+            if let popoverController = alert.popoverPresentationController {
+                popoverController.barButtonItem = moreButton
+            }
             
             if let isRead = currentPost?.isRead {
                 if isRead {
