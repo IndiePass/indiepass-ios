@@ -491,7 +491,9 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     }
     
     func replyToUrl(url: URL) {
-        performSegue(withIdentifier: "showReplyView", sender: self)
+        let replyToPost = Jf2Post()
+        replyToPost.url = url
+        performSegue(withIdentifier: "showReplyView", sender: replyToPost)
     }
     
     func moreOptions(post: Jf2Post) {

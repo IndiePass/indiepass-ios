@@ -337,6 +337,9 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = ThemeManager.currentTheme().backgroundColor
+        postContentField.textColor = ThemeManager.currentTheme().textColor
+        
         postContentField.delegate = self
         photoUploads.dataSource = self
         setupKeyboardObservers()
