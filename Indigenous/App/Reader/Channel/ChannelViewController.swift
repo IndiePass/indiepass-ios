@@ -77,6 +77,13 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
         }
     }
     
+    @objc func openMicrosubHelp(_ sender:UITapGestureRecognizer){
+        if let openUrl = URL(string: "https://indigenous.abode.pub/ios/help/#microsub"),
+            UIApplication.shared.canOpenURL(openUrl) {
+            UIApplication.shared.open(openUrl)
+        }
+    }
+    
     func getSingleChannelData(channel: Int, forTimeline timeline: Channel, callback: (() -> ())? = nil) {
         
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
@@ -397,23 +404,43 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             
             tableView.delegate = self
             tableView.dataSource = self
-            self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
             
-            if let savedFilter = UserDefaults(suiteName: "group.software.studioh.indigenous")?.string(forKey: "ChannelFilter") {
-                currentFiltering = ChannelListFilter.fromValue(value: savedFilter)
-            }
-            
-            // We'll want to fetch new data from the server for unread counts, etc
-            fetchChannelData { [weak self] in
-                self?.updateFilteringAndSorting()
-            }
-            
-            if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
-                commands = [
-                    Command(name: "Rebuild Site",
-                            url: URL(string: "https://eddiehinkle.com/abode/rebuild/slack/")!,
-                            body: ["token": "h0uOKoXJklurbaIY6AbqW9PZ"])
-                ]
+            if micropubDetails.microsub_endpoint != nil {
+                self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
+                
+                if let savedFilter = UserDefaults(suiteName: "group.software.studioh.indigenous")?.string(forKey: "ChannelFilter") {
+                    currentFiltering = ChannelListFilter.fromValue(value: savedFilter)
+                }
+                
+                // We'll want to fetch new data from the server for unread counts, etc
+                fetchChannelData { [weak self] in
+                    self?.updateFilteringAndSorting()
+                }
+                
+                if currentAccount?.me.absoluteString == "https://eddiehinkle.com/" {
+                    commands = [
+                        Command(name: "Rebuild Site",
+                                url: URL(string: "https://eddiehinkle.com/abode/rebuild/slack/")!,
+                                body: ["token": "h0uOKoXJklurbaIY6AbqW9PZ"])
+                    ]
+                }
+            } else {
+                self.refreshControl?.isEnabled = false
+                tableView.backgroundColor = ThemeManager.currentTheme().mainColor
+                tableView.isScrollEnabled = false
+                edgesForExtendedLayout = []
+                
+                let onboardingStoryboard = UIStoryboard(name: "Onboarding", bundle: nil)
+                if let microsubPage = onboardingStoryboard.instantiateViewController(withIdentifier: "onboardingTemplate") as? OnboardingTemplateViewController {
+                    microsubPage.titleText = "No microsub detected"
+                    microsubPage.contentText = "You can only read posts within Indigenous if your website supports Microsub. However, no microsub endpoint was detected on your website. Tap to see more information on settings up Microsub."
+//                    microsubPage.buttonText = "More Info on Microsub"
+//                    microsubPage.buttonUrl = URL(string: "https://indigenous.abode.pub/ios/help/#microsub")
+                    microsubPage.primaryIcon = .eyeSlash
+                    tableView.backgroundView = microsubPage.view
+                    let microsubGesture = UITapGestureRecognizer(target: self, action:  #selector (openMicrosubHelp (_:)))
+                    tableView.backgroundView?.addGestureRecognizer(microsubGesture)
+                }
             }
         }
     }
