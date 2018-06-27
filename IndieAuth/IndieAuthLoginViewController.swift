@@ -23,6 +23,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     var authSession: SFAuthenticationSession?
     var delegate: IndieAuthDelegate?
     var displayedAsModal: Bool? = nil
+    var dataController: DataController!
     
     enum IndieWebEndpointType: String {
         case Authorization = "authorization_endpoint"
@@ -37,19 +38,21 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var domainView: UIView!
     @IBOutlet weak var authorizingText: UILabel!
     @IBOutlet weak var authorizingProgressIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var indieAuthLink: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var indieAuthInfo: UIStackView!
     
     @IBAction func cancelLogin(_ sender: UIButton = UIButton()) {
         authSession?.cancel()
         progressView?.isHidden = true
         loginView?.isHidden = false
+        indieAuthInfo?.isHidden = false
     }
     
     @IBAction func readAboutIndieAuth(_ sender: UIButton) {
-        if let openUrl = URL(string: indieAuthSetupUrl) {
-            DispatchQueue.main.async {
-                let safariVC = SFSafariViewController(url: openUrl)
-                self.present(safariVC, animated: true, completion: nil)
-            }
+        if let openUrl = URL(string: indieAuthSetupUrl),
+        UIApplication.shared.canOpenURL(openUrl) {
+            UIApplication.shared.open(openUrl)
         }
     }
     
@@ -57,6 +60,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
         
         progressView?.isHidden = false
         loginView?.isHidden = true
+        indieAuthInfo?.isHidden = true
         
         var url: URL? = nil
         
@@ -119,6 +123,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                                 print(String(describing: error))
                                 self.progressView?.isHidden = true
                                 self.loginView?.isHidden = false
+                                self.indieAuthInfo?.isHidden = false
                                 return
                             }
                             
@@ -180,12 +185,12 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
         let copyOfUserEndpoints = userEndpoints;
         
         if let tokenEndpoints = userEndpoints["token_endpoint"] {
-            IndieAuth.makeTokenRequest(forEndpoint: tokenEndpoints[0], meUrl: meUrl, code: authorizationCode, redirectURI: callbackUrl!, clientId: appClientId, state: state) { _, scope, accessToken in
+            IndieAuth.makeTokenRequest(forEndpoint: tokenEndpoints[0], meUrl: meUrl, code: authorizationCode, redirectURI: callbackUrl!, clientId: appClientId, state: state) { [weak self] _, scope, accessToken in
                 
                 guard scope.lowercased().contains("create") || scope.lowercased().contains("post") else {
                     // TODO: Figure out why this error screen isn't working
                     // What is wrong??
-                    self.presentErrorLoginAgain("Recieved scope of \(scope), you must be authorized with at least create scope.")
+                    self?.presentErrorLoginAgain("Recieved scope of \(scope), you must be authorized with at least create scope.")
                     return
                 }
                 
@@ -219,11 +224,11 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                     return
                 }
                 
-                IndieAuth.getMicropubConfig(forEndpoint: micropubEndpoint, withToken: accessToken) { config, error in
+                IndieAuth.getMicropubConfig(forEndpoint: micropubEndpoint, withToken: accessToken) { [weak self] config, error in
                     
                     var micropubConfig = config
                     
-                    IndieAuth.getSyndicationTargets(forEndpoint: micropubEndpoint, withToken: accessToken) { syndicateTargets, error in
+                    IndieAuth.getSyndicationTargets(forEndpoint: micropubEndpoint, withToken: accessToken) { [weak self] syndicateTargets, error in
                         
                         if error != nil && syndicateTargets == nil {
                             print("Error on Syndication Targets")
@@ -254,11 +259,17 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                         defaults?.set(activeAccount, forKey: "activeAccounts")
                         
                         print("processing completed")
-                        self.delegate?.loggedIn()
                         
-                        if let displayedModal = self.displayedAsModal, displayedModal == true {
+                        if let displayedModal = self?.displayedAsModal, displayedModal == true {
                             DispatchQueue.main.async {
-                                self.dismiss(animated: true, completion: nil)
+                                self?.dismiss(animated: true, completion: nil)
+                            }
+                        } else {
+                            let appView = UIStoryboard(name: "Main", bundle: nil)
+                            if let appVC = appView.instantiateInitialViewController() as? MainViewController,
+                            let dataController = self?.dataController {
+                                appVC.dataController = dataController
+                                self?.present(appVC, animated: true, completion: nil)
                             }
                         }
                         
@@ -288,11 +299,21 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        domainView.backgroundColor = ThemeManager.currentTheme().deepColor
-        authorizingText.textColor = ThemeManager.currentTheme().mainColor
-        authorizingProgressIndicator.color = ThemeManager.currentTheme().mainColor
+        view.backgroundColor = ThemeManager.currentTheme().mainColor
+        domainView.backgroundColor = ThemeManager.currentTheme().backgroundColor
+        authorizingText.textColor = ThemeManager.currentTheme().backgroundColor
+        authorizingProgressIndicator.color = ThemeManager.currentTheme().backgroundColor
+        domainInput.textColor = ThemeManager.currentTheme().mainColor
         indieAuthDomain?.delegate = self
-        domainInput?.becomeFirstResponder()
+        indieAuthLink.tintColor = ThemeManager.currentTheme().backgroundColor
+        loginButton.tintColor = ThemeManager.currentTheme().backgroundColor
+    }
+    
+    override public func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        DispatchQueue.main.async { [weak self] in
+            self?.domainInput?.becomeFirstResponder()
+        }
     }
 
     public override func didReceiveMemoryWarning() {

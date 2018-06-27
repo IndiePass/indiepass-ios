@@ -20,17 +20,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let dataController = DataController(modelName: "Indigenous")
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        // Configure Crashlytics for Crash Reporting
         Fabric.with([Crashlytics.self])
         
+        // Configure the theme
         ThemeManager.applyTheme(theme: ThemeManager.currentTheme(), window: window)
         
+        // Loading CoreData
         dataController.load()
         
-        let mainVC = window?.rootViewController as! MainViewController
-        mainVC.dataController = dataController
-        
+        // Set up background audio
         let session: AVAudioSession = AVAudioSession.sharedInstance();
         try? session.setCategory(AVAudioSessionCategoryPlayback)
+        
+        // Check if has any user accounts
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+        let loggedIn = micropubAccounts.count >= 1
+        
+        if loggedIn {
+            // Add shortcut for creating a new post
+            let shortcutItem = UIApplicationShortcutItem(type: ShortcutItemType.NewPost.rawValue, localizedTitle: "New Post")
+            UIApplication.shared.shortcutItems = [shortcutItem]
+
+            let appView = UIStoryboard(name: "Main", bundle: nil)
+            if let appVC = appView.instantiateInitialViewController() as? MainViewController {
+                appVC.dataController = dataController
+                self.window?.rootViewController = appVC
+                self.window?.makeKeyAndVisible()
+            }
+        } else {
+            // We should empty the shortcut items
+            UIApplication.shared.shortcutItems = []
+            let onboardingView = UIStoryboard(name: "Onboarding", bundle: nil)
+
+            if let onboardingVC = onboardingView.instantiateInitialViewController() as? OnboardingViewController {
+                onboardingVC.dataController = dataController
+                self.window?.rootViewController = onboardingVC
+                self.window?.makeKeyAndVisible()
+            }
+        }
         
         return true
     }

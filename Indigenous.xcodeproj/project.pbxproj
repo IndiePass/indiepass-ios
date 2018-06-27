@@ -158,6 +158,10 @@
 		C8DAA8B4201127D7002B7083 /* MicropubPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DAA8B3201127D7002B7083 /* MicropubPhoto.swift */; };
 		C8DAA8B5201127D7002B7083 /* MicropubPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DAA8B3201127D7002B7083 /* MicropubPhoto.swift */; };
 		C8DAA8B820113694002B7083 /* TimelinePhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DAA8B720113694002B7083 /* TimelinePhotoTableViewCell.swift */; };
+		C8DD6F5020E2B8300023D3D6 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8DD6F4F20E2B8300023D3D6 /* Onboarding.storyboard */; };
+		C8DD6F5220E2CECD0023D3D6 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DD6F5120E2CECD0023D3D6 /* OnboardingViewController.swift */; };
+		C8DD6F5420E2CEE80023D3D6 /* OnboardingTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DD6F5320E2CEE80023D3D6 /* OnboardingTemplateViewController.swift */; };
+		C8DD6F5820E2F8E40023D3D6 /* OnboardingCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DD6F5720E2F8E40023D3D6 /* OnboardingCompletionViewController.swift */; };
 		C8E7008020C76B1C00B134BC /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7007F20C76B1B00B134BC /* DataController.swift */; };
 		C8F2844220D5AD3300FDB731 /* ChannelSettingsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F2844120D5AD3300FDB731 /* ChannelSettingsDelegate.swift */; };
 		C8F431C61FB530010026B8D6 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F431C11FB530010026B8D6 /* HalfModalPresentationController.swift */; };
@@ -327,6 +331,10 @@
 		C8D171CD1FF58BFB00134485 /* FontAwesomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeView.swift; sourceTree = "<group>"; };
 		C8DAA8B3201127D7002B7083 /* MicropubPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicropubPhoto.swift; sourceTree = "<group>"; };
 		C8DAA8B720113694002B7083 /* TimelinePhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePhotoTableViewCell.swift; sourceTree = "<group>"; };
+		C8DD6F4F20E2B8300023D3D6 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		C8DD6F5120E2CECD0023D3D6 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		C8DD6F5320E2CEE80023D3D6 /* OnboardingTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTemplateViewController.swift; sourceTree = "<group>"; };
+		C8DD6F5720E2F8E40023D3D6 /* OnboardingCompletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompletionViewController.swift; sourceTree = "<group>"; };
 		C8E7007F20C76B1B00B134BC /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		C8F2844120D5AD3300FDB731 /* ChannelSettingsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingsDelegate.swift; sourceTree = "<group>"; };
 		C8F431C11FB530010026B8D6 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
@@ -675,6 +683,7 @@
 		C8CBEB2E1FAA9C1D00298113 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				C8DD6F4E20E2B7870023D3D6 /* Onboarding */,
 				C8254C4E201A7EF0000AC32A /* Main */,
 				C8254C4D201A7ED6000AC32A /* Settings */,
 				C8254C4A201A7EAF000AC32A /* Reader */,
@@ -711,6 +720,17 @@
 				C8D171CD1FF58BFB00134485 /* FontAwesomeView.swift */,
 			);
 			path = FontAwesome;
+			sourceTree = "<group>";
+		};
+		C8DD6F4E20E2B7870023D3D6 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				C8DD6F4F20E2B8300023D3D6 /* Onboarding.storyboard */,
+				C8DD6F5120E2CECD0023D3D6 /* OnboardingViewController.swift */,
+				C8DD6F5320E2CEE80023D3D6 /* OnboardingTemplateViewController.swift */,
+				C8DD6F5720E2F8E40023D3D6 /* OnboardingCompletionViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		C8F431C01FB530010026B8D6 /* Presentation */ = {
@@ -900,6 +920,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8DD6F5020E2B8300023D3D6 /* Onboarding.storyboard in Resources */,
 				C89AE10320D9EB32001D951C /* FullView.storyboard in Resources */,
 				C8CBEB521FAA9DEF00298113 /* Modules in Resources */,
 				C8D171DA1FF58C3900134485 /* FontAwesome.otf in Resources */,
@@ -1017,6 +1038,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8254C49201A7E6A000AC32A /* TimelineTextTableViewCell.swift in Sources */,
+				C8DD6F5820E2F8E40023D3D6 /* OnboardingCompletionViewController.swift in Sources */,
 				C8CBEAFE1FAA9B4600298113 /* Indigenous.xcdatamodeld in Sources */,
 				C840A2C8200BC77200CD2091 /* SimpleSelectionViewController.swift in Sources */,
 				C894F5F11FEADCF6003D0A48 /* ChannelAPIResponse.swift in Sources */,
@@ -1026,12 +1048,14 @@
 				C840A2D1200D114A00CD2091 /* SimpleSelectionDelegate.swift in Sources */,
 				C87B4DC41FBBAB3900181B62 /* Micropub.swift in Sources */,
 				C8667408202254E50076DB8E /* MicropubSyndicationQueryResponse.swift in Sources */,
+				C8DD6F5220E2CECD0023D3D6 /* OnboardingViewController.swift in Sources */,
 				C87B1A34200A73B000F3E79C /* MicropubRsvpValue.swift in Sources */,
 				C86714FC20B25F250014D242 /* ChannelSettingsViewController.swift in Sources */,
 				C8D171E21FF58C3900134485 /* FontAwesomeTextRepresentable.swift in Sources */,
 				C8D171DE1FF58C3900134485 /* FontAwesomeImageView.swift in Sources */,
 				C80AEA401FEB0B4100CCBE2E /* TimelinePostContent.swift in Sources */,
 				C845B46E1FF5E6E400354391 /* Jf2Post.swift in Sources */,
+				C8DD6F5420E2CEE80023D3D6 /* OnboardingTemplateViewController.swift in Sources */,
 				C8753BF6200FDDE5005C1E28 /* ShortcutItemType.swift in Sources */,
 				C8DAA8B4201127D7002B7083 /* MicropubPhoto.swift in Sources */,
 				C8F2844220D5AD3300FDB731 /* ChannelSettingsDelegate.swift in Sources */,
