@@ -78,7 +78,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
             micropubPage.titleText = "Writing"
             micropubPage.contentText = "Post to any website or microblog that supports Micropub. Some popular services that can support Micropub is Micro.blog, Wordpress and Known."
             micropubPage.buttonText = "Learn About Micropub"
-            micropubPage.buttonUrl = URL(string: "https://indigenous.abode.pub/micropub")
+            micropubPage.buttonUrl = URL(string: "https://indigenous.abode.pub/ios/help/#micropub")
             micropubPage.primaryIcon = .commenting
             pages.append(micropubPage)
         }
@@ -87,7 +87,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
             microsubPage.titleText = "Reading"
             microsubPage.contentText = "You can read posts within Indigenous if your website supports Microsub. The primary service that currently supports Microsub is Aperture."
             microsubPage.buttonText = "Learn About Microsub"
-            microsubPage.buttonUrl = URL(string: "https://indigenous.abode.pub/microsub")
+            microsubPage.buttonUrl = URL(string: "https://indigenous.abode.pub/ios/help/#microsub")
             microsubPage.primaryIcon = .newspaperO
             pages.append(microsubPage)
         }

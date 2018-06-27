@@ -19,16 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="IW0-j4-QCX" userLabel="IndieAuth Info">
-                                <rect key="frame" x="16" y="44" width="343" height="100"/>
+                                <rect key="frame" x="16" y="44" width="343" height="30"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This login uses IndieAuth and requires you to have a website on your domain that supports IndieAuth." lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iTW-RP-loS">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="32.333333333333336"/>
-                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFG-Vs-yGB">
-                                        <rect key="frame" x="0.0" y="32.333333333333321" width="168" height="67.666666666666686"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFG-Vs-yGB">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                         <state key="normal" title="Find out about IndieAuth"/>
                                         <connections>
                                             <action selector="readAboutIndieAuth:" destination="BYZ-38-t0r" eventType="touchUpInside" id="21L-Ew-P74"/>
@@ -36,7 +30,10 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="5Dt-zV-0pm"/>
+                                    <constraint firstAttribute="trailing" secondItem="hFG-Vs-yGB" secondAttribute="trailing" id="8IP-Ha-Li7"/>
+                                    <constraint firstItem="hFG-Vs-yGB" firstAttribute="leading" secondItem="IW0-j4-QCX" secondAttribute="leading" id="C2D-2t-xry"/>
+                                    <constraint firstItem="hFG-Vs-yGB" firstAttribute="top" secondItem="IW0-j4-QCX" secondAttribute="top" id="dEi-L5-BVB"/>
+                                    <constraint firstAttribute="bottom" secondItem="hFG-Vs-yGB" secondAttribute="bottom" id="hxl-5Z-d3v"/>
                                 </constraints>
                             </stackView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GsB-Gx-kvG" userLabel="Loading View">
@@ -73,7 +70,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8H-H3-Kbd" userLabel="Login View">
-                                <rect key="frame" x="0.0" y="144" width="375" height="210"/>
+                                <rect key="frame" x="0.0" y="74" width="375" height="210"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with your Domain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7G-Ss-oGh">
                                         <rect key="frame" x="98.000000000000014" y="30" width="179.33333333333337" height="20.333333333333329"/>
@@ -103,7 +100,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UX2-jg-ufv">
-                                        <rect key="frame" x="168.66666666666666" y="160.33333333333331" width="38" height="30"/>
+                                        <rect key="frame" x="168.66666666666666" y="160.33333333333334" width="38" height="30"/>
                                         <state key="normal" title="Login"/>
                                         <connections>
                                             <action selector="loginWithIndieAuth:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M3c-Zc-csT"/>
