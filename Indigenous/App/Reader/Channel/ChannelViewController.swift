@@ -408,7 +408,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
             if micropubDetails.microsub_endpoint != nil {
                 self.refreshControl?.isEnabled = true
                 tableView.isScrollEnabled = true
-                tableView.backgroundColor = UIColor.white
+                tableView.backgroundColor = ThemeManager.currentTheme().backgroundColor
                 tableView.backgroundView = nil
                 edgesForExtendedLayout = [ UIRectEdge.all ]
                 self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
