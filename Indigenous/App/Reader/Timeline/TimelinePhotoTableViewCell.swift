@@ -17,7 +17,6 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     var playerToken: Any? = nil
     var mediaControlCallback: ((_ currentTime: Int?) -> ())?
     var delegate: TimelineCellDelegate? = nil
-    private var unreadIndicator: CALayer? = nil
     
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
@@ -313,26 +312,14 @@ class TimelinePhotoTableViewCell: UITableViewCell {
 
         if let postRead = post?.isRead, postRead == false {
             print("Unread Post \(String(describing: post?.name))")
-            let borderWidth: CGFloat = 4
-            
-            if unreadIndicator == nil {
-                unreadIndicator = CALayer()
-                unreadIndicator!.borderColor = ThemeManager.currentTheme().mainColor.cgColor
-                unreadIndicator!.borderWidth = borderWidth
-                
-                contentView.layer.addSublayer(unreadIndicator!)
-                contentView.layer.masksToBounds = true
-            }
 
             DispatchQueue.main.async { [weak self] in
-                if let frameHeight = self?.contentView.frame.height {
-                    self?.unreadIndicator!.frame = CGRect(x: 0, y: 0, width: borderWidth, height: frameHeight)
-                }
+                
             }
-            unreadIndicator!.isHidden = false
+            backgroundColor = ThemeManager.currentTheme().mainColor.withAlphaComponent(0.2)
         } else {
             print("Read Post \(String(describing: post?.name))")
-            unreadIndicator?.isHidden = true
+            backgroundColor = ThemeManager.currentTheme().backgroundColor
         }
         
     }
