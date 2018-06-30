@@ -9,8 +9,8 @@
 import UIKit
 import SafariServices
 
-let callbackUrl = URL(string: "indigenous://auth/callback")
-//let callbackUrl = URL(string: "https://indigenous.abode.pub/ios-login-redirect")
+//let callbackUrl = URL(string: "indigenous://auth/callback")
+let callbackUrl = URL(string: "https://indigenous.abode.pub/ios/login-redirect")
 let appClientId = "https://indigenous.abode.pub/ios/"
 let indieAuthSetupUrl = "https://indigenous.abode.pub/ios/help/#indieauth"
 let kSafariViewControllerCloseNotification = "kSafariViewControllerCloseNotification"
@@ -190,7 +190,9 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 guard scope.lowercased().contains("create") || scope.lowercased().contains("post") else {
                     // TODO: Figure out why this error screen isn't working
                     // What is wrong??
-                    self?.presentErrorLoginAgain("Recieved scope of \(scope), you must be authorized with at least create scope.")
+                    DispatchQueue.main.async {
+                        self?.presentErrorLoginAgain("Recieved scope of \(scope), you must be authorized with at least create scope.")
+                    }
                     return
                 }
                 
@@ -269,7 +271,9 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                             if let appVC = appView.instantiateInitialViewController() as? MainViewController,
                             let dataController = self?.dataController {
                                 appVC.dataController = dataController
-                                self?.present(appVC, animated: true, completion: nil)
+                                DispatchQueue.main.async {
+                                    self?.present(appVC, animated: true, completion: nil)
+                                }
                             }
                         }
                         
