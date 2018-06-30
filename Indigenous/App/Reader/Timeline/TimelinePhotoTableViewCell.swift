@@ -235,7 +235,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         } else {
             if post?.photo != nil, post!.photo!.count > 0 {
                 postImage.image = nil
-                postImage.backgroundColor = ThemeManager.currentTheme().backgroundColor
+                postImage.backgroundColor = UIColor.clear
                 // if we are here, then there is an unloaded photo
                 post?.downloadPhoto(photoIndex: 0) { returnedImage in
                     DispatchQueue.main.async {
@@ -259,7 +259,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             authorPhoto.image = authorImage.image
         } else {
             if post?.author?.photo != nil, post!.author!.photo!.count > 0 {
-                authorPhoto.backgroundColor = ThemeManager.currentTheme().backgroundColor
+                authorPhoto.backgroundColor = UIColor.clear
                 authorPhoto.image = nil
                 post?.author?.downloadPhoto(photoIndex: 0) { returnedAuthorPhoto in
                     DispatchQueue.main.async {
@@ -311,14 +311,8 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         }
 
         if let postRead = post?.isRead, postRead == false {
-            print("Unread Post \(String(describing: post?.name))")
-
-            DispatchQueue.main.async { [weak self] in
-                
-            }
             backgroundColor = ThemeManager.currentTheme().mainColor.withAlphaComponent(0.2)
         } else {
-            print("Read Post \(String(describing: post?.name))")
             backgroundColor = ThemeManager.currentTheme().backgroundColor
         }
         
