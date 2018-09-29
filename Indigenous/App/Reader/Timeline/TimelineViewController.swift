@@ -329,6 +329,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             if let currentTimelineCell = tableView.cellForRow(at: indexPath) as? TimelinePhotoTableViewCell {
                 currentTimelineCell.displayResponseBar()
                 if let isRead = currentTimelineCell.post?.isRead, !isRead, let postId = currentTimelineCell.post?.id {
+                    currentTimelineCell.displayAsRead()
                     timeline?.markAsRead(posts: [postId]) { _ in
                         // TODO: Handle errors
                     }

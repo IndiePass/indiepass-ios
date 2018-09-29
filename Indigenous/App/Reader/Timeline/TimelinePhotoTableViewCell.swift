@@ -24,6 +24,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDate: UILabel!
     @IBOutlet weak var postTitle: UILabel!
+    @IBOutlet weak var unreadIndicator: UILabel!
     
     @IBOutlet weak var authorPhotoWidth: NSLayoutConstraint!
     @IBOutlet weak var authorPhotoHeight: NSLayoutConstraint!
@@ -193,6 +194,12 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         })
     }
     
+    func displayAsRead() {
+        UIView.animate(withDuration: 0.4, animations: { [weak self] in
+            self?.unreadIndicator.alpha = 0
+        })
+    }
+    
     func setContent(ofPost postData: Jf2Post) {
         
         post = postData
@@ -251,8 +258,10 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         }
         
         authorPhoto.isHidden = false
-        authorPhotoHeight.constant = 50
-        authorPhotoWidth.constant = 50
+        authorPhotoHeight.constant = 30
+        authorPhotoWidth.constant = 30
+        authorPhoto.layer.cornerRadius = 4.0
+        authorPhoto.clipsToBounds = true
         
         if let authorImageUrl = post?.author?.photo?[0],
             let authorImage = post?.author?.photoImage?[authorImageUrl] {
@@ -296,6 +305,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         
         if postTitle.text == nil || postTitle.text == "" {
             postTitle.isHidden = true
+            postTitle.text = nil
         } else {
             postTitle.isHidden = false
             // Since a post title exists, we should also truncate the post content to 280 characters
@@ -311,9 +321,10 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         }
 
         if let postRead = post?.isRead, postRead == false {
-            backgroundColor = ThemeManager.currentTheme().mainColor.withAlphaComponent(0.2)
+            unreadIndicator.textColor = ThemeManager.currentTheme().mainColor
+            unreadIndicator.isHidden = false
         } else {
-            backgroundColor = ThemeManager.currentTheme().backgroundColor
+            unreadIndicator.isHidden = true
         }
         
     }
