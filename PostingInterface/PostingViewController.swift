@@ -47,7 +47,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     
     @IBAction func cancelModal(_ sender: Any) {
         if hasPostChanged() {
-            let alert = UIAlertController(title: "Save Draft", message: "Would you like to save this post as a draft?", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Save Draft", message: "Would you like to save this post as a draft?", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Discard", style: .destructive, handler: { action in
                 self.currentPost = nil
                 self.clearPostDraft()
@@ -93,9 +93,12 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
-        if let newImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let newImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
             
             if self.currentPost?.properties.photo == nil {
                 self.currentPost?.properties.photo = []
@@ -107,7 +110,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
             let uploadingId = (self.currentPost?.properties.photo?.count)! - 1
             currentUploading.append(uploadingId)
             
-            if let fileUrl = info[UIImagePickerControllerImageURL] as? URL {
+            if let fileUrl = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.imageURL)] as? URL {
                 MicropubPost.uploadToMediaEndpoint(image: newPhoto.image!, withId: "\(uploadingId)", ofType: "image/jpeg", withName: fileUrl.lastPathComponent, forUser: activeAccount!, withDelegate: self) { imageUrl in
                     self.currentPost?.properties.photo?[uploadingId].uploadedUrl = imageUrl
                     self.currentPost?.properties.photo?[uploadingId].progressPercent = nil
@@ -168,7 +171,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         DispatchQueue.main.async {
             self.postingStatusView.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
             self.postingActivityIndicator.isHidden = false
-            self.postingActivityIndicator.activityIndicatorViewStyle = .white
+            self.postingActivityIndicator.style = .white
             self.postingActivityIndicator.startAnimating()
             self.postingStatus.text = "Sending micropub post..."
             self.view.layoutIfNeeded()
@@ -317,19 +320,19 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     }
     
     func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func handleKeyboardWillShow(notification: NSNotification) {
-        let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
-        let keyboardDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
+        let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
         keyboardHeight = keyboardFrame.height
         updatePostingView(withAnimation: true, forDuration: keyboardDuration)
     }
     
     @objc func handleKeyboardWillHide(notification: NSNotification) {
-        let keyboardDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
+        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
         keyboardHeight = 0
         updatePostingView(withAnimation: true, forDuration: keyboardDuration)
     }
@@ -406,7 +409,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        if self.isMovingFromParentViewController {
+        if self.isMovingFromParent {
             if hasPostChanged() == false {
                 // Post hasn't changed since load, so we don't want to save it
                 self.currentPost = nil
@@ -565,4 +568,14 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     }
 
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

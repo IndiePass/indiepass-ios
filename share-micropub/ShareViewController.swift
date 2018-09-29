@@ -105,8 +105,8 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
                         case .reply:
                             performSegue(withIdentifier: "showReplyView", sender: self)
                         default:
-                            let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                            let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
                             self.present(alert, animated: true, completion: nil)
                     }
                 }

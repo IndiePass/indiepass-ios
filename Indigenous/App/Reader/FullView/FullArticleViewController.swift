@@ -109,13 +109,13 @@ class FullArticleViewController: UIViewController, UIScrollViewDelegate, WKNavig
         
         if(velocity.y>0) {
             //Code will work without the animation block.I am using animation block incase if you want to set any delay to it.
-            UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
+            UIView.animate(withDuration: 2.5, delay: 0, options: UIView.AnimationOptions(), animations: {
                 self.navigationController?.setNavigationBarHidden(true, animated: true)
                 self.navigationController?.setToolbarHidden(true, animated: true)
             }, completion: nil)
             
         } else {
-            UIView.animate(withDuration: 2.5, delay: 0, options: UIViewAnimationOptions(), animations: {
+            UIView.animate(withDuration: 2.5, delay: 0, options: UIView.AnimationOptions(), animations: {
                 self.navigationController?.setNavigationBarHidden(false, animated: true)
                 self.navigationController?.setToolbarHidden(false, animated: true)
             }, completion: nil)

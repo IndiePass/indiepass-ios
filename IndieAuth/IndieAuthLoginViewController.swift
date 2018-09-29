@@ -286,7 +286,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     private func presentErrorLoginAgain(_ errorString: String) {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                 self.cancelLogin()
             }))

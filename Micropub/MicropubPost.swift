@@ -133,7 +133,7 @@ public struct MicropubPost: Codable {
                 let fileName = name
                 let mimeType = type
                 let fieldName = "file"
-                let imageData: Data = UIImageJPEGRepresentation(image, 1)!
+                let imageData: Data = image.jpegData(compressionQuality: 1)!
                 var sendData = Data()
                 
                 sendData.append(convertToData(fromString: "--\(boundaryConstant)\r\n"))

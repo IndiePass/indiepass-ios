@@ -231,7 +231,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 
                 guard error == nil else {
                     DispatchQueue.main.sync {
-                        let alert = UIAlertController(title: "Syndication Targets Failed", message: error ?? "no message", preferredStyle: UIAlertControllerStyle.alert)
+                        let alert = UIAlertController(title: "Syndication Targets Failed", message: error ?? "no message", preferredStyle: UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }

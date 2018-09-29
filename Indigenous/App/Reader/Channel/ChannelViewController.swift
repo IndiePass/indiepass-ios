@@ -411,7 +411,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
                 tableView.backgroundColor = ThemeManager.currentTheme().backgroundColor
                 tableView.backgroundView = nil
                 edgesForExtendedLayout = [ UIRectEdge.all ]
-                self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
+                self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControl.Event.valueChanged)
                 
                 if let savedFilter = UserDefaults(suiteName: "group.software.studioh.indigenous")?.string(forKey: "ChannelFilter") {
                     currentFiltering = ChannelListFilter.fromValue(value: savedFilter)
