@@ -20,7 +20,13 @@ class AccountDebugViewController: UIViewController {
             print(String(describing: debugAccount))
             textView.text = "Debugging: \(account.profile.name ?? ""): \(account.profile.url?.absoluteString ?? "")\n\n"
             
-            textView.text = textView.text + "Access Token: \(account.access_token)\n\n"
+            textView.text = textView.text + "Micropub Endpoint: \(account.micropub_endpoint)"
+            if account.microsub_endpoint != nil {
+                textView.text = textView.text + "Microsub Endpoint: \(String(describing: account.microsub_endpoint))"
+            }
+            textView.text = textView.text + "Scopes: \(String(describing: account.scope))\n\n"
+            
+//            textView.text = textView.text + "Access Token: \(account.access_token)\n\n"
             
             if let config = account.micropub_config {
                 if let mediaEndpoint = config.mediaEndpoint {
