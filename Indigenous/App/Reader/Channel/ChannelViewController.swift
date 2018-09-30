@@ -66,6 +66,8 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     
     var currentAccount: IndieAuthAccount? = nil
     
+    let notificationFeedback = UINotificationFeedbackGenerator()
+    
 //    @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var accountButton: UIBarButtonItem!
     
@@ -524,6 +526,7 @@ class ChannelViewController: UITableViewController, UISearchResultsUpdating, UIS
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if currentAccount?.me.absoluteString == "https://eddiehinkle.com/", indexPath.section == 1 {
+            notificationFeedback.notificationOccurred(.success)
             let command = commands[indexPath.row]
             command.sendCommand()
             return

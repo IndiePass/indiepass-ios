@@ -12,6 +12,8 @@ class HalfModalPresentationController : UIPresentationController {
     var isMaximized: Bool = false
     var isFullscreen: Bool = false
     
+    let impactFeedback = UIImpactFeedbackGenerator()
+    
     func adjustToFullScreen() {
         if let presentedView = presentedView, let containerView = self.containerView {
             UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: { () -> Void in
@@ -27,7 +29,9 @@ class HalfModalPresentationController : UIPresentationController {
                     navController.isNavigationBarHidden = true
                     navController.isNavigationBarHidden = false
                 }
-                }, completion: nil)
+            }, completion: { [weak self] (_) -> Void in
+                self?.impactFeedback.impactOccurred()
+            })
         }
     }
     
@@ -47,7 +51,9 @@ class HalfModalPresentationController : UIPresentationController {
                     navController.isNavigationBarHidden = true
                     navController.isNavigationBarHidden = false
                 }
-            }, completion: nil)
+            }, completion: { [weak self] (_) -> Void in
+                self?.impactFeedback.impactOccurred()
+            })
         }
     }
     
@@ -60,7 +66,9 @@ class HalfModalPresentationController : UIPresentationController {
             
             coordinator.animate(alongsideTransition: { (context) -> Void in
                 self.presentingViewController.view.alpha = 0.5
-            }, completion: nil)
+            }, completion: { [weak self] (_) -> Void in
+                self?.impactFeedback.impactOccurred()
+            })
         }
     }
     
@@ -69,8 +77,9 @@ class HalfModalPresentationController : UIPresentationController {
             
             coordinator.animate(alongsideTransition: { (context) -> Void in
                 self.presentingViewController.view.alpha = 1
-            }, completion: { (completed) -> Void in
+            }, completion: { [weak self] (completed) -> Void in
                 print("done dismiss animation")
+                self?.impactFeedback.impactOccurred()
             })
             
         }
@@ -78,6 +87,7 @@ class HalfModalPresentationController : UIPresentationController {
     
     override func dismissalTransitionDidEnd(_ completed: Bool) {
         print("dismissal did end: \(completed)")
+        
         
         if completed {
             isMaximized = false

@@ -18,6 +18,8 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     var mediaControlCallback: ((_ currentTime: Int?) -> ())?
     var delegate: TimelineCellDelegate? = nil
     
+    let notificationFeedback = UINotificationFeedbackGenerator()
+    
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
     @IBOutlet weak var postContent: UILabel!
@@ -49,15 +51,21 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         switch sender.title {
         case "Like":
             if let url = post?.url, account != nil {
+                notificationFeedback.notificationOccurred(.success)
                 sendMicropub(forAction: .like, aboutUrl: url, forUser: account!) {
                     // TODO: Need to display an alert based on if it was successful or not
                 }
+            } else {
+                notificationFeedback.notificationOccurred(.error)
             }
         case "Repost":
             if let url = post?.url, account != nil {
+                notificationFeedback.notificationOccurred(.success)
                 sendMicropub(forAction: .repost, aboutUrl: url, forUser: account!) {
                     // TODO: Need to display an alert based on if it was successful or not
                 }
+            } else {
+                notificationFeedback.notificationOccurred(.error)
             }
         case "Reply":
             if let url = post?.url, account != nil {

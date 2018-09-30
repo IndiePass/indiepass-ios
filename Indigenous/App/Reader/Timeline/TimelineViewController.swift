@@ -18,6 +18,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                                                      TimelineCellDelegate {
     
     var channelSettingsTransitioningDelegate: HalfModalTransitioningDelegate?
+    let impactFeedback = UIImpactFeedbackGenerator()
     
 //    var channel: Channel? = nil
     var uid: String!
@@ -489,7 +490,9 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
     // MARK: - TimelineCellDelegate Methods
     func shareUrl(url: URL) {
         let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-        present(activityViewController, animated: true, completion: {})
+        present(activityViewController, animated: true) { [weak self] in
+            self?.impactFeedback.impactOccurred()
+        }
     }
     
     func replyToUrl(url: URL) {
@@ -532,7 +535,9 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
-            self.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true) { [weak self] in
+                self?.impactFeedback.impactOccurred()
+            }
         }
     }
     
