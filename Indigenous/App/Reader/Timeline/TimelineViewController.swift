@@ -10,6 +10,7 @@ import Social
 import MobileCoreServices
 import SafariServices
 import CoreData
+import Intents
 
 class TimelineViewController: UITableViewController, UITableViewDataSourcePrefetching,
                                                      PostingViewDelegate,
@@ -387,6 +388,21 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             if let context = self?.context, let uid = self?.uid, let channelData = try? ChannelData.findChannel(byId: uid, in: context) {
                 self?.channelData = channelData
             
+                if let channelName = channelData?.name, let channelId = channelData?.uid {
+                    let activity = NSUserActivity(activityType: "software.studioh.Indigenous.viewTimeline")
+                    activity.title = "Open \(channelName)"
+                    activity.userInfo = ["id": channelId, "name": channelName]
+                    activity.isEligibleForSearch = true
+                    
+                    if #available(iOS 12.0, *) {
+                        activity.isEligibleForPrediction = true
+                        activity.suggestedInvocationPhrase = "View \(channelName)"
+                    }
+                    
+                    self?.view.userActivity = activity
+                    activity.becomeCurrent()
+                }
+                
                 let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
                 let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
                 if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],

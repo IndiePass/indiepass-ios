@@ -15,6 +15,7 @@
 		C80AEA421FEB14C700CCBE2E /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */; };
 		C80AEA441FEB1B0900CCBE2E /* ChannelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */; };
 		C81260642059D68E009DE884 /* ChannelUnreadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81260632059D68E009DE884 /* ChannelUnreadStatus.swift */; };
+		C81356332160FE9000444846 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81356322160FE9000444846 /* Intents.framework */; };
 		C8254C43201A4A8C000AC32A /* TimelineApiPaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8254C42201A4A8B000AC32A /* TimelineApiPaging.swift */; };
 		C8254C45201A4B41000AC32A /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8254C44201A4B41000AC32A /* Timeline.swift */; };
 		C8254C47201A55FB000AC32A /* TimelineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8254C46201A55FB000AC32A /* TimelineOptions.swift */; };
@@ -226,6 +227,7 @@
 		C80AEA411FEB14C700CCBE2E /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		C80AEA431FEB1B0900CCBE2E /* ChannelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTableViewCell.swift; sourceTree = "<group>"; };
 		C81260632059D68E009DE884 /* ChannelUnreadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelUnreadStatus.swift; sourceTree = "<group>"; };
+		C81356322160FE9000444846 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		C8254C42201A4A8B000AC32A /* TimelineApiPaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineApiPaging.swift; sourceTree = "<group>"; };
 		C8254C44201A4B41000AC32A /* Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		C8254C46201A55FB000AC32A /* TimelineOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineOptions.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C81356332160FE9000444846 /* Intents.framework in Frameworks */,
 				C8667405202230D50076DB8E /* Crashlytics.framework in Frameworks */,
 				C8667406202230D50076DB8E /* Fabric.framework in Frameworks */,
 			);
@@ -501,6 +504,7 @@
 		C87B4DAC1FBBA6AB00181B62 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C81356322160FE9000444846 /* Intents.framework */,
 				C87B4DAD1FBBA6AB00181B62 /* IntentsUI.framework */,
 			);
 			name = Frameworks;

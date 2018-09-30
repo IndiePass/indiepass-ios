@@ -66,6 +66,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if userActivity.activityType == "software.studioh.Indigenous.viewTimeline" {
+            if let appVC = self.window?.rootViewController as? MainViewController,
+               let channelsVC = appVC.viewControllers[0] as? ChannelViewController,
+               let channelName = userActivity.userInfo?["name"] as? String,
+               let channelId = userActivity.userInfo?["id"] as? String {
+               
+                    let channel = Channel(uniqueId: channelId, withName: channelName)
+                
+                    let timelineStoryboard = UIStoryboard(name: "Timeline", bundle: nil)
+                    if let timelineVC = timelineStoryboard.instantiateInitialViewController() as? TimelineViewController {
+                    
+                        timelineVC.uid = channel.uid
+                        timelineVC.dataController = dataController
+                        timelineVC.title = channel.name
+  
+                        appVC.setViewControllers([channelsVC, timelineVC], animated: false)
+                }
+            }
+            return true
+        }
+        
+        return false
+    }
     
     func applicationHandleRemoteNotification(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])
     {
