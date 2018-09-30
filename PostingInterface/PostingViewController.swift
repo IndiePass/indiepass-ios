@@ -10,6 +10,8 @@ import UIKit
 import Photos
 
 class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelectionDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, URLSessionTaskDelegate, UICollectionViewDataSource {
+    
+    let notificationFeedback = UINotificationFeedbackGenerator()
 
     public var currentPost: MicropubPost? = nil
     public var displayAsModal: Bool = true
@@ -167,6 +169,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     }
     
     @IBAction func sendPost(_ sender: Any) {
+        
+        notificationFeedback.notificationOccurred(.success)
         
         DispatchQueue.main.async {
             self.postingStatusView.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)

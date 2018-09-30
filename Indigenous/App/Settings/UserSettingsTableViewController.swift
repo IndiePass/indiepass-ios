@@ -17,6 +17,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     var loginDisplayedAsModal: Bool? = nil
     var fetchingSyndicateTargets = false
     
+    let notificationFeedback = UINotificationFeedbackGenerator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -165,6 +167,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         
         if indexPath.section == 1 {
             
+            notificationFeedback.notificationOccurred(.success)
+            
             if (indexPath.row < userAccounts.count) {
                 activeUserAccount = indexPath.row
                 defaults?.set(activeUserAccount, forKey: "activeAccount")
@@ -179,6 +183,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         } else if indexPath.section == 2 {
         
             if let theme = Theme(rawValue: indexPath.row) {
+                notificationFeedback.notificationOccurred(.success)
                 ThemeManager.applyTheme(theme: theme, window: UIApplication.shared.keyWindow)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -189,6 +194,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 }
             } else {
                 // TODO: Present error that apply theme failed
+                notificationFeedback.notificationOccurred(.error)
             }
             
             
@@ -199,13 +205,16 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 
             } else {
                 if indexPath.row == userSettings.count {
+                    notificationFeedback.notificationOccurred(.success)
                     refreshSyndicationTargets()
                 } else if indexPath.row == userSettings.count + 1 {
                     // TODO: View DEBUG INFO
                     viewAccountDebug()
                 } else if indexPath.row == userSettings.count + 2 {
+                    notificationFeedback.notificationOccurred(.success)
                     makeCurrentUserDefault()
                 } else if indexPath.row == userSettings.count + 3 {
+                    notificationFeedback.notificationOccurred(.success)
                     logOutCurrentUser()
                 }
             }
