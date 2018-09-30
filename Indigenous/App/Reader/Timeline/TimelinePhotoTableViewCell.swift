@@ -52,6 +52,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         case "Like":
             if let url = post?.url, account != nil {
                 notificationFeedback.notificationOccurred(.success)
+                
                 sendMicropub(forAction: .like, aboutUrl: url, forUser: account!) {
                     // TODO: Need to display an alert based on if it was successful or not
                 }
@@ -69,11 +70,16 @@ class TimelinePhotoTableViewCell: UITableViewCell {
             }
         case "Reply":
             if let url = post?.url, account != nil {
+                notificationFeedback.notificationOccurred(.success)
                 delegate?.replyToUrl(url: url)
+            } else {
+                notificationFeedback.notificationOccurred(.error)
             }
         default:
             if let url = post?.url, account != nil {
                 delegate?.shareUrl(url: url)
+            } else {
+                notificationFeedback.notificationOccurred(.error)
             }
         }
     }
