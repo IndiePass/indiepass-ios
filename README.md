@@ -1,4 +1,7 @@
 # indigenous-ios
-A Social Reader that supports the W3C Micropub spec and the Microsub spec.
+Indigenous is an app that is no longer maintained. Instead, it's functionality is being built out in 3 different apps:
+* [Remark: a fun social reader](https://github.com/EdwardHinkle/remark)
+* [Chronicler: a flexible publishing app](https://github.com/EdwardHinkle/chronicler)
+* [Anthologist: a focused long-form reading app](https://github.com/EdwardHinkle/anthologist)
 
-Read more about the motivations behind Indigenous in the [first dev log post](https://eddiehinkle.com/2018/05/02/16/article/).
+You can [read more about it here](https://eddiehinkle.com/2019/05/08/5/article/)
