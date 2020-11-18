@@ -28,7 +28,7 @@ class AccountSelectorTableViewController: UITableViewController {
     func refreshAccountData() {
         print("refreshing data")
         userAccounts.removeAll()
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.com.popcoding.i-indie")
         let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         micropubAccounts.forEach { userData in
             if let newAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: userData) {

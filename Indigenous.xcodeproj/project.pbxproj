@@ -1122,12 +1122,12 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "share-micropub/share-micropub.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				DEVELOPMENT_TEAM = 8F2CMQZJN6;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "share-micropub/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.share-micropub";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.popcoding.i-indie.i-indie-share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules";
@@ -1141,12 +1141,12 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "share-micropub/share-micropub.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				DEVELOPMENT_TEAM = 8F2CMQZJN6;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "share-micropub/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "software.studioh.Indigenous.share-micropub";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.popcoding.i-indie.i-indie-share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules";
@@ -1279,7 +1279,7 @@
 				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = Indigenous/Indigenous.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				DEVELOPMENT_TEAM = 8F2CMQZJN6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1287,7 +1287,7 @@
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
 				INFOPLIST_FILE = Indigenous/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = software.studioh.Indigenous;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.popcoding.i-indie";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules/**";
 				SWIFT_VERSION = 4.0;
@@ -1304,7 +1304,7 @@
 				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = Indigenous/Indigenous.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 26VU3UTL8J;
+				DEVELOPMENT_TEAM = 8F2CMQZJN6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1312,7 +1312,7 @@
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
 				INFOPLIST_FILE = Indigenous/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = software.studioh.Indigenous;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.popcoding.i-indie";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Modules/**";
 				SWIFT_VERSION = 4.0;

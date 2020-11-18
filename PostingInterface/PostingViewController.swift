@@ -78,6 +78,8 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         case .denied:
             // same same
             print("User has denied the permission.")
+        default:
+            break
         }
     }
     
