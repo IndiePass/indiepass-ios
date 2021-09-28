@@ -1,4 +1,4 @@
-# indigenous iOS
+# Indigenous for iOS
 
 Firstly thanks to [@swentel](https://github.com/swentel) for maintaining the iOS version for the past couple of years.
 
