@@ -9,7 +9,9 @@
 import UIKit
 import SafariServices
 
-let callbackUrl = URL(string: "indigenous://auth/callback")
+//let callbackUrl = URL(string: "indigenous://auth/callback")
+//let callbackUrl = URL(string: "indigenous-android://oauthcallback")
+let callbackUrl = URL(string: "https://indiepass.app/android-callback")
 //let callbackUrl = URL(string: "https://indigenous.abode.pub/ios-login-redirect")
 let appClientId = "https://indigenous.abode.pub"
 let indieAuthSetupUrl = "https://indieauth.com/setup"
