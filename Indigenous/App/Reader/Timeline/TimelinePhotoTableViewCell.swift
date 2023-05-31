@@ -140,9 +140,16 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         
         post = postData
         
-        
         postTitle.text = post?.name
-        postContent.text = post?.content?.text ?? post?.summary ?? nil
+        let postText: String?
+        if let text = post?.content?.text {
+            postText = text
+        } else if let text = post?.content?.html?.html2String {
+            postText = text
+        } else {
+            postText = post?.summary
+        }
+        postContent.text = postText
         
         authorName.text = post?.author?.name ?? URLComponents.init(url: (post?.url)!, resolvingAgainstBaseURL: false)?.host ?? "Unknown"
         
@@ -156,7 +163,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         } else {
             if post?.photo != nil, post!.photo!.count > 0 {
                 postImage.image = nil
-                postImage.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                postImage.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
                 // if we are here, then there is an unloaded photo
                 post?.downloadPhoto(photoIndex: 0) { returnedImage in
                     DispatchQueue.main.async {

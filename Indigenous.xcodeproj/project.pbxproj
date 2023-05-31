@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9148FBA2A26E55100285E74 /* StringProtocol+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9148FB92A26E55100285E74 /* StringProtocol+Extension.swift */; };
+		A9148FBB2A26E55100285E74 /* StringProtocol+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9148FB92A26E55100285E74 /* StringProtocol+Extension.swift */; };
+		A9148FBD2A26E58B00285E74 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9148FBC2A26E58B00285E74 /* Data+Extension.swift */; };
+		A9148FBE2A26E58B00285E74 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9148FBC2A26E58B00285E74 /* Data+Extension.swift */; };
 		C80AD70E20AB7515000EE9C1 /* CommandDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AD70D20AB7515000EE9C1 /* CommandDelegate.swift */; };
 		C80AEA3A1FEB0A1A00CCBE2E /* TimelineApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA391FEB0A1A00CCBE2E /* TimelineApiResponse.swift */; };
 		C80AEA3C1FEB0A4C00CCBE2E /* TimelinePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AEA3B1FEB0A4B00CCBE2E /* TimelinePost.swift */; };
@@ -208,6 +212,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A9148FB92A26E55100285E74 /* StringProtocol+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Extension.swift"; sourceTree = "<group>"; };
+		A9148FBC2A26E58B00285E74 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		C80AD70D20AB7515000EE9C1 /* CommandDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandDelegate.swift; sourceTree = "<group>"; };
 		C80AEA391FEB0A1A00CCBE2E /* TimelineApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineApiResponse.swift; sourceTree = "<group>"; };
 		C80AEA3B1FEB0A4B00CCBE2E /* TimelinePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePost.swift; sourceTree = "<group>"; };
@@ -457,6 +463,8 @@
 			isa = PBXGroup;
 			children = (
 				C864F3A9205C1DF2000C5F89 /* String.extension.swift */,
+				A9148FB92A26E55100285E74 /* StringProtocol+Extension.swift */,
+				A9148FBC2A26E58B00285E74 /* Data+Extension.swift */,
 			);
 			path = SwiftExtensions;
 			sourceTree = "<group>";
@@ -915,6 +923,7 @@
 				C8CBDEF01FB4E8E6001CF409 /* MicropubShareViewController.swift in Sources */,
 				C85B24492005975C0097E577 /* PostingViewController.swift in Sources */,
 				C8D171D31FF58BFB00134485 /* FontAwesomeSegmentedControl.swift in Sources */,
+				A9148FBE2A26E58B00285E74 /* Data+Extension.swift in Sources */,
 				C8CBDEF41FB4EAD4001CF409 /* RealLinkParser.swift in Sources */,
 				C8D171C01FF46DCC00134485 /* AccountSelectorTableViewController.swift in Sources */,
 				C8DAA8B5201127D7002B7083 /* MicropubPhoto.swift in Sources */,
@@ -940,6 +949,7 @@
 				C8D171D01FF58BFB00134485 /* FontAwesome.swift in Sources */,
 				C840A2D2200D114A00CD2091 /* SimpleSelectionDelegate.swift in Sources */,
 				C8F724A320866BB500BB53B2 /* RandomString.swift in Sources */,
+				A9148FBB2A26E55100285E74 /* StringProtocol+Extension.swift in Sources */,
 				C8F431CB1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,
 				C8D171D11FF58BFB00134485 /* FontAwesomeStateRequirement.swift in Sources */,
 				C845B46F1FF5E6E400354391 /* Jf2Post.swift in Sources */,
@@ -987,6 +997,7 @@
 				C86714FC20B25F250014D242 /* ChannelSettingsViewController.swift in Sources */,
 				C8D171E21FF58C3900134485 /* FontAwesomeTextRepresentable.swift in Sources */,
 				C8D171DE1FF58C3900134485 /* FontAwesomeImageView.swift in Sources */,
+				A9148FBD2A26E58B00285E74 /* Data+Extension.swift in Sources */,
 				C80AEA401FEB0B4100CCBE2E /* TimelinePostContent.swift in Sources */,
 				C845B46E1FF5E6E400354391 /* Jf2Post.swift in Sources */,
 				C8753BF6200FDDE5005C1E28 /* ShortcutItemType.swift in Sources */,
@@ -1022,6 +1033,7 @@
 				C8F431C81FB530010026B8D6 /* HalfModalInteractiveTransition.swift in Sources */,
 				C81260642059D68E009DE884 /* ChannelUnreadStatus.swift in Sources */,
 				C8B3B0881FAADAA90041C58E /* CSS.swift in Sources */,
+				A9148FBA2A26E55100285E74 /* StringProtocol+Extension.swift in Sources */,
 				C8E7008020C76B1C00B134BC /* DataController.swift in Sources */,
 				C8439C35203B412C004EE01E /* TimelineMarkAsReadRequest.swift in Sources */,
 				C8F431CA1FB530010026B8D6 /* HalfModalTransitionAnimator.swift in Sources */,

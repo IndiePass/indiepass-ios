@@ -91,11 +91,15 @@ public class Jf2Post: Codable {
         
         let dateOnlyFormat = DateFormatter()
         dateOnlyFormat.dateFormat = "yyyy'-'MM'-'dd"
-        
+
+        let iso601MilliVariant = DateFormatter()
+        iso601MilliVariant.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+
         if let dateString = try? values.decode(String.self, forKey: .published) {
             published = ISO8601DateFormatter().date(from: dateString) ??
                         iso601SpaceVariant.date(from: dateString) ??
-                        dateOnlyFormat.date(from: dateString)
+                        dateOnlyFormat.date(from: dateString) ??
+                        iso601MilliVariant.date(from: dateString)
         } else {
             published = nil
         }
