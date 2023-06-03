@@ -1,6 +1,6 @@
 //
 //  MicropubRsvpValues.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Edward Hinkle on 1/13/18.
 //  Copyright © 2018 Studio H, LLC. All rights reserved.

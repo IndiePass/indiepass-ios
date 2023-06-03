@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Eddie Hinkle on 4/20/17.
 //  Copyright © 2017 Studio H, LLC. All rights reserved.
@@ -173,7 +173,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     public func indieAuthProcess(authorizationCode: String, state: String, meUrl: URL) {
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
         var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         
         let copyOfUserEndpoints = userEndpoints;
@@ -184,7 +184,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
                 guard scope.lowercased().contains("create") || scope.lowercased().contains("post") else {
                     // TODO: Figure out why this error screen isn't working
                     // What is wrong??
-                    self.presentErrorLoginAgain("Recieved scope of \(scope), you must be authorized with at least create scope.")
+                    self.presentErrorLoginAgain("Received scope of \(scope), you must be authorized with at least create scope.")
                     return
                 }
                 
