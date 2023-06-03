@@ -173,7 +173,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     public func indieAuthProcess(authorizationCode: String, state: String, meUrl: URL) {
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
+        let defaults = UserDefaults(suiteName: AppGroup)
         var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         
         let copyOfUserEndpoints = userEndpoints;
