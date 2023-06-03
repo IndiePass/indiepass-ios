@@ -10,24 +10,30 @@ import Social
 import MobileCoreServices
 import SafariServices
 import CoreData
+import Intents
 
 class TimelineViewController: UITableViewController, UITableViewDataSourcePrefetching,
                                                      PostingViewDelegate,
                                                      UINavigationControllerDelegate,
-                                                     ChannelSettingsDelegate {
+                                                     ChannelSettingsDelegate,
+                                                     TimelineCellDelegate {
     
     var channelSettingsTransitioningDelegate: HalfModalTransitioningDelegate?
+    let impactFeedback = UIImpactFeedbackGenerator()
     
 //    var channel: Channel? = nil
     var uid: String!
     var channelData: ChannelData? = nil
     var timeline: Timeline? = nil
+    var account: IndieAuthAccount? = nil
     var fetchingOlderData: Bool = false
     var fetchingNewerData: Bool = false
     var previousDataAvailable: Bool = true
     var mediaTimeTracking: [Int: String] = [:]
     var context: NSManagedObjectContext? = nil
     private var isTransitioning: Bool = true
+    private var selectedRowIndex: Int? = nil
+    private var thereIsCellTapped: Bool = false
     
     @IBOutlet weak var channelSettingsButton: UIBarButtonItem!
     
@@ -200,8 +206,8 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             success(true)
         })
         
-        replyAction.image = UIImage(named: "tick")
-        replyAction.backgroundColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+        replyAction.image = UIImage.fontAwesomeIcon(name: .reply, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        replyAction.backgroundColor = ThemeManager.currentTheme().deepColor
 
         return UISwipeActionsConfiguration(actions: [replyAction])
     }
@@ -216,48 +222,44 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             
             let viewAction = UIContextualAction(style: .normal, title:  "View", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 
-                if let postUrl = post.url {
-                    self.isTransitioning = true
-                    let safariVC = SFSafariViewController(url: postUrl)
-                    self.present(safariVC, animated: true)
-                    
-                    if post.isRead != nil, let postId = post.id {
-                        post.isRead = true
-                        DispatchQueue.global(qos: .background).async { [weak self] in
-                            self?.timeline?.markAsRead(posts: [postId]) { error in
-                                if error != nil {
-                                    print("Error Marking post as read \(error ?? "")")
-                                }
+                self.isTransitioning = true
+                self.performSegue(withIdentifier: "showFullArticle", sender: post)
+                if post.isRead != nil, let postId = post.id {
+                    post.isRead = true
+                    DispatchQueue.global(qos: .background).async { [weak self] in
+                        self?.timeline?.markAsRead(posts: [postId]) { error in
+                            if error != nil {
+                                print("Error Marking post as read \(error ?? "")")
                             }
                         }
                     }
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        self?.tableView.reloadRows(at: [indexPath], with: .none)
-                    }
-                    success(true)
-                } else {
-                    success(false)
                 }
-            })
-            viewAction.image = UIImage(named: "tick")
-            viewAction.backgroundColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
-            
-            let shareAction = UIContextualAction(style: .normal, title:  "Share", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-                
-                if let postUrl = post.url {
-                    let shareVC = UIActivityViewController(activityItems: [postUrl], applicationActivities: nil)
-                    shareVC.popoverPresentationController?.sourceView = self.view
-                    self.present(shareVC, animated: true, completion: nil)
-                    success(true)
-                } else {
-                    success(false)
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadRows(at: [indexPath], with: .none)
                 }
+
+                success(true)
             })
-            shareAction.image = UIImage(named: "Action")
-            shareAction.backgroundColor = #colorLiteral(red: 0.8063602448, green: 0.371145457, blue: 0.3616603613, alpha: 1)
+            viewAction.image = UIImage.fontAwesomeIcon(name: .alignLeft, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+            viewAction.backgroundColor = ThemeManager.currentTheme().deepColor
             
-            return UISwipeActionsConfiguration(actions: [viewAction, shareAction])
+//            let shareAction = UIContextualAction(style: .normal, title:  "Share", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+//
+//                if let postUrl = post.url {
+//                    let shareVC = UIActivityViewController(activityItems: [postUrl], applicationActivities: nil)
+//                    shareVC.popoverPresentationController?.sourceView = self.view
+//                    self.present(shareVC, animated: true, completion: nil)
+//                    success(true)
+//                } else {
+//                    success(false)
+//                }
+//            })
+//
+//            shareAction.image = UIImage(named: "tick")
+//            shareAction.backgroundColor = #colorLiteral(red: 0.8063602448, green: 0.371145457, blue: 0.3616603613, alpha: 1)
+        
+            return UISwipeActionsConfiguration(actions: [viewAction])
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -272,6 +274,8 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
         
 //        if let photoCount = post.photo?.count, photoCount > 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoTimelineCell", for: indexPath) as! TimelinePhotoTableViewCell
+        cell.account = self.account
+        cell.delegate = self
         cell.setContent(ofPost: post)
         cell.mediaControlCallback = { [weak self] currentTime in
             if let time = currentTime {
@@ -310,6 +314,37 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 }
             }
         }
+        
+        self.tableView.beginUpdates()
+        
+        // If there is a previous selected row index, we should hide the response bar
+        if selectedRowIndex != nil, selectedRowIndex != -1 {
+            if let previousTimelineCell = tableView.cellForRow(at: IndexPath(row: selectedRowIndex!, section: 0)) as? TimelinePhotoTableViewCell {
+                previousTimelineCell.hideResponseBar()
+            }
+        }
+
+        if selectedRowIndex != indexPath.row {
+            // If a new cell is tapped, we need to track that and display the new response bar
+            thereIsCellTapped = true
+            selectedRowIndex = indexPath.row
+            if let currentTimelineCell = tableView.cellForRow(at: indexPath) as? TimelinePhotoTableViewCell {
+                currentTimelineCell.displayResponseBar()
+                if let isRead = currentTimelineCell.post?.isRead, !isRead, let postId = currentTimelineCell.post?.id {
+                    currentTimelineCell.displayAsRead()
+                    timeline?.markAsRead(posts: [postId]) { _ in
+                        // TODO: Handle errors
+                    }
+                }
+            }
+        }
+        else {
+            // there is no cell selected anymore, hide everything
+            thereIsCellTapped = false
+            selectedRowIndex = -1
+        }
+        
+        self.tableView.endUpdates()
         
         
         //let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
@@ -353,6 +388,21 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
             if let context = self?.context, let uid = self?.uid, let channelData = try? ChannelData.findChannel(byId: uid, in: context) {
                 self?.channelData = channelData
             
+                if let channelName = channelData?.name, let channelId = channelData?.uid {
+                    let activity = NSUserActivity(activityType: "software.studioh.Indigenous.viewTimeline")
+                    activity.title = "Open \(channelName)"
+                    activity.userInfo = ["id": channelId, "name": channelName]
+                    activity.isEligibleForSearch = true
+                    
+                    if #available(iOS 12.0, *) {
+                        activity.isEligibleForPrediction = true
+                        activity.suggestedInvocationPhrase = "View \(channelName)"
+                    }
+                    
+                    self?.view.userActivity = activity
+                    activity.becomeCurrent()
+                }
+                
                 let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
                 let activeAccount = defaults?.integer(forKey: "activeAccount") ?? 0
                 if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
@@ -361,6 +411,7 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                  
                         print("about to load timeline")
                     
+                        self?.account = account
                         self?.timeline = Timeline()
                         self?.timeline?.accountDetails = account
                         self?.timeline?.channel = Channel(fromData: channelData)
@@ -433,10 +484,77 @@ class TimelineViewController: UITableViewController, UITableViewDataSourcePrefet
                 }
             }
         }
+        
+        if segue.identifier == "showFullArticle" {
+            if let fullViewVC = destinationViewController as? FullArticleViewController {
+                
+                if let fullPost = sender as? Jf2Post {
+                    fullViewVC.currentPost = fullPost
+                    fullViewVC.timeline = timeline
+                }
+                
+//                postingVC.displayAsModal = false
+//                postingVC.delegate = self
+            }
+        }
     }
     
     func removePostingView() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - TimelineCellDelegate Methods
+    func shareUrl(url: URL) {
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(activityViewController, animated: true) { [weak self] in
+            self?.impactFeedback.impactOccurred()
+        }
+    }
+    
+    func replyToUrl(url: URL) {
+        let replyToPost = Jf2Post()
+        replyToPost.url = url
+        performSegue(withIdentifier: "showReplyView", sender: replyToPost)
+    }
+    
+    func moreOptions(post: Jf2Post, sourceButton: UIBarButtonItem) {
+        if let postId = post.id, let url = post.url, account != nil {
+            let alert = UIAlertController(title: "More Options", message: "\(url)", preferredStyle: .actionSheet)
+            if let popoverController = alert.popoverPresentationController {
+                popoverController.barButtonItem = sourceButton
+            }
+            
+            if post.isRead != nil {
+                if post.isRead! {
+                    alert.addAction(UIAlertAction(title: "Mark as Unread", style: .default, handler: { [weak self] action in
+                        self?.timeline?.markAsUnread(posts: [postId]) { response in
+                            // TODO: Handle errors
+                        }
+                    }))
+                } else {
+                    alert.addAction(UIAlertAction(title: "Mark as Read", style: .default, handler: { [weak self] action in
+                        self?.timeline?.markAsRead(posts: [postId]) { response in
+                            // TODO: Handle errors
+                        }
+                    }))
+                }
+            }
+            alert.addAction(UIAlertAction(title: "Mark posts below as read", style: .default, handler: { [weak self] action in
+                self?.timeline?.markAsRead(postsBefore: postId) { response in
+                    // TODO: Handle errors
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Delete post", style: .default, handler: { [weak self] action in
+                self?.timeline?.removePost(postId: postId) { response in
+                    // TODO: Handle errors
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+            self.present(alert, animated: true) { [weak self] in
+                self?.impactFeedback.impactOccurred()
+            }
+        }
     }
     
     // MARK: - ChannelSettingsDelegate Methods

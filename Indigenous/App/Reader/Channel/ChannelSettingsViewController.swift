@@ -30,10 +30,11 @@ class ChannelSettingsViewController: UIViewController, HalfModalPresentable {
     
     @IBAction func markAllPosts(_ sender: UIButton) {
         delegate?.markAllPostsAsRead()
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func close(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func updateMarkAllPostsButtonText() {
@@ -50,6 +51,11 @@ class ChannelSettingsViewController: UIViewController, HalfModalPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = ThemeManager.currentTheme().backgroundColor
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        navigationController?.navigationBar.backgroundColor = ThemeManager.currentTheme().backgroundColor
         
         closeButton.image = UIImage.fontAwesomeIcon(name: .times, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
 

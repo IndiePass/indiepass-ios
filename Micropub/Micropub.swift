@@ -24,13 +24,13 @@ func sendMicropub(forAction: MicropubResponseType, aboutUrl: URL, forUser user: 
         
         switch(forAction) {
             case .like:
-                entryString = "h=entry&like-of=\(encodedUrl)"
+                entryString = "h=entry&like-of=\(encodedUrl)&summary=Liked: \(encodedUrl)"
             case .repost:
-                entryString = "h=entry&repost-of=\(encodedUrl)"
+                entryString = "h=entry&repost-of=\(encodedUrl)&summary=Reposted: \(encodedUrl)"
             case .bookmark:
-                entryString = "h=entry&bookmark-of=\(encodedUrl)"
+                entryString = "h=entry&bookmark-of=\(encodedUrl)&summary=Bookmarked: \(encodedUrl)"
             case .listen:
-                entryString = "h=entry&listen-of=\(encodedUrl)"
+                entryString = "h=entry&listen-of=\(encodedUrl)&summary=Listened: \(encodedUrl)"
             default:
                 print("ERROR")
         }

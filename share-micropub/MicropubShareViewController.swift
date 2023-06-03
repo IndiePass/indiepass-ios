@@ -21,6 +21,9 @@ class MicropubShareViewController: UIViewController, UINavigationControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // TODO: Can't decide if I want to use the theme manager inside the Share Extension
+//        ThemeManager.applyTheme(theme: .blue)
+        
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         

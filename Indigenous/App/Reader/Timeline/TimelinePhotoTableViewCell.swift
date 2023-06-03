@@ -12,10 +12,13 @@ import AVFoundation
 class TimelinePhotoTableViewCell: UITableViewCell {
 
     var post: Jf2Post? = nil
+    var account: IndieAuthAccount? = nil
     var player: AVPlayer? = nil
     var playerToken: Any? = nil
     var mediaControlCallback: ((_ currentTime: Int?) -> ())?
-    private var unreadIndicator: CALayer? = nil
+    var delegate: TimelineCellDelegate? = nil
+    
+    let notificationFeedback = UINotificationFeedbackGenerator()
     
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
@@ -23,6 +26,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDate: UILabel!
     @IBOutlet weak var postTitle: UILabel!
+    @IBOutlet weak var unreadIndicator: UILabel!
     
     @IBOutlet weak var authorPhotoWidth: NSLayoutConstraint!
     @IBOutlet weak var authorPhotoHeight: NSLayoutConstraint!
@@ -34,6 +38,57 @@ class TimelinePhotoTableViewCell: UITableViewCell {
     @IBOutlet weak var audioPlayerHeight: NSLayoutConstraint!
     @IBOutlet weak var audioLoading: UIActivityIndicatorView!
     @IBOutlet weak var replyIcon: UILabel!
+    
+    @IBOutlet weak var likeButton: UIBarButtonItem!
+    @IBOutlet weak var repostButton: UIBarButtonItem!
+    @IBOutlet weak var replyButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var moreButton: UIBarButtonItem!
+    @IBOutlet weak var responseToolbar: UIToolbar!
+    @IBOutlet weak var responseToolbarHeight: NSLayoutConstraint!
+    
+    @IBAction func responseButtonPressed(_ sender: UIBarButtonItem) {
+        switch sender.title {
+        case "Like":
+            if let url = post?.url, account != nil {
+                notificationFeedback.notificationOccurred(.success)
+                
+                sendMicropub(forAction: .like, aboutUrl: url, forUser: account!) {
+                    // TODO: Need to display an alert based on if it was successful or not
+                }
+            } else {
+                notificationFeedback.notificationOccurred(.error)
+            }
+        case "Repost":
+            if let url = post?.url, account != nil {
+                notificationFeedback.notificationOccurred(.success)
+                sendMicropub(forAction: .repost, aboutUrl: url, forUser: account!) {
+                    // TODO: Need to display an alert based on if it was successful or not
+                }
+            } else {
+                notificationFeedback.notificationOccurred(.error)
+            }
+        case "Reply":
+            if let url = post?.url, account != nil {
+                notificationFeedback.notificationOccurred(.success)
+                delegate?.replyToUrl(url: url)
+            } else {
+                notificationFeedback.notificationOccurred(.error)
+            }
+        default:
+            if let url = post?.url, account != nil {
+                delegate?.shareUrl(url: url)
+            } else {
+                notificationFeedback.notificationOccurred(.error)
+            }
+        }
+    }
+    
+    @IBAction func moreButtonPressed(_ sender: Any) {
+        if post != nil {
+            delegate?.moreOptions(post: post!, sourceButton: moreButton)
+        }
+    }
     
     @IBAction func activatedAudioControl(_ sender: Any) {
         if player == nil {
@@ -74,11 +129,11 @@ class TimelinePhotoTableViewCell: UITableViewCell {
 //        }
         
         if keyPath == #keyPath(AVPlayerItem.status) {
-            let status: AVPlayerItemStatus
+            let status: AVPlayerItem.Status
             
             // Get the status change from the change dictionary
             if let statusNumber = change?[.newKey] as? NSNumber {
-                status = AVPlayerItemStatus(rawValue: statusNumber.intValue)!
+                status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
             } else {
                 status = .unknown
             }
@@ -136,6 +191,29 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         try? session.setActive(false)
     }
     
+    func displayResponseBar() {
+        responseToolbar.setBackgroundImage(nil, forToolbarPosition: .bottom, barMetrics: .default)
+        likeButton.image = UIImage.fontAwesomeIcon(name: .thumbsOUp, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        repostButton.image = UIImage.fontAwesomeIcon(name: .retweet, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        replyButton.image = UIImage.fontAwesomeIcon(name: .reply, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        moreButton.image = UIImage.fontAwesomeIcon(name: .ellipsisH, textColor: UIColor.white, size: CGSize(width: 30, height: 30))
+        UIView.animate(withDuration: 0.4, animations: { [weak self] in
+            self?.responseToolbarHeight.constant = 44
+        })
+    }
+    
+    func hideResponseBar() {
+        UIView.animate(withDuration: 0.4, animations: { [weak self] in
+            self?.responseToolbarHeight.constant = 0
+        })
+    }
+    
+    func displayAsRead() {
+        UIView.animate(withDuration: 0.4, animations: { [weak self] in
+            self?.unreadIndicator.alpha = 0
+        })
+    }
+    
     func setContent(ofPost postData: Jf2Post) {
         
         post = postData
@@ -151,7 +229,29 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         }
         postContent.text = postText
         
-        authorName.text = post?.author?.name ?? URLComponents.init(url: (post?.url)!, resolvingAgainstBaseURL: false)?.host ?? "Unknown"
+        if let likeOfCount = post?.likeOf?.count,
+            likeOfCount > 0,
+            let likeOfUrl = post?.likeOf?[0],
+            let likeOfComponents = URLComponents(url: likeOfUrl, resolvingAgainstBaseURL: false) {
+            // TODO: Make sure this isn't wrapped in an optional
+            postContent.text = "liked a post\(likeOfComponents.host != nil ? " on \(likeOfComponents.host!)" : "")."
+        }
+        
+        if let bookmarkOfCount = post?.bookmarkOf?.count,
+            bookmarkOfCount > 0,
+            let bookmarkOfUrl = post?.bookmarkOf?[0],
+            let bookmarkOfComponents = URLComponents(url: bookmarkOfUrl, resolvingAgainstBaseURL: false) {
+            // TODO: Make sure this isn't wrapped in an optional
+            postContent.text = "bookmarked a post\(bookmarkOfComponents.host != nil ? " on \(bookmarkOfComponents.host!)" : "")."
+        }
+        
+        if let name = post?.author?.name {
+            authorName.text = name
+        } else if let postUrl = post?.url {
+            authorName.text = URLComponents.init(url: postUrl, resolvingAgainstBaseURL: false)?.host
+        } else {
+            authorName.text = "Unknown"
+        }
         
         postImage.isHidden = false
         postImageHeight.constant = 200
@@ -179,15 +279,17 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         }
         
         authorPhoto.isHidden = false
-        authorPhotoHeight.constant = 50
-        authorPhotoWidth.constant = 50
+        authorPhotoHeight.constant = 30
+        authorPhotoWidth.constant = 30
+        authorPhoto.layer.cornerRadius = 4.0
+        authorPhoto.clipsToBounds = true
         
         if let authorImageUrl = post?.author?.photo?[0],
             let authorImage = post?.author?.photoImage?[authorImageUrl] {
             authorPhoto.image = authorImage.image
         } else {
             if post?.author?.photo != nil, post!.author!.photo!.count > 0 {
-                authorPhoto.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                authorPhoto.backgroundColor = UIColor.clear
                 authorPhoto.image = nil
                 post?.author?.downloadPhoto(photoIndex: 0) { returnedAuthorPhoto in
                     DispatchQueue.main.async {
@@ -224,6 +326,7 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         
         if postTitle.text == nil || postTitle.text == "" {
             postTitle.isHidden = true
+            postTitle.text = nil
         } else {
             postTitle.isHidden = false
             // Since a post title exists, we should also truncate the post content to 280 characters
@@ -239,27 +342,10 @@ class TimelinePhotoTableViewCell: UITableViewCell {
         }
 
         if let postRead = post?.isRead, postRead == false {
-            print("Unread Post \(String(describing: post?.name))")
-            let borderWidth: CGFloat = 4
-            
-            if unreadIndicator == nil {
-                unreadIndicator = CALayer()
-                unreadIndicator!.borderColor = #colorLiteral(red: 0.7994786501, green: 0.1424995661, blue: 0.1393664181, alpha: 1)
-                unreadIndicator!.borderWidth = borderWidth
-                
-                contentView.layer.addSublayer(unreadIndicator!)
-                contentView.layer.masksToBounds = true
-            }
-
-            DispatchQueue.main.async { [weak self] in
-                if let frameHeight = self?.contentView.frame.height {
-                    self?.unreadIndicator!.frame = CGRect(x: 0, y: 0, width: borderWidth, height: frameHeight)
-                }
-            }
-            unreadIndicator!.isHidden = false
+            unreadIndicator.textColor = ThemeManager.currentTheme().mainColor
+            unreadIndicator.isHidden = false
         } else {
-            print("Read Post \(String(describing: post?.name))")
-            unreadIndicator?.isHidden = true
+            unreadIndicator.isHidden = true
         }
         
     }

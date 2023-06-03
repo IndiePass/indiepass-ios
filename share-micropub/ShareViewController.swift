@@ -29,6 +29,8 @@ import MobileCoreServices
 
 class ShareViewController: UITableViewController, HalfModalPresentable, PostingViewDelegate {
     
+    let notificationFeedback = UINotificationFeedbackGenerator()
+    
 //    var micropubAuth: [String: Any]? = nil
     var sharingType: String? = nil
     var sharingContent: URLComponents? = nil
@@ -95,18 +97,24 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
                 if (indexPath.section == 0) {
                     switch(micropubActions[indexPath.row]) {
                         case .like:
+                            notificationFeedback.notificationOccurred(.success)
                             sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .repost:
+                            notificationFeedback.notificationOccurred(.success)
                             sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .bookmark:
+                            notificationFeedback.notificationOccurred(.success)
                             sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .listen:
+                            notificationFeedback.notificationOccurred(.success)
                             sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .reply:
+                            notificationFeedback.notificationOccurred(.success)
                             performSegue(withIdentifier: "showReplyView", sender: self)
                         default:
-                            let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                            notificationFeedback.notificationOccurred(.error)
+                            let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
                             self.present(alert, animated: true, completion: nil)
                     }
                 }

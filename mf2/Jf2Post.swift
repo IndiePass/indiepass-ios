@@ -118,7 +118,7 @@ public class Jf2Post: Codable {
             if let doc = try? HTML(html: contentHTML, encoding: .utf8) {
                 // Look for all img tags
                 for imgTag in doc.css("img") {
-                    if let imgSrc = imgTag["src"], let imgUrl = URL(string: imgSrc) {
+                    if let imgSrc = imgTag["src"], imgSrc.range(of: "core/emoji") == nil, let imgUrl = URL(string: imgSrc) {
                         if photo == nil {
                             photo = []
                         }

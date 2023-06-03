@@ -19,19 +19,77 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let dataController = DataController(modelName: "Indigenous")
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        Fabric.with([Crashlytics.self])
-        UINavigationBar.appearance().shadowImage = UIImage()
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        // Configure Crashlytics for Crash Reporting
+        Fabric.with([Crashlytics.self])
+        
+        // Configure the theme
+        ThemeManager.applyTheme(theme: ThemeManager.currentTheme(), window: window)
+        
+        // Loading CoreData
         dataController.load()
         
-        let mainVC = window?.rootViewController as! MainViewController
-        mainVC.dataController = dataController
-        
+        // Set up background audio
         let session: AVAudioSession = AVAudioSession.sharedInstance();
-        try? session.setCategory(AVAudioSessionCategoryPlayback)
+        try? session.setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.spokenAudio)
+        
+        // Check if has any user accounts
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
+        let loggedIn = micropubAccounts.count >= 1
+        
+        if loggedIn {
+            // Add shortcut for creating a new post
+            let shortcutItem = UIApplicationShortcutItem(type: ShortcutItemType.NewPost.rawValue, localizedTitle: "New Post")
+            UIApplication.shared.shortcutItems = [shortcutItem]
+
+            let appView = UIStoryboard(name: "Main", bundle: nil)
+            if let appVC = appView.instantiateInitialViewController() as? MainViewController {
+                appVC.dataController = dataController
+                self.window?.rootViewController = appVC
+                self.window?.makeKeyAndVisible()
+            }
+        } else {
+            // We should empty the shortcut items
+            UIApplication.shared.shortcutItems = []
+            let onboardingView = UIStoryboard(name: "Onboarding", bundle: nil)
+
+            if let onboardingVC = onboardingView.instantiateInitialViewController() as? OnboardingViewController {
+                onboardingVC.dataController = dataController
+                self.window?.rootViewController = onboardingVC
+                self.window?.makeKeyAndVisible()
+            }
+        }
         
         return true
+    }
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if userActivity.activityType == "software.studioh.Indigenous.viewTimeline" {
+            if let appVC = self.window?.rootViewController as? MainViewController,
+               let channelsVC = appVC.viewControllers[0] as? ChannelViewController,
+               let channelName = userActivity.userInfo?["name"] as? String,
+               let channelId = userActivity.userInfo?["id"] as? String {
+               
+                    let channel = Channel(uniqueId: channelId, withName: channelName)
+                
+                    let timelineStoryboard = UIStoryboard(name: "Timeline", bundle: nil)
+                    if let timelineVC = timelineStoryboard.instantiateInitialViewController() as? TimelineViewController {
+                    
+                        timelineVC.uid = channel.uid
+                        timelineVC.dataController = dataController
+                        timelineVC.title = channel.name
+  
+                        appVC.setViewControllers([channelsVC, timelineVC], animated: false)
+                }
+            }
+            return true
+        }
+        
+        return false
     }
     
     func applicationHandleRemoteNotification(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])
@@ -50,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
         print("Attempting URL Call in App Delegate")
         
@@ -92,3 +150,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
+}

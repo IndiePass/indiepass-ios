@@ -17,6 +17,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     var loginDisplayedAsModal: Bool? = nil
     var fetchingSyndicateTargets = false
     
+    let notificationFeedback = UINotificationFeedbackGenerator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +51,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,6 +60,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 return userSettings.count + 4
             case 1:
                 return userAccounts.count + 1
+            case 2:
+                return 2
             default:
                 return 0
         }
@@ -78,13 +82,36 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 }
                 
                 if (defaultUserAccount == indexPath.row) {
-                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .userCircleO, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .userCircleO, textColor: ThemeManager.currentTheme().textColor, size: CGSize(width: 30, height: 30))
                 } else {
-                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+                    cell.imageView?.image = UIImage.fontAwesomeIcon(name: .user, textColor: ThemeManager.currentTheme().textColor, size: CGSize(width: 30, height: 30))
                 }
             } else {
                 cell.textLabel?.text = "Add New Micropub Account"
                 cell.imageView?.image = nil
+            }
+            
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserSettingCell", for: indexPath)
+            
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "Cardinal (Light)"
+                cell.imageView?.image = nil
+            case 1:
+                cell.textLabel?.text = "Zombie (Dark)"
+                cell.imageView?.image = nil
+            default:
+                cell.textLabel?.text = nil
+                cell.imageView?.image = nil
+            }
+            cell.detailTextLabel?.text = nil
+            
+            if (ThemeManager.currentTheme().rawValue == indexPath.row) {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
             }
             
             return cell
@@ -127,6 +154,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         switch section {
             case 0:
                 return userAccounts[activeUserAccount].me.absoluteString.components(separatedBy: "://").last?.components(separatedBy: "/").first
+            case 2:
+                return "Theme"
             default:
                 return nil
         }
@@ -137,6 +166,8 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
         let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         
         if indexPath.section == 1 {
+            
+            notificationFeedback.notificationOccurred(.success)
             
             if (indexPath.row < userAccounts.count) {
                 activeUserAccount = indexPath.row
@@ -149,6 +180,24 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 showLoginScreen()
             }
             
+        } else if indexPath.section == 2 {
+        
+            if let theme = Theme(rawValue: indexPath.row) {
+                notificationFeedback.notificationOccurred(.success)
+                ThemeManager.applyTheme(theme: theme, window: UIApplication.shared.keyWindow)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    UIApplication.shared.keyWindow?.subviews.forEach({ (view: UIView) in
+                        view.removeFromSuperview()
+                        UIApplication.shared.keyWindow?.addSubview(view)
+                    })
+                }
+            } else {
+                // TODO: Present error that apply theme failed
+                notificationFeedback.notificationOccurred(.error)
+            }
+            
+            
         } else {
             
             if (indexPath.row < userSettings.count) {
@@ -156,13 +205,16 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 
             } else {
                 if indexPath.row == userSettings.count {
+                    notificationFeedback.notificationOccurred(.success)
                     refreshSyndicationTargets()
                 } else if indexPath.row == userSettings.count + 1 {
                     // TODO: View DEBUG INFO
                     viewAccountDebug()
                 } else if indexPath.row == userSettings.count + 2 {
+                    notificationFeedback.notificationOccurred(.success)
                     makeCurrentUserDefault()
                 } else if indexPath.row == userSettings.count + 3 {
+                    notificationFeedback.notificationOccurred(.success)
                     logOutCurrentUser()
                 }
             }
@@ -188,7 +240,7 @@ class UserSettingsTableViewController: UITableViewController, IndieAuthDelegate 
                 
                 guard error == nil else {
                     DispatchQueue.main.sync {
-                        let alert = UIAlertController(title: "Syndication Targets Failed", message: error ?? "no message", preferredStyle: UIAlertControllerStyle.alert)
+                        let alert = UIAlertController(title: "Syndication Targets Failed", message: error ?? "no message", preferredStyle: UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }
