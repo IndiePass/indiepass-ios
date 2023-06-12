@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Eddie Hinkle on 4/20/17.
 //  Copyright © 2017 Studio H, LLC. All rights reserved.
@@ -13,7 +13,7 @@ import SafariServices
 //let callbackUrl = URL(string: "indigenous-android://oauthcallback")
 let callbackUrl = URL(string: "https://indiepass.app/android-callback")
 //let callbackUrl = URL(string: "https://indigenous.abode.pub/ios-login-redirect")
-let appClientId = "https://indigenous.abode.pub"
+let appClientId = "https://indiepass.app"
 let indieAuthSetupUrl = "https://indieauth.com/setup"
 let kSafariViewControllerCloseNotification = "kSafariViewControllerCloseNotification"
 
@@ -181,7 +181,7 @@ public class IndieAuthLoginViewController: UIViewController, UITextFieldDelegate
     
     public func indieAuthProcess(authorizationCode: String, state: String, meUrl: URL) {
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: AppGroup)
         var micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         
         let copyOfUserEndpoints = userEndpoints;

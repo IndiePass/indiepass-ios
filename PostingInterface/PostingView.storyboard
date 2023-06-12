@@ -12,7 +12,7 @@
         <!--New Post-->
         <scene sceneID="Gwu-In-smi">
             <objects>
-                <viewController storyboardIdentifier="postingView" modalPresentationStyle="currentContext" id="naI-gX-XzM" customClass="PostingViewController" customModule="Indigenous" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="postingView" modalPresentationStyle="currentContext" id="naI-gX-XzM" customClass="PostingViewController" customModule="IndiePass" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5da-vQ-kj4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -121,7 +121,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoUploadCell" id="2bP-IJ-ei8" customClass="PhotoUploadCollectionViewCell" customModule="Indigenous" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoUploadCell" id="2bP-IJ-ei8" customClass="PhotoUploadCollectionViewCell" customModule="IndiePass" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">

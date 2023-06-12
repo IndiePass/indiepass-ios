@@ -1,6 +1,6 @@
 //
 //  PXColor.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Edward Hinkle on 6/21/18.
 //  Copyright © 2018 Studio H, LLC. All rights reserved.

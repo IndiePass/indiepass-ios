@@ -1,6 +1,6 @@
 //
 //  ThemeManager.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Edward Hinkle on 6/21/18.
 //  Copyright © 2018 Studio H, LLC. All rights reserved.
@@ -156,7 +156,7 @@ class ThemeManager {
     
     // ThemeManager
     static func currentTheme() -> Theme {
-        if let storedTheme = (UserDefaults(suiteName: "group.software.studioh.indigenous")?.value(forKey: SelectedThemeKey) as AnyObject).integerValue {
+        if let storedTheme = (UserDefaults(suiteName: "group.app.indiepass")?.value(forKey: SelectedThemeKey) as AnyObject).integerValue {
             return Theme(rawValue: storedTheme)!
         } else {
             return .red
@@ -169,8 +169,8 @@ class ThemeManager {
     
     static func applyTheme(theme: Theme, window: UIWindow?) {
         // First persist the selected theme using NSUserDefaults.
-        UserDefaults(suiteName: "group.software.studioh.indigenous")?.setValue(theme.rawValue, forKey: SelectedThemeKey)
-        UserDefaults(suiteName: "group.software.studioh.indigenous")?.synchronize()
+        UserDefaults(suiteName: "group.app.indiepass")?.setValue(theme.rawValue, forKey: SelectedThemeKey)
+        UserDefaults(suiteName: "group.app.indiepass")?.synchronize()
         
         // You get your current (selected) theme and apply the main color to the tintColor property of your application’s window.
         window?.tintColor = theme.mainColor

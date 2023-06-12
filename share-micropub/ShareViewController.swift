@@ -89,7 +89,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
@@ -183,7 +183,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
         dismiss(animated: true) { () in
             if let presentingVC = self.parent?.transitioningDelegate as? HalfModalTransitioningDelegate,
                 let micropubVC = presentingVC.viewController as? MicropubShareViewController {
-                micropubVC.extensionContext!.cancelRequest(withError: NSError(domain: "pub.abode.indigenous", code: 1))
+                micropubVC.extensionContext!.cancelRequest(withError: NSError(domain: "app.indiepass", code: 1))
             }
         }
     }
@@ -191,7 +191,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         activeAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
         
         self.clearsSelectionOnViewWillAppear = false
@@ -316,7 +316,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
         
         micropubActions = [.reply, .like, .repost, .bookmark]
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
             
