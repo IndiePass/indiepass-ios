@@ -1,6 +1,6 @@
 //
 //  ReplyViewController.swift
-//  IndiePass
+//  Indigenous
 //
 //  Created by Eddie Hinkle on 7/14/17.
 //  Copyright © 2017 Studio H, LLC. All rights reserved.

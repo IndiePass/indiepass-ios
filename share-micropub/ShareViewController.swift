@@ -87,7 +87,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
@@ -183,7 +183,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         activeAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
         
         self.clearsSelectionOnViewWillAppear = false
@@ -308,7 +308,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
         
         micropubActions = [.reply, .like, .repost, .bookmark]
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
             

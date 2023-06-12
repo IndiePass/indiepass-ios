@@ -1,6 +1,6 @@
 //
 //  ModalNavController.swift
-//  IndiePass
+//  Indigenous
 //
 //  Created by Edward Hinkle on 11/9/17.
 //  Copyright © 2017 Studio H, LLC. All rights reserved.

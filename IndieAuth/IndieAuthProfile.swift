@@ -1,6 +1,6 @@
 //
 //  IndieAuthProfile.swift
-//  IndiePass
+//  Indigenous
 //
 //  Created by Edward Hinkle on 12/22/17.
 //  Copyright © 2017 Studio H, LLC. All rights reserved.
