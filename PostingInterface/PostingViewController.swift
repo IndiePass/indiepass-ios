@@ -260,21 +260,21 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     }
     
     func savePostDraft(post: MicropubPost) {
-        let defaults = UserDefaults(suiteName: AppGroup)
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
         if let currentPostData = try? JSONEncoder().encode(post) {
             defaults?.set(currentPostData, forKey: "draftPost")
         }
     }
     
     func clearPostDraft() {
-        let defaults = UserDefaults(suiteName: AppGroup)
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
         if let currentPostData = try? JSONEncoder().encode(MicropubPost(type: .entry, properties: MicropubPostProperties())) {
             defaults?.set(currentPostData, forKey: "draftPost")
         }
     }
     
     func getPostDraft() -> MicropubPost? {
-        let defaults = UserDefaults(suiteName: AppGroup)
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
         if let draftPostData = defaults?.data(forKey: "draftPost"),
            let draftPost = try? JSONDecoder().decode(MicropubPost.self, from: draftPostData) {
                 return draftPost
@@ -350,7 +350,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
             navigationItem.leftBarButtonItem = nil
         }
         
-        let defaults = UserDefaults(suiteName: AppGroup)
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
         let activeAccountId = defaults?.integer(forKey: "activeAccount") ?? 0
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let currentAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccountId]) {

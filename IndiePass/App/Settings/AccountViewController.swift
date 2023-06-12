@@ -10,7 +10,7 @@ import UIKit
 
 class AccountViewController: UIViewController {
     
-    let defaults = UserDefaults(suiteName: AppGroup)
+    let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
 
     override func viewDidLoad() {
         super.viewDidLoad()

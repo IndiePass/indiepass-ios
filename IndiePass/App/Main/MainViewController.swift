@@ -53,7 +53,7 @@ class MainViewController: UINavigationController, IndieAuthDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let defaults = UserDefaults(suiteName: AppGroup)
+        let defaults = UserDefaults(suiteName: "group.software.studioh.indiepass")
         let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         
         if micropubAccounts.count < 1 {
