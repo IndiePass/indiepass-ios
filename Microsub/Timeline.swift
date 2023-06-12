@@ -1,6 +1,6 @@
 //
 //  Timeline.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Edward Hinkle on 1/25/18.
 //  Copyright © 2018 Studio H, LLC. All rights reserved.
@@ -108,6 +108,58 @@ class Timeline {
             var request = URLRequest(url: microsubEndpoint)
             request.httpMethod = "POST"
             request.httpBody = requestData
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
+            request.setValue("Bearer \(account.access_token)", forHTTPHeaderField: "Authorization")
+            
+            let session = URLSession(configuration: URLSessionConfiguration.default)
+            
+            let task = session.dataTask(with: request) { (data, response, error) in
+                // check for any errors
+                guard error == nil else {
+                    completion("error calling POST on \(microsubEndpoint)")
+                    print(error ?? "No error present")
+                    return
+                }
+                
+                // Check if endpoint is in the HTTP Header fields
+                if let httpResponse = response as? HTTPURLResponse, let body = String(data: data!, encoding: .utf8) {
+                    if httpResponse.statusCode == 200 {
+                        completion(nil)
+                    } else {
+                        completion("Status Code not 200")
+                        print(httpResponse)
+                        print(body)
+                    }
+                }
+                
+            }
+            
+            task.resume()
+        }
+    }
+    
+    func removePost(postId: String, completion: @escaping (_ error: String?) -> Swift.Void) {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            
+            guard let microsubEndpoint = self?.accountDetails?.microsub_endpoint else {
+                completion("microsubEndpoint failure")
+                return
+            }
+            
+            guard let account = self?.accountDetails else {
+                completion("No account details")
+                return
+            }
+            
+            guard let channelId = self?.channel?.uid else {
+                completion("No Channel ID")
+                return
+            }
+            
+            var request = URLRequest(url: microsubEndpoint)
+            request.httpMethod = "POST"
+            request.httpBody = "action=timeline&method=remove&channel=\(channelId)&entry=\(postId)".data(using: .utf8, allowLossyConversion: false)
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             request.setValue(UAString(), forHTTPHeaderField: "User-Agent")
             request.setValue("Bearer \(account.access_token)", forHTTPHeaderField: "Authorization")

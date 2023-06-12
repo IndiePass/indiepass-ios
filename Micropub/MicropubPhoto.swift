@@ -1,6 +1,6 @@
 //
 //  MicropubPhoto.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Edward Hinkle on 1/18/18.
 //  Copyright © 2018 Studio H, LLC. All rights reserved.
@@ -36,7 +36,7 @@ public struct MicropubPhoto: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         if let imageFile = image {
-            guard let data = UIImagePNGRepresentation(imageFile) else {
+            guard let data = imageFile.pngData() else {
                 print("Image unable to encode")
                 return
             }
