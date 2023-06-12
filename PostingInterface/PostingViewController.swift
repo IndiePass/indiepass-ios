@@ -1,6 +1,6 @@
 //
 //  PostingViewController.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Edward Hinkle on 1/9/18.
 //  Copyright © 2018 Studio H, LLC. All rights reserved.
@@ -10,6 +10,8 @@ import UIKit
 import Photos
 
 class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelectionDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, URLSessionTaskDelegate, UICollectionViewDataSource {
+    
+    let notificationFeedback = UINotificationFeedbackGenerator()
 
     public var currentPost: MicropubPost? = nil
     public var displayAsModal: Bool = true
@@ -18,7 +20,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     
     var activeAccount: IndieAuthAccount? = nil
     var originalPost: MicropubPost? = nil
-    var tagOptions: [String] = ["Test", "Testing 1", "Testing 4"]
+    var tagOptions: [String] = []
     var currentSelectionView: String? = nil
     var imagePicker = UIImagePickerController()
     var currentUploading: [Int] = []
@@ -47,7 +49,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     
     @IBAction func cancelModal(_ sender: Any) {
         if hasPostChanged() {
-            let alert = UIAlertController(title: "Save Draft", message: "Would you like to save this post as a draft?", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Save Draft", message: "Would you like to save this post as a draft?", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Discard", style: .destructive, handler: { action in
                 self.currentPost = nil
                 self.clearPostDraft()
@@ -95,9 +97,12 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
-        if let newImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let newImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
             
             if self.currentPost?.properties.photo == nil {
                 self.currentPost?.properties.photo = []
@@ -109,7 +114,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
             let uploadingId = (self.currentPost?.properties.photo?.count)! - 1
             currentUploading.append(uploadingId)
             
-            if let fileUrl = info[UIImagePickerControllerImageURL] as? URL {
+            if let fileUrl = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.imageURL)] as? URL {
                 MicropubPost.uploadToMediaEndpoint(image: newPhoto.image!, withId: "\(uploadingId)", ofType: "image/jpeg", withName: fileUrl.lastPathComponent, forUser: activeAccount!, withDelegate: self) { imageUrl in
                     self.currentPost?.properties.photo?[uploadingId].uploadedUrl = imageUrl
                     self.currentPost?.properties.photo?[uploadingId].progressPercent = nil
@@ -167,10 +172,12 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     
     @IBAction func sendPost(_ sender: Any) {
         
+        notificationFeedback.notificationOccurred(.success)
+        
         DispatchQueue.main.async {
             self.postingStatusView.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
             self.postingActivityIndicator.isHidden = false
-            self.postingActivityIndicator.activityIndicatorViewStyle = .white
+            self.postingActivityIndicator.style = .white
             self.postingActivityIndicator.startAnimating()
             self.postingStatus.text = "Sending micropub post..."
             self.view.layoutIfNeeded()
@@ -260,21 +267,21 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     }
     
     func savePostDraft(post: MicropubPost) {
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         if let currentPostData = try? JSONEncoder().encode(post) {
             defaults?.set(currentPostData, forKey: "draftPost")
         }
     }
     
     func clearPostDraft() {
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         if let currentPostData = try? JSONEncoder().encode(MicropubPost(type: .entry, properties: MicropubPostProperties())) {
             defaults?.set(currentPostData, forKey: "draftPost")
         }
     }
     
     func getPostDraft() -> MicropubPost? {
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         if let draftPostData = defaults?.data(forKey: "draftPost"),
            let draftPost = try? JSONDecoder().decode(MicropubPost.self, from: draftPostData) {
                 return draftPost
@@ -319,25 +326,28 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     }
     
     func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func handleKeyboardWillShow(notification: NSNotification) {
-        let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
-        let keyboardDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
+        let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
         keyboardHeight = keyboardFrame.height
         updatePostingView(withAnimation: true, forDuration: keyboardDuration)
     }
     
     @objc func handleKeyboardWillHide(notification: NSNotification) {
-        let keyboardDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
+        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
         keyboardHeight = 0
         updatePostingView(withAnimation: true, forDuration: keyboardDuration)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = ThemeManager.currentTheme().backgroundColor
+        postContentField.textColor = ThemeManager.currentTheme().textColor
         
         postContentField.delegate = self
         photoUploads.dataSource = self
@@ -350,7 +360,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
             navigationItem.leftBarButtonItem = nil
         }
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         let activeAccountId = defaults?.integer(forKey: "activeAccount") ?? 0
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let currentAccount = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccountId]) {
@@ -390,13 +400,13 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
         updatePostingView(withAnimation: false)
         
         if let categoryCount = currentPost?.properties.category?.count, categoryCount > 0 {
-            tagsButton.tintColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+            tagsButton.tintColor = ThemeManager.currentTheme().deepColor
         } else {
             tagsButton.tintColor = self.view.tintColor
         }
         
         if let syndicateCount = currentPost?.properties.mpSyndicateTo?.count, syndicateCount > 0 {
-            syndicateButton.tintColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+            syndicateButton.tintColor = ThemeManager.currentTheme().deepColor
         } else {
             syndicateButton.tintColor = self.view.tintColor
         }
@@ -405,7 +415,7 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        if self.isMovingFromParentViewController {
+        if self.isMovingFromParent {
             if hasPostChanged() == false {
                 // Post hasn't changed since load, so we don't want to save it
                 self.currentPost = nil
@@ -564,4 +574,14 @@ class PostingViewController: UIViewController, UITextViewDelegate, SimpleSelecti
     }
 
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

@@ -29,6 +29,8 @@ import MobileCoreServices
 
 class ShareViewController: UITableViewController, HalfModalPresentable, PostingViewDelegate {
     
+    let notificationFeedback = UINotificationFeedbackGenerator()
+    
 //    var micropubAuth: [String: Any]? = nil
     var sharingType: String? = nil
     var sharingContent: URLComponents? = nil
@@ -87,7 +89,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
@@ -95,18 +97,24 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
                 if (indexPath.section == 0) {
                     switch(micropubActions[indexPath.row]) {
                         case .like:
+                            notificationFeedback.notificationOccurred(.success)
                             sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .repost:
+                            notificationFeedback.notificationOccurred(.success)
                             sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .bookmark:
+                            notificationFeedback.notificationOccurred(.success)
                             sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .listen:
+                            notificationFeedback.notificationOccurred(.success)
                             sendMicropub(forAction: micropubActions[indexPath.row], aboutUrl: sharingContent!.url!, forUser: micropubDetails, completion: shareComplete)
                         case .reply:
+                            notificationFeedback.notificationOccurred(.success)
                             performSegue(withIdentifier: "showReplyView", sender: self)
                         default:
-                            let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                            notificationFeedback.notificationOccurred(.error)
+                            let alert = UIAlertController(title: "Oops", message: "This action isn't built yet", preferredStyle: UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
                             self.present(alert, animated: true, completion: nil)
                     }
                 }
@@ -175,7 +183,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
         dismiss(animated: true) { () in
             if let presentingVC = self.parent?.transitioningDelegate as? HalfModalTransitioningDelegate,
                 let micropubVC = presentingVC.viewController as? MicropubShareViewController {
-                micropubVC.extensionContext!.cancelRequest(withError: NSError(domain: "pub.abode.indigenous", code: 1))
+                micropubVC.extensionContext!.cancelRequest(withError: NSError(domain: "app.indiepass", code: 1))
             }
         }
     }
@@ -183,7 +191,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         activeAccount = defaults?.integer(forKey: "defaultAccount") ?? 0
         
         self.clearsSelectionOnViewWillAppear = false
@@ -308,7 +316,7 @@ class ShareViewController: UITableViewController, HalfModalPresentable, PostingV
         
         micropubActions = [.reply, .like, .repost, .bookmark]
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         if let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data],
             let micropubDetails = try? JSONDecoder().decode(IndieAuthAccount.self, from: micropubAccounts[activeAccount]) {
             

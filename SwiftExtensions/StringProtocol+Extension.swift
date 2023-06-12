@@ -1,6 +1,6 @@
 //
 //  StringProtocol+Extension.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Antonio Rodrigues on 5/30/23.
 //

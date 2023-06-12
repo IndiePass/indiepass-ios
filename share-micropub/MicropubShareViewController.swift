@@ -1,6 +1,6 @@
 //
 //  MicropubShareViewController.swift
-//  Indigenous
+//  IndiePass
 //
 //  Created by Eddie Hinkle on 6/10/17.
 //  Copyright © 2017 Studio H, LLC. All rights reserved.
@@ -21,11 +21,14 @@ class MicropubShareViewController: UIViewController, UINavigationControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = UserDefaults(suiteName: "group.software.studioh.indigenous")
+        // TODO: Can't decide if I want to use the theme manager inside the Share Extension
+//        ThemeManager.applyTheme(theme: .blue)
+        
+        let defaults = UserDefaults(suiteName: "group.app.indiepass")
         let micropubAccounts = defaults?.array(forKey: "micropubAccounts") as? [Data] ?? [Data]()
         
         guard micropubAccounts.count > 0 else {
-            let alert = UIAlertController(title: "Not logged in", message: "You are not currently logged in. Please open Indigenous and log in before using the Share extension.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Not logged in", message: "You are not currently logged in. Please open IndiePass and log in before using the Share extension.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .default) { action in
                 self.cancelShareSheet()
             })
@@ -63,7 +66,7 @@ class MicropubShareViewController: UIViewController, UINavigationControllerDeleg
     }
     
     public func cancelShareSheet() {
-        self.extensionContext!.cancelRequest(withError: NSError(domain: "pub.abode.indigenous", code: 1))
+        self.extensionContext!.cancelRequest(withError: NSError(domain: "app.indiepass", code: 1))
     }
 
     /*

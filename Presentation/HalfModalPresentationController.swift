@@ -12,34 +12,7 @@ class HalfModalPresentationController : UIPresentationController {
     var isMaximized: Bool = false
     var isFullscreen: Bool = false
     
-    var _dimmingView: UIView?
-    var dimmingView: UIView {
-        if let dimmedView = _dimmingView {
-            return dimmedView
-        }
-        
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: containerView!.bounds.width, height: containerView!.bounds.height))
-        
-        // Blur Effect
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.alpha = 0.7
-        blurEffectView.frame = view.bounds
-        
-        view.addSubview(blurEffectView)
-        
-        // Vibrancy Effect
-        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
-        let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-        vibrancyEffectView.frame = view.bounds
-        
-        // Add the vibrancy view to the blur view
-        blurEffectView.contentView.addSubview(vibrancyEffectView)
-        
-        _dimmingView = view
-        
-        return view
-    }
+    let impactFeedback = UIImpactFeedbackGenerator()
     
     func adjustToFullScreen() {
         if let presentedView = presentedView, let containerView = self.containerView {
@@ -56,7 +29,9 @@ class HalfModalPresentationController : UIPresentationController {
                     navController.isNavigationBarHidden = true
                     navController.isNavigationBarHidden = false
                 }
-                }, completion: nil)
+            }, completion: { [weak self] (_) -> Void in
+                self?.impactFeedback.impactOccurred()
+            })
         }
     }
     
@@ -76,7 +51,9 @@ class HalfModalPresentationController : UIPresentationController {
                     navController.isNavigationBarHidden = true
                     navController.isNavigationBarHidden = false
                 }
-            }, completion: nil)
+            }, completion: { [weak self] (_) -> Void in
+                self?.impactFeedback.impactOccurred()
+            })
         }
     }
     
@@ -85,18 +62,13 @@ class HalfModalPresentationController : UIPresentationController {
     }
     
     override func presentationTransitionWillBegin() {
-        let dimmedView = dimmingView
-        
         if let containerView = self.containerView, let coordinator = presentingViewController.transitionCoordinator {
             
-            dimmedView.alpha = 0
-            containerView.addSubview(dimmedView)
-            dimmedView.addSubview(presentedViewController.view)
-            
             coordinator.animate(alongsideTransition: { (context) -> Void in
-                dimmedView.alpha = 1
-                self.presentingViewController.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            }, completion: nil)
+                self.presentingViewController.view.alpha = 0.5
+            }, completion: { [weak self] (_) -> Void in
+                self?.impactFeedback.impactOccurred()
+            })
         }
     }
     
@@ -104,10 +76,10 @@ class HalfModalPresentationController : UIPresentationController {
         if let coordinator = presentingViewController.transitionCoordinator {
             
             coordinator.animate(alongsideTransition: { (context) -> Void in
-                self.dimmingView.alpha = 0
-                self.presentingViewController.view.transform = CGAffineTransform.identity
-            }, completion: { (completed) -> Void in
+                self.presentingViewController.view.alpha = 1
+            }, completion: { [weak self] (completed) -> Void in
                 print("done dismiss animation")
+                self?.impactFeedback.impactOccurred()
             })
             
         }
@@ -116,10 +88,8 @@ class HalfModalPresentationController : UIPresentationController {
     override func dismissalTransitionDidEnd(_ completed: Bool) {
         print("dismissal did end: \(completed)")
         
+        
         if completed {
-            dimmingView.removeFromSuperview()
-            _dimmingView = nil
-            
             isMaximized = false
         }
     }
